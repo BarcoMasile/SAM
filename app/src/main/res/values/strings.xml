@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">SAM</string>
+
+    <!-- Home -->
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <!-- Map -->
+    <string name="title_map">Map</string>
+
+    <!-- Saved Posts -->
+    <string name="title_saved_posts">Saved Posts</string>
+    <string name="saved_posts_search_string">Search posts</string>
+    <string name="saved_posts_search_btn">Search</string>
 </resources>

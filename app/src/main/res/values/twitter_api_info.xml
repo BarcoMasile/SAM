@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="twitter_api_key">5Ks4NOzJVThOL8oKTYjaGSLoq</string>
+    <string name="twitter_api_secret">iriZW0AMqAO9oHyqOq9jwHEz1YvcTZWoSTxGdGVpsTKtONIRNQ</string>
+    <string name="twitter_access_token">81099126-Qzw3vwnCjiSNa064sBtHssee6mzedYbQXjY2TMNcc</string>
+    <string name="twitter_access_token_secret">2XtyfCxZCc99gsy8FapKuMcD5XPW5ztVVm966WkdK4aw5</string>
+    <string name="twitter_access_level">Read and write</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY" tools:ignore="ExtraTranslation">5Ks4NOzJVThOL8oKTYjaGSLoq</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET" tools:ignore="ExtraTranslation">iriZW0AMqAO9oHyqOq9jwHEz1YvcTZWoSTxGdGVpsTKtONIRNQ</string>
+</resources>
