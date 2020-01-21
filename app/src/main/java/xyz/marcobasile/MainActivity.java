@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -17,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Twitter.initialize(this);
+
+        TwitterCore twitterCore = TwitterCore.getInstance();
+        TweetComposer tweetComposer = TweetComposer.getInstance();
+
 
         setContentView(R.layout.activity_main_relative_layout);
         BottomNavigationView navView = findViewById(R.id.nav_view);
