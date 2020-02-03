@@ -1,6 +1,7 @@
 package xyz.marcobasile;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.twitter.sdk.android.core.Twitter;
@@ -15,6 +16,8 @@ import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
 
+    private BottomNavigationView navView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +26,21 @@ public class MainActivity extends AppCompatActivity {
         TwitterCore twitterCore = TwitterCore.getInstance();
         TweetComposer tweetComposer = TweetComposer.getInstance();
 
+        setupMainView();
 
+        if (!isUserAuthenticated()) {
+            setupLoginView();
+        }
+    }
+
+    private boolean isUserAuthenticated() {
+        return true;
+    }
+
+    private void setupMainView() {
         setContentView(R.layout.activity_main_relative_layout);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        navView = findViewById(R.id.nav_view);
+
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_map, R.id.navigation_saved_posts)
                 .build();
@@ -36,4 +49,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    private void setupLoginView() {
+        // TODO far apparire il bottone di Login
+        navView.setVisibility(View.INVISIBLE);
+    }
 }

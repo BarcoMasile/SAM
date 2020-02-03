@@ -57,7 +57,6 @@ public class MapFragment extends Fragment {
     private MapViewModel mapViewModel;
     private MapView mapView;
     private MapSetupUtils mapUtils;
-    private LocationManager locationManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,11 +68,10 @@ public class MapFragment extends Fragment {
         mapView = root.<MapView>findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
-        // if (checkSelfPermission(getContext(), Manifest.permission.MAPS_RECEIVE)
         if (mapUtils.permissionsGranted()) {
             mapUtils.setupMapView(mapView);
         } else {
-            Toast.makeText(getContext(), "Non hai i permessi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.missing_grants, Toast.LENGTH_SHORT).show();
             mapUtils.requestPermissions();
         }
 
@@ -98,14 +96,12 @@ public class MapFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        mapUtils.registerLocationManager();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapUtils.unregisterLocationManagerUpdates();
-        mapView.onDestroy();
+        // mapView.onDestroy();
     }
 
     @Override

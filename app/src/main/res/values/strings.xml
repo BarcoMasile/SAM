@@ -6,6 +6,7 @@
 
     <!-- Map -->
     <string name="title_map">Posts Locations</string>
+    <string name="missing_grants">Localization grants missing</string>
 
     <!-- Saved Posts -->
     <string name="title_saved_posts">Saved Posts</string>
