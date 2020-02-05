@@ -24,10 +24,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import lombok.extern.slf4j.Slf4j;
+import xyz.marcobasile.twitter.util.LoginUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getName();
+    private final String TAG = this.getClass().getName();
     private BottomNavigationView navView;
     private TwitterCore twitterCore;
     private TweetComposer tweetComposer;
@@ -45,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
         setupMainView();
 
-        if (!isUserAuthenticated()) {
+        if (!LoginUtils.isUserAuthenticated()) {
             setupLoginView();
         }
+
+        Log.i(TAG, "Done creating " + TAG);
     }
 
     @Override
@@ -71,36 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupLoginView() {
         loginBtn = findViewById(R.id.login_button);
-        Callback<TwitterSession> twitterSessionCallback = new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
-                Log.i(TAG, "Twitter Login successful");
 
-                currentUserUsername = result.data.getUserName();
-                currentUserToken = result.data.getAuthToken();
-                Log.d(TAG, "Twitter auth result, username: " + currentUserUsername + ", userId: " + currentUserUsername + ", authToken: " + currentUserToken);
-
-                loginBtn.setVisibility(View.INVISIBLE);
-                navView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void failure(TwitterException exception) {
-                Log.w(TAG, "Twitter Login failure");
-                currentUserUsername = null;
-                currentUserToken = null;
-                Log.d(TAG, "Message: " + exception.getLocalizedMessage());
-            }
-        };
-
-        loginBtn.setCallback(twitterSessionCallback);
+        loginBtn.setCallback(LoginUtils.makeCallback(loginBtn, navView));
 
         loginBtn.setVisibility(View.VISIBLE);
         navView.setVisibility(View.INVISIBLE);
-    }
-
-    private boolean isUserAuthenticated() {
-        TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-        return null != session;
     }
 }
