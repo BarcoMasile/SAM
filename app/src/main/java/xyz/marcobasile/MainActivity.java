@@ -2,12 +2,17 @@ package xyz.marcobasile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.twitter.sdk.android.core.AuthToken;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
@@ -18,12 +23,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import lombok.extern.slf4j.Slf4j;
+
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getName();
     private BottomNavigationView navView;
     private TwitterCore twitterCore;
     private TweetComposer tweetComposer;
     private TwitterLoginButton loginBtn;
+    private String currentUserUsername;
+    private AuthToken currentUserToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +71,36 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupLoginView() {
         loginBtn = findViewById(R.id.login_button);
+        Callback<TwitterSession> twitterSessionCallback = new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                Log.i(TAG, "Twitter Login successful");
+
+                currentUserUsername = result.data.getUserName();
+                currentUserToken = result.data.getAuthToken();
+                Log.d(TAG, "Twitter auth result, username: " + currentUserUsername + ", userId: " + currentUserUsername + ", authToken: " + currentUserToken);
+
+                loginBtn.setVisibility(View.INVISIBLE);
+                navView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Log.w(TAG, "Twitter Login failure");
+                currentUserUsername = null;
+                currentUserToken = null;
+                Log.d(TAG, "Message: " + exception.getLocalizedMessage());
+            }
+        };
+
+        loginBtn.setCallback(twitterSessionCallback);
+
         loginBtn.setVisibility(View.VISIBLE);
         navView.setVisibility(View.INVISIBLE);
     }
 
     private boolean isUserAuthenticated() {
         TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-        // TwitterAuthToken authToken = session.getAuthToken();
         return null == session;
     }
 }
