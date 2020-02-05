@@ -101,6 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isUserAuthenticated() {
         TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-        return null == session;
+        return null != session;
     }
 }
