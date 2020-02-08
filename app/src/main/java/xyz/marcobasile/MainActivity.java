@@ -1,29 +1,25 @@
 package xyz.marcobasile;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.twitter.sdk.android.core.AuthToken;
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import lombok.extern.slf4j.Slf4j;
 import xyz.marcobasile.twitter.util.LoginUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentUserUsername;
     private AuthToken currentUserToken;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupLoginView() {
         loginBtn = findViewById(R.id.login_button);
 
-        loginBtn.setCallback(LoginUtils.makeCallback(loginBtn, navView));
+        loginBtn.setCallback(LoginUtils.makeCallback(this, loginBtn, navView));
 
         loginBtn.setVisibility(View.VISIBLE);
         navView.setVisibility(View.INVISIBLE);

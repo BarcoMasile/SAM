@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import xyz.marcobasile.Manifest;
@@ -52,36 +54,34 @@ import static androidx.core.content.ContextCompat.getSystemService;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MapFragment extends Fragment {
 
-    private final String TAG = "MapFragment";
+    private final String TAG = this.getClass().getName();
 
-    private MapViewModel mapViewModel;
+//    private MapViewModel mapViewModel;
     private MapView mapView;
     private MapSetupUtils mapUtils;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mapUtils = new MapSetupUtils(this);
 
-        mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+        mapUtils = new MapSetupUtils(this);
+//        mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = root.<MapView>findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
         if (mapUtils.permissionsGranted()) {
+            Log.i(TAG, "Permission already granted");
             mapUtils.setupMapView(mapView);
         } else {
+            Log.i(TAG, "Permissions to grant");
             Toast.makeText(getContext(), R.string.missing_grants, Toast.LENGTH_SHORT).show();
             mapUtils.requestPermissions();
         }
 
-        final TextView textView = root.findViewById(R.id.text_map);
-        mapViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        if (!mapUtils.permissionsGranted()) {
+            Toast.makeText(getContext(), "You really need to give permission grants", Toast.LENGTH_LONG).show();
+        }
 
         return root;
     }
@@ -89,7 +89,14 @@ public class MapFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mapUtils.setupMapView(mapView);
+
+        if (mapUtils.permissionGrantedResult(grantResults)) {
+            mapUtils.setupMapView(mapView);
+        } else {
+            Toast toast = Toast.makeText(getContext(), R.string.really_missing_grants, Toast.LENGTH_LONG);
+            toast.getView().setBackgroundColor(Color.RED);
+            toast.show();
+        }
     }
 
     @Override
@@ -101,7 +108,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // mapView.onDestroy();
+        mapView.onDestroy();
     }
 
     @Override

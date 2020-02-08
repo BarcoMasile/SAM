@@ -1,9 +1,11 @@
 package xyz.marcobasile.ui.map.util;
 
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Build;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+
+import xyz.marcobasile.R;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -39,7 +43,6 @@ public class MapSetupUtils {
     public MapSetupUtils(Fragment fragment) {
         this.fragment = fragment;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragment.getContext());
-        setLastLocationAndMoveCamera();
     }
 
     public void setupMapView(MapView mapView) {
@@ -52,8 +55,29 @@ public class MapSetupUtils {
                 && checkSelfPermission(fragment.getContext(), ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED);
     }
 
+    public boolean permissionGrantedResult(int[] grants) {
+        int mustBeZero = 0;
+        for(int grantResult : grants) {
+            mustBeZero += grantResult;
+        }
+
+        return 0 == mustBeZero;
+    }
+
     public void requestPermissions() {
         fragment.requestPermissions(permessi, 0);
+    }
+
+    public void setLastLocationAndMoveCamera() {
+        if (null == latLng) {
+            fusedLocationClient.getLastLocation().addOnCompleteListener(result -> {
+                Location location = result.getResult();
+                latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                setupCameraPosition(latLng);
+            });
+        } else {
+            setupCameraPosition(latLng);
+        }
     }
 
 
@@ -63,21 +87,12 @@ public class MapSetupUtils {
         map.setBuildingsEnabled(true);
 
         MapsInitializer.initialize(fragment.getActivity());
+        setLastLocationAndMoveCamera();
     }
 
 
     private void setupCameraPosition(LatLng latLng) {
         cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, INITIAL_ZOOM);
         mapView.getMapAsync(map -> map.moveCamera(cameraUpdate));
-    }
-
-    private void setLastLocationAndMoveCamera() {
-        if (null == latLng) {
-            fusedLocationClient.getLastLocation().addOnCompleteListener(result -> {
-                Location location = result.getResult();
-                latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                setupCameraPosition(latLng);
-            });
-        }
     }
 }

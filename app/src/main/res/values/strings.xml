@@ -3,10 +3,13 @@
 
     <!-- Home -->
     <string name="title_home">Home</string>
+    <string name="toast_login_successful">Authentication success</string>
+    <string name="toast_login_failure">Authentication failed</string>
 
     <!-- Map -->
     <string name="title_map">Posts Locations</string>
     <string name="missing_grants">Localization grants missing</string>
+    <string name="really_missing_grants">Can\'t use this section without location grants</string>
 
     <!-- Saved Posts -->
     <string name="title_saved_posts">Saved Posts</string>
