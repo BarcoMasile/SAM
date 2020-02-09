@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_map" />
 
     <fragment
+        android:id="@+id/navigation_tweet_composer"
+        android:name="xyz.marcobasile.ui.composer.TweetComposerFragment"
+        android:label="@string/post_a_tweet"
+        tools:layout="@layout/tweet_composer" />
+
+    <fragment
         android:id="@+id/navigation_saved_posts"
         android:name="xyz.marcobasile.ui.savedposts.SavedPostsFragment"
         android:label="@string/title_saved_posts"

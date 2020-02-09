@@ -17,4 +17,8 @@
     <string name="title_saved_posts">Saved Posts</string>
     <string name="saved_posts_search_string">Search posts</string>
     <string name="saved_posts_search_btn">Search</string>
+    <string name="post_a_tweet">Post a tweet</string>
+    <string name="tweet_body_hint">What\'s going through your mind?</string>
+    <string name="post_tweet">Tweet</string>
+    <string name="cancel_tweet">Cancel</string>
 </resources>

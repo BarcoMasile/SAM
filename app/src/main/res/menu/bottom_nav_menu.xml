@@ -12,6 +12,11 @@
         android:title="@string/title_map" />
 
     <item
+        android:id="@+id/navigation_tweet_composer"
+        android:icon="@drawable/ic_add_comment_24px"
+        android:title="@string/post_a_tweet" />
+
+    <item
         android:id="@+id/navigation_saved_posts"
         android:icon="@drawable/ic_star_24px"
         android:title="@string/title_saved_posts" />
