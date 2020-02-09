@@ -5,13 +5,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.twitter.sdk.android.core.AuthToken;
-import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,27 +17,23 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import xyz.marcobasile.twitter.util.LoginUtils;
+import xyz.marcobasile.service.twitter.util.LoginUtils;
+import xyz.marcobasile.service.twitter.util.TwitterInitializer;
 
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getName();
     private BottomNavigationView navView;
-    private TwitterCore twitterCore;
-    private TweetComposer tweetComposer;
+
     private TwitterLoginButton loginBtn;
-    private String currentUserUsername;
-    private AuthToken currentUserToken;
+    private TextView welcomeTextView;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Twitter.initialize(this);
 
-        twitterCore = TwitterCore.getInstance();
-        tweetComposer = TweetComposer.getInstance();
-
+        TwitterInitializer.setup(getApplicationContext());
         setupMainView();
 
         if (!LoginUtils.isUserAuthenticated()) {
@@ -54,10 +47,15 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         loginBtn.onActivityResult(requestCode, resultCode, data);
+        welcomeTextView.setVisibility(View.INVISIBLE);
+        loginBtn.setVisibility(View.INVISIBLE);
     }
 
     private void setupMainView() {
         setContentView(R.layout.activity_main_relative_layout);
+        loginBtn = findViewById(R.id.login_button);
+        welcomeTextView = findViewById(R.id.welcome_text);
+
         navView = findViewById(R.id.nav_view);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -70,10 +68,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupLoginView() {
-        loginBtn = findViewById(R.id.login_button);
-
         loginBtn.setCallback(LoginUtils.makeCallback(this, loginBtn, navView));
 
+        welcomeTextView.setVisibility(View.VISIBLE);
         loginBtn.setVisibility(View.VISIBLE);
         navView.setVisibility(View.INVISIBLE);
     }

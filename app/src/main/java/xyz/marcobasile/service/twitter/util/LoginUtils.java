@@ -1,4 +1,4 @@
-package xyz.marcobasile.twitter.util;
+package xyz.marcobasile.service.twitter.util;
 
 import android.content.Context;
 import android.os.Build;

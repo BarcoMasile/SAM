@@ -6,6 +6,8 @@
     <string name="toast_login_successful">Authentication success</string>
     <string name="toast_login_failure">Authentication failed</string>
 
+    <string name="welcome_message">Please login via Twitter to use the app</string>
+
     <!-- Map -->
     <string name="title_map">Posts Locations</string>
     <string name="missing_grants">Localization grants missing</string>
