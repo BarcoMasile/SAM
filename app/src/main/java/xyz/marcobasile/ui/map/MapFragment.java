@@ -64,7 +64,6 @@ public class MapFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         mapUtils = new MapSetupUtils(this);
-//        mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = root.<MapView>findViewById(R.id.mapView);

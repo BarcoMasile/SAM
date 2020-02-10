@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tweet_composer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FABE6B">
+    android:background="#FABE6B"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/header"
@@ -33,7 +36,9 @@
         android:layout_height="160dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
-        android:hint="@string/tweet_body_hint">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:hintAnimationEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tweet_body"
@@ -47,7 +52,10 @@
             android:layout_marginEnd="42dp"
             android:layout_marginBottom="8dp"
             android:background="#9EFFFFFF"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_horizontal"
+            android:hint="@string/tweet_body_hint"
             android:padding="24dp"
             android:visibility="visible" />
 
@@ -93,16 +101,24 @@
         android:layout_marginStart="34dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="34dp"
-        android:background="#32AC0E0E"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:background="#00AC0E0E"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="2dp"
+        android:soundEffectsEnabled="true"
+        app:chipSpacingHorizontal="2dp"
+        app:chipSpacingVertical="2dp">
 
-        <com.google.android.material.chip.Chip
+        <!--<com.google.android.material.chip.Chip
             android:id="@+id/chip"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
             android:text="@string/generic_test_string"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            tools:visibility="visible" />-->
 
     </com.google.android.material.chip.ChipGroup>
 

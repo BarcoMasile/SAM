@@ -33,6 +33,7 @@
         android:layout_marginEnd="20dp"
         android:text="@string/saved_posts_search_btn"
         android:visibility="visible"
+        app:backgroundTint="@color/textColor"
         app:layout_constraintBaseline_toBaselineOf="@+id/searchString"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
