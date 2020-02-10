@@ -80,6 +80,7 @@ public class LoginUtils {
         public void failure(TwitterException exception) {
             Log.w(TAG, "Twitter Login failure");
             Log.d(TAG, "Message: " + exception.getLocalizedMessage());
+            TwitterCore.getInstance().getSessionManager().clearActiveSession(); // TODO: verificare non faccia danni
             loginFailureToast(ctx);
         }
     };
