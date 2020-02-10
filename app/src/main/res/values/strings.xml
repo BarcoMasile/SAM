@@ -13,12 +13,16 @@
     <string name="missing_grants">Localization grants missing</string>
     <string name="really_missing_grants">Can\'t use this section without location grants</string>
 
-    <!-- Saved Posts -->
-    <string name="title_saved_posts">Saved Posts</string>
-    <string name="saved_posts_search_string">Search posts</string>
-    <string name="saved_posts_search_btn">Search</string>
+    <!-- Tweet Composer -->
     <string name="post_a_tweet">Post a tweet</string>
     <string name="tweet_body_hint">What\'s going through your mind?</string>
     <string name="post_tweet">Tweet</string>
     <string name="cancel_tweet">Cancel</string>
+    <string name="generic_test_string">#test</string>
+
+    <!-- Saved Posts -->
+    <string name="title_saved_posts">Saved Posts</string>
+    <string name="saved_posts_search_string">Search posts</string>
+    <string name="saved_posts_search_btn">Search</string>
+
 </resources>
