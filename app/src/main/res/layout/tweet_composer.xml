@@ -37,14 +37,15 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tweet_body"
-            android:layout_width="326dp"
-            android:layout_height="140dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentTop="false"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="42dp"
-            android:layout_marginTop="152dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="42dp"
+            android:layout_marginBottom="8dp"
             android:background="#9EFFFFFF"
             android:gravity="center_horizontal"
             android:padding="24dp"
@@ -64,6 +65,7 @@
         android:layout_marginEnd="34dp"
         android:layout_marginBottom="62dp"
         android:text="@string/post_tweet"
+        app:backgroundTint="@color/textColor"
         app:icon="@drawable/ic_add_comment_24px" />
 
     <com.google.android.material.button.MaterialButton
@@ -81,28 +83,26 @@
         app:backgroundTint="#BA03A9F4"
         app:icon="@drawable/ic_delete_24px" />
 
-    <!--<com.google.android.material.chip.Chip
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="140dp"
-        android:layout_marginStart="34dp"
-        android:text="@string/app_name" />-->
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="320dp"
         android:layout_below="@+id/tweet_body_layout"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="34dp"
         android:layout_marginTop="65dp"
         android:layout_marginEnd="34dp"
-        android:background="#E2AC0E0E">
+        android:background="#32AC0E0E"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip"
-            android:layout_width="80dp"
-            android:layout_height="60dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:text="@string/generic_test_string"
+            android:textAlignment="center" />
 
     </com.google.android.material.chip.ChipGroup>
 

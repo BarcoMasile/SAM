@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.button.MaterialButton;
 
 import xyz.marcobasile.R;
@@ -17,7 +19,9 @@ import xyz.marcobasile.ui.composer.listeners.TweetComposerFragmentListeners;
 
 public class TweetComposerFragment extends Fragment {
     private final String TAG = this.getClass().getName();
-    private TextView tweetBody;
+    private final int characterLimit = 280;
+
+    private TextView tweetBodyView;
     private MaterialButton tweetBtn, cancelBtn;
 
     public TweetComposerFragment() {
@@ -52,7 +56,7 @@ public class TweetComposerFragment extends Fragment {
     }
 
     private void setupView(View root) {
-        tweetBody = root.<TextView>findViewById(R.id.tweet_body);
+        tweetBodyView = root.<TextView>findViewById(R.id.tweet_body);
         tweetBtn = root.<MaterialButton>findViewById(R.id.tweet_button);
         cancelBtn = root.<MaterialButton>findViewById(R.id.cancel_button);
     }
@@ -63,6 +67,13 @@ public class TweetComposerFragment extends Fragment {
     }
 
     private void setupTextViewListeners() {
-        tweetBody.setOnEditorActionListener(TweetComposerFragmentListeners.tweetBodyListener());
+        tweetBodyView.setOnEditorActionListener(TweetComposerFragmentListeners.tweetBodyListener());
+    }
+
+    private void setupBadgeCharCounter() {
+        BadgeDrawable charCounter = BadgeDrawable.create(getContext());
+        charCounter.setBadgeGravity(BadgeDrawable.BOTTOM_END);
+        charCounter.setNumber(characterLimit);
+        BadgeUtils.attachBadgeDrawable(charCounter, tweetBodyView, null);
     }
 }
