@@ -1,17 +1,13 @@
 package xyz.marcobasile.ui.composer.util;
 
 import android.content.Context;
-import android.os.Build;
-import android.view.View;
-
-import androidx.annotation.IdRes;
-import androidx.annotation.RequiresApi;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,6 +19,13 @@ public class TweetComposerFragmentUtils {
     private static ChipGroup group;
     private static Map<Integer,Chip> map = new HashMap<>();
 
+
+    public static void addChips(List<String> chips) {
+        group.removeAllViews();
+        chips.stream()
+                .forEachOrdered(TweetComposerFragmentUtils::addChipToGroup);
+
+    }
 
     public static void addChipToGroup(String chipText) {
         Chip chip = makeChip(chipText);
