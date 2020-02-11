@@ -51,12 +51,17 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="42dp"
             android:layout_marginBottom="8dp"
+            android:autoLink="web|map|email"
             android:background="#9EFFFFFF"
+            android:contextClickable="true"
+            android:enabled="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="center_horizontal"
             android:hint="@string/tweet_body_hint"
             android:padding="24dp"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
             android:visibility="visible" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -112,14 +117,13 @@
         app:chipSpacingHorizontal="2dp"
         app:chipSpacingVertical="2dp">
 
-        <!--<com.google.android.material.chip.Chip
-            android:id="@+id/chip"
-            android:layout_width="wrap_content"
-            android:layout_height="52dp"
-            android:text="@string/generic_test_string"
-            android:textAlignment="center"
-            tools:visibility="visible" />-->
-
     </com.google.android.material.chip.ChipGroup>
+
+    <FrameLayout
+        android:id="@+id/touch_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </RelativeLayout>

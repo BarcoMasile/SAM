@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,8 +30,9 @@ public class TweetComposerFragment extends Fragment {
     private TextView tweetBodyView;
     private MaterialButton tweetBtn, cancelBtn;
     private ChipGroup chipGroup;
-
     private BadgeDrawable charCounter;
+
+    private FrameLayout touchLayer;
 
     public TweetComposerFragment() {
         Log.i(TAG, "TweetComposerFragment init");
@@ -43,43 +45,34 @@ public class TweetComposerFragment extends Fragment {
 
         setupView(root);
 
-        TweetComposerFragmentUtils.setCtx(getContext());
-        TweetComposerFragmentUtils.setGroup(chipGroup);
+        setupFragmentUtils();
 
         setupListeners();
-        //setupTextViewListeners();
-        //setupBadgeCharCounter();
+        setupTextViewListeners();
+        setupBadgeCharCounter();
 
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-    }
 
     private void setupView(View root) {
         tweetBodyView = root.<TextView>findViewById(R.id.tweet_body);
         tweetBtn = root.<MaterialButton>findViewById(R.id.tweet_button);
         cancelBtn = root.<MaterialButton>findViewById(R.id.cancel_button);
         chipGroup = root.<ChipGroup>findViewById(R.id.chip_group);
+
+        touchLayer = root.<FrameLayout>findViewById(R.id.touch_layer);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupListeners() {
         tweetBodyView.setOnFocusChangeListener(TweetComposerFragmentListeners.tweetBodyFocusChangeListener(getContext()));
         tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweetButtonListener());
         cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancelButtonListener());
         chipGroup.setOnCheckedChangeListener(TweetComposerFragmentListeners.chipGroupCheckChangeListener());
+
+        touchLayer.setOnTouchListener(TweetComposerFragmentListeners.touchLayerOnTouchListener(tweetBodyView));
     }
 
     private void setupTextViewListeners() {
@@ -91,5 +84,10 @@ public class TweetComposerFragment extends Fragment {
         charCounter.setBadgeGravity(BadgeDrawable.BOTTOM_END);
         charCounter.setNumber(characterLimit);
         BadgeUtils.attachBadgeDrawable(charCounter, tweetBodyView, null);
+    }
+
+    private void setupFragmentUtils() {
+        TweetComposerFragmentUtils.setCtx(getContext());
+        TweetComposerFragmentUtils.setGroup(chipGroup);
     }
 }
