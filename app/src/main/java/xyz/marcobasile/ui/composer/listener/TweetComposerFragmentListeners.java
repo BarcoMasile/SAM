@@ -1,7 +1,6 @@
-package xyz.marcobasile.ui.composer.listeners;
+package xyz.marcobasile.ui.composer.listener;
 
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;

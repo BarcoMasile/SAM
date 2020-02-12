@@ -1,4 +1,4 @@
-package xyz.marcobasile.ui.composer.listeners;
+package xyz.marcobasile.ui.composer.listener;
 
 import android.text.Editable;
 import android.text.TextWatcher;

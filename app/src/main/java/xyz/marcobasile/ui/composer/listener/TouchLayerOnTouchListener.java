@@ -1,4 +1,4 @@
-package xyz.marcobasile.ui.composer.listeners;
+package xyz.marcobasile.ui.composer.listener;
 
 import android.content.Context;
 import android.graphics.Rect;

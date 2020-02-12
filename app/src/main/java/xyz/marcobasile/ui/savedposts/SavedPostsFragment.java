@@ -4,32 +4,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import xyz.marcobasile.R;
 
 public class SavedPostsFragment extends Fragment {
 
-    private SavedPostsModel savedPostsModel;
+    private TextInputEditText searchTextEdit;
+    private Button searchBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        savedPostsModel =
-                ViewModelProviders.of(this).get(SavedPostsModel.class);
+
         View root = inflater.inflate(R.layout.fragment_saved_posts, container, false);
-//        final TextView textView = root.findViewById(R.id.text_saved_posts);
-//        savedPostsModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+
+        searchTextEdit = root.findViewById(R.id.search_string);
+        searchBtn = root.findViewById(R.id.search_btn);
+
         return root;
     }
 }

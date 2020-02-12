@@ -20,7 +20,7 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import xyz.marcobasile.R;
-import xyz.marcobasile.ui.composer.listeners.TweetComposerFragmentListeners;
+import xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListeners;
 import xyz.marcobasile.ui.composer.util.TweetComposerFragmentUtils;
 
 public class TweetComposerFragment extends Fragment {
