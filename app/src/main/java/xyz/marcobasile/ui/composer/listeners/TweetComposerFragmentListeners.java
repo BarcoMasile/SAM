@@ -11,23 +11,23 @@ import com.google.android.material.chip.ChipGroup;
 
 public class TweetComposerFragmentListeners {
 
-    public static View.OnClickListener tweetButtonListener() {
+    public static View.OnClickListener tweet() {
         return new TweetButtonListener();
     }
 
-    public static View.OnClickListener cancelButtonListener() {
+    public static View.OnClickListener cancel() {
         return new CancelButtonListener();
     }
 
-    public static ChipGroup.OnCheckedChangeListener chipGroupCheckChangeListener() {
+    public static ChipGroup.OnCheckedChangeListener chipGroup() {
         return new ChipGroupCheckChangeListener();
     }
 
-    public static TextWatcher tweetBodyTextWatcher() {
+    public static TextWatcher tweetBody() {
         return new TweetBodyTextWatcher();
     }
 
-    public static FrameLayout.OnTouchListener touchLayerOnTouchListener(TextView tweetBody) {
+    public static FrameLayout.OnTouchListener layer(TextView tweetBody) {
         return new TouchLayerOnTouchListener(tweetBody);
     }
 }

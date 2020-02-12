@@ -1,19 +1,14 @@
 package xyz.marcobasile.ui.composer;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -71,13 +66,13 @@ public class TweetComposerFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupListeners() {
-        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweetButtonListener());
-        cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancelButtonListener());
-        chipGroup.setOnCheckedChangeListener(TweetComposerFragmentListeners.chipGroupCheckChangeListener());
-        touchLayer.setOnTouchListener(TweetComposerFragmentListeners.touchLayerOnTouchListener(tweetBodyView));
+        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet());
+        cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancel());
+        chipGroup.setOnCheckedChangeListener(TweetComposerFragmentListeners.chipGroup());
+        touchLayer.setOnTouchListener(TweetComposerFragmentListeners.layer(tweetBodyView));
 
         tweetBodyView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(characterLimit)});
-        tweetBodyView.addTextChangedListener(TweetComposerFragmentListeners.tweetBodyTextWatcher());
+        tweetBodyView.addTextChangedListener(TweetComposerFragmentListeners.tweetBody());
 
 
     }
@@ -86,6 +81,8 @@ public class TweetComposerFragment extends Fragment {
         charCounter = BadgeDrawable.create(getContext());
         charCounter.setBadgeGravity(BadgeDrawable.BOTTOM_END);
         charCounter.setNumber(characterLimit);
+        charCounter.setVisible(true);
+        charCounter.setBounds(new Rect(0,0,40, 40));
         BadgeUtils.attachBadgeDrawable(charCounter, tweetBodyView, null);
     }
 
