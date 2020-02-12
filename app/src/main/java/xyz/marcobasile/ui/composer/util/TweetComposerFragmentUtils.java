@@ -46,6 +46,7 @@ public class TweetComposerFragmentUtils {
         Chip chip = new Chip(ctx);
         chip.setId(group.getChildCount());
         chip.setHeight(54);
+        chip.setCloseIconVisible(true);
         chip.setText(text);
         chip.setChipDrawable(chipDrawable);
         chip.setCheckable(false);
