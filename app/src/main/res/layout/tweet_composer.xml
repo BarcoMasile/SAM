@@ -61,7 +61,6 @@
             android:hint="@string/tweet_body_hint"
             android:padding="24dp"
             android:selectAllOnFocus="false"
-            android:singleLine="false"
             android:visibility="visible" />
 
     </com.google.android.material.textfield.TextInputLayout>

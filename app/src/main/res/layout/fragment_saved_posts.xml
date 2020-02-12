@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FABE6B"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:visibility="visible">
 
     <EditText
@@ -20,6 +22,8 @@
         android:elegantTextHeight="true"
         android:ems="10"
         android:enabled="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:hint="@string/saved_posts_search_string"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -45,5 +49,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/touch_layer_sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="auto"
+        android:focusableInTouchMode="true">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

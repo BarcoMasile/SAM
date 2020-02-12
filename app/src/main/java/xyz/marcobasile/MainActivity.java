@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import androidx.annotation.RequiresApi;
@@ -18,7 +19,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import xyz.marcobasile.service.twitter.util.LoginUtils;
-import xyz.marcobasile.service.twitter.util.TwitterInitializer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,12 +33,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TwitterInitializer.setup(getApplicationContext());
+        // TwitterInitializer.setup(getApplicationContext());
+        Twitter.initialize(getApplicationContext());
         setupMainView();
 
         if (!LoginUtils.isUserAuthenticated()) {
             setupLoginView();
         }
+
+
 
         Log.i(TAG, "Done creating " + TAG);
     }
@@ -74,4 +77,5 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setVisibility(View.VISIBLE);
         navView.setVisibility(View.INVISIBLE);
     }
+
 }

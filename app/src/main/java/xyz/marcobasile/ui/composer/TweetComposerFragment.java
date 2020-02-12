@@ -58,6 +58,7 @@ public class TweetComposerFragment extends Fragment {
     private void setupView(View root) {
         tweetBodyView = root.<TextInputEditText>findViewById(R.id.tweet_body);
         tweetBtn = root.<MaterialButton>findViewById(R.id.tweet_button);
+        tweetBtn.setEnabled(false);
         cancelBtn = root.<MaterialButton>findViewById(R.id.cancel_button);
         chipGroup = root.<ChipGroup>findViewById(R.id.chip_group);
 
@@ -66,13 +67,13 @@ public class TweetComposerFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupListeners() {
-        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet());
-        cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancel());
+        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet(tweetBodyView, getActivity()));
+        cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancel(tweetBodyView));
         chipGroup.setOnCheckedChangeListener(TweetComposerFragmentListeners.chipGroup());
         touchLayer.setOnTouchListener(TweetComposerFragmentListeners.layer(tweetBodyView));
 
         tweetBodyView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(characterLimit)});
-        tweetBodyView.addTextChangedListener(TweetComposerFragmentListeners.tweetBody());
+        tweetBodyView.addTextChangedListener(TweetComposerFragmentListeners.tweetBody(tweetBtn));
 
 
     }

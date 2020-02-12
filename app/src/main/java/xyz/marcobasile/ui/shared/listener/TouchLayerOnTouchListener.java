@@ -1,4 +1,4 @@
-package xyz.marcobasile.ui.composer.listener;
+package xyz.marcobasile.ui.shared.listener;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -12,10 +12,10 @@ import java.util.Optional;
 
 public class TouchLayerOnTouchListener implements FrameLayout.OnTouchListener {
 
-    private TextView tweetBody;
+    private TextView textView;
 
-    public TouchLayerOnTouchListener(TextView tweetBody) {
-        this.tweetBody = tweetBody;
+    public TouchLayerOnTouchListener(TextView textView) {
+        this.textView = textView;
     }
 
     @Override
@@ -24,13 +24,13 @@ public class TouchLayerOnTouchListener implements FrameLayout.OnTouchListener {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            if (tweetBody.isFocused()) {
+            if (textView.isFocused()) {
 
                 Rect outRect = new Rect();
-                tweetBody.getGlobalVisibleRect(outRect);
+                textView.getGlobalVisibleRect(outRect);
 
                 if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    tweetBody.clearFocus();
+                    textView.clearFocus();
                     Optional.ofNullable((InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .ifPresent(imm -> imm.hideSoftInputFromWindow(view.getWindowToken(), 0));
                 }
