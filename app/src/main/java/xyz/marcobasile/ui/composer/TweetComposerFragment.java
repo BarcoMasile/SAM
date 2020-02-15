@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -37,6 +38,7 @@ public class TweetComposerFragment extends Fragment {
     private MaterialButton tweetBtn, cancelBtn;
     private Button pickImage, clearAttach, attachIcon;
     private ChipGroup chipGroup;
+    private ProgressBar bar;
 
 //    private Uri imageUri;
     private PictureHolder pictureHolder = new PictureHolder();
@@ -84,9 +86,9 @@ public class TweetComposerFragment extends Fragment {
         pickImage = root.<Button>findViewById(R.id.image_picker_btn);
         clearAttach = root.<Button>findViewById(R.id.delete_attach_btn);
         clearAttach.setEnabled(false);
-
+        bar = root.findViewById(R.id.progress_bar);
+        bar.setVisibility(View.INVISIBLE); // todo testare;
         chipGroup = root.<ChipGroup>findViewById(R.id.chip_group);
-
         touchLayer = root.<FrameLayout>findViewById(R.id.touch_layer);
     }
 
