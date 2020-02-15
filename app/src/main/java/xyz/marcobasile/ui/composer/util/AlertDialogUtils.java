@@ -1,12 +1,13 @@
 package xyz.marcobasile.ui.composer.util;
 
-import android.app.Activity;
 import android.content.DialogInterface;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.model.PictureHolder;
 import xyz.marcobasile.ui.composer.listener.CancelButtonAlertDialogListener;
 import xyz.marcobasile.ui.composer.listener.TweetButtonAlertDialogListener;
 
@@ -15,16 +16,20 @@ import static xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListener
 
 public class AlertDialogUtils {
 
-    public static void cancelButtonAlertDialog(TextView textView) {
-        CancelButtonAlertDialogListener listener = cancelDialog(textView);
+    public static void cancelButtonAlertDialog(TextView textView, Button clearAttach) {
+
+        CancelButtonAlertDialogListener listener = cancelDialog(textView, clearAttach);
+
         alertDialog(textView,
                     listener,
                     R.string.cancel_btn_dialog_title,
                     textView.getResources().getString(R.string.cancel_btn_dialog_message));
     }
 
-    public static void tweetButtonAlertDialog(TextView textView, Activity activity) {
-        TweetButtonAlertDialogListener listener = tweetDialog(textView, activity);
+    public static void tweetButtonAlertDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon) {
+
+        TweetButtonAlertDialogListener listener = tweetDialog(textView, pictureHolder, clearAttach, attachIcon);
+
         alertDialog(textView,
                 listener,
                 R.string.tweet_btn_dialog_title,

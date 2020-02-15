@@ -1,6 +1,7 @@
 package xyz.marcobasile.ui.composer.util;
 
 import android.content.Context;
+import android.widget.TextView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
@@ -15,20 +16,20 @@ import xyz.marcobasile.R;
 
 public class TweetComposerFragmentUtils {
 
-    private static Context ctx;
     private static ChipGroup group;
     private static Map<Integer,Chip> map = new HashMap<>();
+    private static TextView textView;
 
 
-    public static void addChips(List<String> chips) {
+    public static void addChips(List<String> chips, Context ctx) {
         group.removeAllViews();
         chips.stream()
-                .forEachOrdered(TweetComposerFragmentUtils::addChipToGroup);
+                .forEachOrdered(chipText -> addChipToGroup(chipText, ctx));
 
     }
 
-    public static void addChipToGroup(String chipText) {
-        Chip chip = makeChip(chipText);
+    public static void addChipToGroup(String chipText, Context ctx) {
+        Chip chip = makeChip(chipText, ctx);
         group.addView(chip);
     }
 
@@ -37,10 +38,15 @@ public class TweetComposerFragmentUtils {
                 .ifPresent(view -> {
                     group.removeView(view);
                     map.remove(chipId);
+                    String newText = textView.getText()
+                            .toString()
+                            .replaceAll(view.getText().toString(), "");
+
+                    textView.setText(newText);
                 });
     }
 
-    private static Chip makeChip(String text) {
+    private static Chip makeChip(String text, Context ctx) {
         ChipDrawable chipDrawable = ChipDrawable.createFromResource(ctx, R.xml.single_chip);
 
         Chip chip = new Chip(ctx);
@@ -61,7 +67,7 @@ public class TweetComposerFragmentUtils {
         TweetComposerFragmentUtils.group = group;
     }
 
-    public static void setCtx(Context ctx) {
-        TweetComposerFragmentUtils.ctx = ctx;
+    public static void setTextView(TextView textView) {
+        TweetComposerFragmentUtils.textView = textView;
     }
 }

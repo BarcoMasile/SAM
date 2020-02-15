@@ -1,5 +1,6 @@
 package xyz.marcobasile.ui.composer.listener;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
@@ -18,11 +19,13 @@ public class TweetBodyTextWatcher implements TextWatcher {
 
     private final Pattern pattern = Pattern.compile("#\\S+");
     private final MaterialButton btn;
+    private final Context ctx;
 
     private List<String> chips;
 
-    public TweetBodyTextWatcher(MaterialButton btn) {
+    public TweetBodyTextWatcher(MaterialButton btn, Context ctx) {
         this.btn = btn;
+        this.ctx = ctx;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class TweetBodyTextWatcher implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence cs, int start, int before, int count) {
         chips = getHashtags(cs);
-        TweetComposerFragmentUtils.addChips(chips);
+        TweetComposerFragmentUtils.addChips(chips, ctx);
     }
 
     @Override

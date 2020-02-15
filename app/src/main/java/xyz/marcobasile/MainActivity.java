@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import xyz.marcobasile.service.twitter.TwitterClient;
 import xyz.marcobasile.service.twitter.util.LoginUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,16 +34,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TwitterInitializer.setup(getApplicationContext());
         Twitter.initialize(getApplicationContext());
         setupMainView();
 
         if (!LoginUtils.isUserAuthenticated()) {
             setupLoginView();
         }
-
-
-
+        TwitterClient.createTwitterClient();
         Log.i(TAG, "Done creating " + TAG);
     }
 

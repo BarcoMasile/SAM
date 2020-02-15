@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
 
-        <receiver
+        <!--<receiver
             android:name=".receiver.publish.TweetPublishReceiver"
             android:exported="false">
 
@@ -48,7 +48,8 @@
                 <action android:name="com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL"/>
             </intent-filter>
 
-        </receiver>
+        </receiver>-->
+
     </application>
 
 </manifest>

@@ -27,5 +27,7 @@
     <string name="cancel_btn_dialog_title">Are you sure?</string>
     <string name="cancel_btn_dialog_message">Do you want to delete the message?</string>
     <string name="tweet_btn_dialog_title">Share your thought</string>
+    <string name="image_picker_btn_text">Attach Item</string>
+    <string name="delete_attach_btn_text">Clear</string>
 
 </resources>

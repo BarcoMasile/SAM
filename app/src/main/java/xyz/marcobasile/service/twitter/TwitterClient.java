@@ -1,41 +1,67 @@
 package xyz.marcobasile.service.twitter;
 
-import android.util.Log;
+import android.content.Context;
+import android.net.Uri;
 
-import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+import com.twitter.sdk.android.core.TwitterApiClient;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.models.Media;
+import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.List;
 
-import xyz.marcobasile.model.Tweet;
+import lombok.Getter;
+import lombok.Setter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import xyz.marcobasile.service.twitter.callback.MediaCallback;
+import xyz.marcobasile.service.twitter.util.TwitterClientUtils;
+
 
 public class TwitterClient {
 
     private static String TAG = TwitterClient.class.getName();
 
-    private static TwitterClient instance = new TwitterClient();
+    private static String BASE_URL = "https://api.twitter.com/1.1";
+    private static String TIMELINE_URL = "/statuses/home_timeline.json";
 
-    public static TwitterClient getInstance() {
-        return instance;
+    @Getter
+    private static TwitterClient instance;
+    @Setter @Getter
+    private TwitterApiClient apiClient;
+
+    public static void createTwitterClient() {
+        instance = new TwitterClient();
+        instance.setApiClient(client());
+        TwitterClientUtils.services(instance.getApiClient().getStatusesService(),
+                                    instance.getApiClient().getMediaService());
     }
 
-    public TwitterClient() {
-        Log.i(TAG, "Initializing custom twitter client");
-    }
 
-    public List<Tweet> getHomeTimelineTweets() {
+    public List<String> getHomeTimelineTweets() {
         return null;
     }
 
-    public void postTweet(Tweet tweet) {
-        TweetComposer composer = TweetComposer.getInstance();
+    public void postTweet(String tweet, Callback<Tweet> callback) {
+
+        Call<Tweet> update = TwitterClientUtils.tweet(tweet);
+        update.enqueue(callback);
     }
 
-    public Tweet getTweet(Long id) {
-        return null;
+    public void postTweetWithPicture(String tweet, Uri imageUri, Callback<Tweet> callback, Context ctx) {
+
+        Call<Media> upload = TwitterClientUtils.picUpload(imageUri, ctx);
+        upload.enqueue(new MediaCallback(tweet, callback));
+
     }
 
-    public Tweet getTweet(String id) {
-        return null;
-    }
 
+    private static TwitterApiClient client() {
+        return TwitterCore.getInstance()
+                .getApiClient(
+                        TwitterCore.getInstance()
+                                .getSessionManager()
+                                .getActiveSession()
+                );
+    }
 }
