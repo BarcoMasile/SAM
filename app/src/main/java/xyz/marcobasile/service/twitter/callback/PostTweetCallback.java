@@ -13,6 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.PictureHolder;
+import xyz.marcobasile.ui.shared.interfaces.ProceduralInterface;
 
 public class PostTweetCallback implements Callback<Tweet> {
 
@@ -22,12 +23,14 @@ public class PostTweetCallback implements Callback<Tweet> {
     private Button clearAttach;
     private PictureHolder pictureHolder;
     private Button attachIcon;
+    private ProceduralInterface toggleProgressBar;
 
-    public PostTweetCallback(TextView textView, Button clearAttach, PictureHolder pictureHolder, Button attachIcon) {
+    public PostTweetCallback(TextView textView, Button clearAttach, PictureHolder pictureHolder, Button attachIcon, ProceduralInterface toggleProgressBar) {
         this.textView = textView;
         this.clearAttach = clearAttach;
         this.pictureHolder = pictureHolder;
         this.attachIcon = attachIcon;
+        this.toggleProgressBar = toggleProgressBar;
     }
 
     @Override
@@ -38,12 +41,16 @@ public class PostTweetCallback implements Callback<Tweet> {
         clearAttach.setEnabled(false);
         attachIcon.setVisibility(View.INVISIBLE);
         pictureHolder.clear();
+        // deve spegnere
+        toggleProgressBar.doProcedure();
     }
 
     @Override
     public void onFailure(Call<Tweet> call, Throwable t) {
         snackbar("Couldn't post tweet");
         Log.i(TAG,"Tweet NON pubblicato");
+        // deve spegnere
+        toggleProgressBar.doProcedure();
     }
 
     private void snackbar(String msg) {

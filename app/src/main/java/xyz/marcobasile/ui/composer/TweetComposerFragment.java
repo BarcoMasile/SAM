@@ -2,9 +2,6 @@ package xyz.marcobasile.ui.composer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -13,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -23,9 +19,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Arrays;
+
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.PictureHolder;
-import xyz.marcobasile.service.twitter.util.TwitterClientUtils;
 import xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListeners;
 import xyz.marcobasile.ui.composer.util.TweetComposerFragmentUtils;
 
@@ -39,6 +36,7 @@ public class TweetComposerFragment extends Fragment {
     private Button pickImage, clearAttach, attachIcon;
     private ChipGroup chipGroup;
     private ProgressBar bar;
+    private View backdrop;
 
 //    private Uri imageUri;
     private PictureHolder pictureHolder = new PictureHolder();
@@ -87,14 +85,36 @@ public class TweetComposerFragment extends Fragment {
         clearAttach = root.<Button>findViewById(R.id.delete_attach_btn);
         clearAttach.setEnabled(false);
         bar = root.findViewById(R.id.progress_bar);
-        bar.setVisibility(View.INVISIBLE); // todo testare;
+        bar.setVisibility(View.INVISIBLE);
         chipGroup = root.<ChipGroup>findViewById(R.id.chip_group);
         touchLayer = root.<FrameLayout>findViewById(R.id.touch_layer);
+        backdrop = root.<View>findViewById(R.id.backdrop);
+    }
+
+    public void toggleProgressBarAndBackDrop() {
+        if (bar.getVisibility() == View.VISIBLE) {
+
+            bar.setVisibility(View.INVISIBLE);
+            backdrop.setBackgroundColor(getResources().getColor(R.color.progress_bar_clear, null));
+            setEnableAllButtonsInView(true);
+            Log.i(TAG, "Progress Bar playing");
+        } else {
+
+            bar.setVisibility(View.VISIBLE);
+            backdrop.setBackgroundColor(getResources().getColor(R.color.progress_bar_backdrop, null));
+            setEnableAllButtonsInView(false);
+            Log.i(TAG, "Progress Bar stopped");
+        }
+    }
+
+    private void setEnableAllButtonsInView(boolean enabled) {
+        Arrays.asList(pickImage, clearAttach, attachIcon, tweetBtn, cancelBtn)
+            .forEach(btn -> btn.setEnabled(enabled));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupListeners() {
-        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet(tweetBodyView, pictureHolder, clearAttach, attachIcon));
+        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet(tweetBodyView, pictureHolder, clearAttach, attachIcon, this::toggleProgressBarAndBackDrop));
         cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancel(tweetBodyView, clearAttach));
 
         pickImage.setOnClickListener(view -> {

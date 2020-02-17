@@ -9,4 +9,7 @@
 
     <color name="login_success_color">#81C639</color>
     <color name="login_failure_color">#EB034E</color>
+
+    <color name="progress_bar_backdrop">#C6FFFFFF</color>
+    <color name="progress_bar_clear">#00FFFFFF</color>
 </resources>

@@ -103,6 +103,7 @@
         android:layout_marginStart="340dp"
         android:layout_marginTop="116dp"
         android:backgroundTint="#2196F3"
+        android:clickable="false"
         android:visibility="visible"
         app:icon="@android:drawable/ic_menu_gallery" />
 
@@ -158,6 +159,23 @@
         app:icon="@drawable/tw__composer_close"
         app:rippleColor="#00DB1212" />
 
+    <View
+        android:id="@+id/backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#79FFFFFF"
+        android:visibility="invisible" />
+
+    <FrameLayout
+        android:id="@+id/touch_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C6FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:visibility="visible">
+
+    </FrameLayout>
+
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
@@ -165,14 +183,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="120dp"
         android:layout_marginEnd="120dp"
-        android:foregroundGravity="center_vertical|center|center_horizontal" />
-
-    <FrameLayout
-        android:id="@+id/touch_layer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="#00BE1B1B">
-
-    </FrameLayout>
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:visibility="invisible" />
 
 </RelativeLayout>
