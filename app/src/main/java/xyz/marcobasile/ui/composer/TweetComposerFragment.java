@@ -38,7 +38,6 @@ public class TweetComposerFragment extends Fragment {
     private ProgressBar bar;
     private View backdrop;
 
-//    private Uri imageUri;
     private PictureHolder pictureHolder = new PictureHolder();
 
     private FrameLayout touchLayer;
