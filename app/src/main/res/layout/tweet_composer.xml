@@ -153,6 +153,7 @@
         android:layout_marginTop="180dp"
         android:layout_marginEnd="235dp"
         android:backgroundTint="#FF5722"
+        android:enabled="false"
         android:minWidth="100dp"
         android:text="@string/delete_attach_btn_text"
         android:visibility="visible"

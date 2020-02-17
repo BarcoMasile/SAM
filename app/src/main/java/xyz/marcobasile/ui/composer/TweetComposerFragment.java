@@ -65,8 +65,10 @@ public class TweetComposerFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         
         if (requestCode != IMAGE_PICKER_CODE || null == imageReturnedIntent ) {
+            clearAttach.setEnabled(pictureHolder.getPictureUri() != null);
             return;
         }
+
         attachIcon.setVisibility(View.VISIBLE);
         pictureHolder.setPictureUri(imageReturnedIntent.getData());
         clearAttach.setEnabled(true);
@@ -74,6 +76,7 @@ public class TweetComposerFragment extends Fragment {
 
 
     private void setupView(View root) {
+
         tweetBodyView = root.<TextInputEditText>findViewById(R.id.tweet_body);
         tweetBtn = root.<MaterialButton>findViewById(R.id.tweet_button);
         tweetBtn.setEnabled(false);
@@ -83,32 +86,44 @@ public class TweetComposerFragment extends Fragment {
         pickImage = root.<Button>findViewById(R.id.image_picker_btn);
         clearAttach = root.<Button>findViewById(R.id.delete_attach_btn);
         clearAttach.setEnabled(false);
+
+        // backdrop & progress bar
+        backdrop = root.<View>findViewById(R.id.backdrop);
         bar = root.findViewById(R.id.progress_bar);
         bar.setVisibility(View.INVISIBLE);
+
         chipGroup = root.<ChipGroup>findViewById(R.id.chip_group);
+
         touchLayer = root.<FrameLayout>findViewById(R.id.touch_layer);
-        backdrop = root.<View>findViewById(R.id.backdrop);
+
+
     }
 
     public void toggleProgressBarAndBackDrop() {
         if (bar.getVisibility() == View.VISIBLE) {
 
             bar.setVisibility(View.INVISIBLE);
-            backdrop.setBackgroundColor(getResources().getColor(R.color.progress_bar_clear, null));
+            backdrop.setVisibility(View.INVISIBLE);
+
             setEnableAllButtonsInView(true);
             Log.i(TAG, "Progress Bar playing");
+
         } else {
 
             bar.setVisibility(View.VISIBLE);
-            backdrop.setBackgroundColor(getResources().getColor(R.color.progress_bar_backdrop, null));
+            backdrop.setVisibility(View.VISIBLE);
+
             setEnableAllButtonsInView(false);
             Log.i(TAG, "Progress Bar stopped");
+
         }
     }
 
     private void setEnableAllButtonsInView(boolean enabled) {
-        Arrays.asList(pickImage, clearAttach, attachIcon, tweetBtn, cancelBtn)
+        Arrays.asList(pickImage, attachIcon, tweetBtn, cancelBtn)
             .forEach(btn -> btn.setEnabled(enabled));
+
+        clearAttach.setEnabled(pictureHolder.getPictureUri() != null);
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -17,7 +17,6 @@ public class TweetButtonAlertDialogListener implements DialogInterface.OnClickLi
     private TwitterClient client;
     private PostTweetCallback postTweetCallback;
     private PictureHolder pictureHolder;
-    private Button attachIcon;
 
     public TweetButtonAlertDialogListener(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ProceduralInterface toggleProgressBar) {
         this.textView = textView;
@@ -25,7 +24,6 @@ public class TweetButtonAlertDialogListener implements DialogInterface.OnClickLi
         client = TwitterClient.getInstance();
         postTweetCallback = new PostTweetCallback(textView, clearAttach, pictureHolder, attachIcon, toggleProgressBar);
         this.pictureHolder = pictureHolder;
-        this.attachIcon = attachIcon;
     }
     @Override
     public void onClick(DialogInterface dialog, int which) {

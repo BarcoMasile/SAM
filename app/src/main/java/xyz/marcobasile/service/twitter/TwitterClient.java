@@ -22,8 +22,8 @@ public class TwitterClient {
 
     private static String TAG = TwitterClient.class.getName();
 
-    private static String BASE_URL = "https://api.twitter.com/1.1";
-    private static String TIMELINE_URL = "/statuses/home_timeline.json";
+    // private static String BASE_URL = "https://api.twitter.com/1.1";
+    // private static String TIMELINE_URL = "/statuses/home_timeline.json";
 
     private static TwitterClient instance;
 

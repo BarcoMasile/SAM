@@ -35,20 +35,25 @@ public class PostTweetCallback implements Callback<Tweet> {
 
     @Override
     public void onResponse(Call<Tweet> call, Response<Tweet> response) {
+
         Log.i(TAG,"Tweet pubblicato con successo");
         snackbar("Tweet Successfully Posted");
+
         textView.setText("");
         clearAttach.setEnabled(false);
-        attachIcon.setVisibility(View.INVISIBLE);
         pictureHolder.clear();
+        attachIcon.setVisibility(View.INVISIBLE);
+
         // deve spegnere
         toggleProgressBar.doProcedure();
     }
 
     @Override
     public void onFailure(Call<Tweet> call, Throwable t) {
-        snackbar("Couldn't post tweet");
+
         Log.i(TAG,"Tweet NON pubblicato");
+        snackbar("Couldn't post tweet");
+
         // deve spegnere
         toggleProgressBar.doProcedure();
     }
