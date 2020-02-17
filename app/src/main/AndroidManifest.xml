@@ -7,6 +7,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -18,7 +19,7 @@
     <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -38,14 +39,27 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".services.PicturePublisherService" android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+        </service>
+
         <!--<receiver
-            android:name=".receiver.publish.TweetPublishReceiver"
+            android:name=".receiver.publish.PicturePublisherReceiver"
             android:exported="false">
 
             <intent-filter>
-                <action android:name="com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS"/>
-                <action android:name="com.twitter.sdk.android.tweetcomposer.UPLOAD_FAILURE"/>
-                <action android:name="com.twitter.sdk.android.tweetcomposer.TWEET_COMPOSE_CANCEL"/>
+                &lt;!&ndash;<action android:name="android.intent.action.MEDIA_SHARED"/>
+                <action android:name="android.intent.action.PICK"/>&ndash;&gt;
+
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*" />
             </intent-filter>
 
         </receiver>-->
