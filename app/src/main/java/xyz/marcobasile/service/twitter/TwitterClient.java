@@ -25,9 +25,8 @@ public class TwitterClient {
     private static String BASE_URL = "https://api.twitter.com/1.1";
     private static String TIMELINE_URL = "/statuses/home_timeline.json";
 
-    @Getter
     private static TwitterClient instance;
-    @Setter @Getter
+
     private TwitterApiClient apiClient;
 
     public static void createTwitterClient() {
@@ -63,5 +62,17 @@ public class TwitterClient {
                                 .getSessionManager()
                                 .getActiveSession()
                 );
+    }
+
+    public TwitterApiClient getApiClient() {
+        return apiClient;
+    }
+
+    public void setApiClient(TwitterApiClient apiClient) {
+        this.apiClient = apiClient;
+    }
+
+    public static TwitterClient getInstance() {
+        return instance;
     }
 }
