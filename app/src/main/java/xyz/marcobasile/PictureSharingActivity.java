@@ -66,7 +66,7 @@ public class PictureSharingActivity extends Activity {
 
             intent.setData(null);
             setResult(Activity.RESULT_OK, intent);
-            finish();
+            finishAndRemoveTask();
         }
 
         TwitterClient.createTwitterClient();
@@ -104,7 +104,7 @@ public class PictureSharingActivity extends Activity {
         cancel.setOnClickListener(view -> {
             pictureUri = null;
             setResult(Activity.RESULT_OK);
-            finish();
+            finishAndRemoveTask();
         });
 
         tweet.setOnClickListener(view -> {
@@ -126,7 +126,7 @@ public class PictureSharingActivity extends Activity {
                 setResult(Activity.RESULT_OK);
 
                 Toast.makeText(getApplicationContext(), "Pubblicato!", Toast.LENGTH_SHORT).show();
-                finish();
+                finishAndRemoveTask();
             }
 
             @Override
@@ -136,7 +136,7 @@ public class PictureSharingActivity extends Activity {
                 toggleProgressBarAndBackDrop();
                 Toast.makeText(getApplicationContext(), "Qualcosa e' andato storto", Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_CANCELED);
-                finish();
+                finishAndRemoveTask();
             }
         };
     }
