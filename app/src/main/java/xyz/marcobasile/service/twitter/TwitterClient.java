@@ -10,8 +10,6 @@ import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import xyz.marcobasile.service.twitter.callback.MediaCallback;
@@ -22,14 +20,16 @@ public class TwitterClient {
 
     private static String TAG = TwitterClient.class.getName();
 
-    // private static String BASE_URL = "https://api.twitter.com/1.1";
-    // private static String TIMELINE_URL = "/statuses/home_timeline.json";
-
     private static TwitterClient instance;
 
     private TwitterApiClient apiClient;
 
     public static void createTwitterClient() {
+
+        if (instance != null) {
+            return;
+        }
+
         instance = new TwitterClient();
         instance.setApiClient(client());
         TwitterClientUtils.services(instance.getApiClient().getStatusesService(),
@@ -51,11 +51,11 @@ public class TwitterClient {
 
         Call<Media> upload = TwitterClientUtils.picUpload(imageUri, ctx);
         upload.enqueue(new MediaCallback(tweet, callback));
-
     }
 
 
     private static TwitterApiClient client() {
+
         return TwitterCore.getInstance()
                 .getApiClient(
                         TwitterCore.getInstance()

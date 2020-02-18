@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/picture_sharing_layout"
+    android:layout_width="320dp"
+    android:layout_height="350dp"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:background="#FFEB3B"
+    android:backgroundTint="#FFC107"
+    android:gravity="center|center_horizontal"
+    android:requiresFadingEdge="vertical">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="127dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="192dp"
+        android:background="#31EC1010"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="@string/generic_test_string"
+        android:textAlignment="center"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="34dp"
+        android:backgroundTint="#BA03A9F4"
+        android:text="@string/cancel_tweet" />
+
+    <Button
+        android:id="@+id/tweet_button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="34dp"
+        android:layout_toEndOf="@+id/cancel_button"
+        android:backgroundTint="@color/textColor"
+        android:text="@string/post_tweet" />
+
+</RelativeLayout>
