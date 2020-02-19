@@ -1,35 +1,55 @@
 package xyz.marcobasile.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.models.Tweet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.service.twitter.TwitterClient;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private static final String TAG = HomeFragment.class.getName();
+
+    private List<Tweet> tweets = new ArrayList<Tweet>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-//        final TextView textView = root.findViewById(R.id.text_home);
-//        homeViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+
+        setupView(root);
+
+        populateScrollView();
+
+        Log.i(TAG, "End onCreateView");
+
         return root;
+    }
+
+    private void setupView(View root) {
+        //
+
+    }
+
+    private void populateScrollView() {
+
+        Twitter.initialize(getContext());
+        TwitterClient twitterClient = TwitterClient.getInstance();
+
+        twitterClient.getHomeTimelineTweets(tweets);
+
+        Log.i(TAG, "Ottenuti " + tweets.size() + " tweets.");
     }
 }

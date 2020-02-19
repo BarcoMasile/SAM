@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,13 +9,24 @@
     android:focusableInTouchMode="true"
     tools:visibility="visible">
 
+    <View
+        android:id="@+id/opaque_layer"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#6FFFFFFF" />
+
     <EditText
         android:id="@+id/search_string"
         android:layout_width="263dp"
         android:layout_height="47dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="132dp"
+        android:layout_marginBottom="668dp"
         android:background="#FFFFFF"
         android:backgroundTint="#81FFFFFF"
         android:contextClickable="true"
@@ -40,8 +51,14 @@
         android:id="@+id/search_btn"
         android:layout_width="94dp"
         android:layout_height="49dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="303dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="666dp"
         android:text="@string/saved_posts_search_btn"
         android:visibility="visible"
         app:backgroundTint="@color/textColor"
@@ -59,4 +76,4 @@
 
     </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
