@@ -6,14 +6,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class FavouriteTweetRepository extends SQLiteOpenHelper {
+public class TwitterUserRepository extends SQLiteOpenHelper {
 
-    private static final String name = "tweet_table";
-    private static final int version = 1;
+    private static final int VERSION = 1;
+    private static final int PER_PAGE = 100;
 
-
-    public FavouriteTweetRepository(@Nullable Context context) {
-        super(context, name, null, version);
+    public TwitterUserRepository(String tableName, @Nullable Context context) {
+        super(context, tableName, null, VERSION);
     }
 
     @Override
@@ -25,4 +24,6 @@ public class FavouriteTweetRepository extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    // delete: select distinc tweet not in
 }

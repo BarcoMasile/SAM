@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.service.twitter.TwitterClient;
 
 public class HomeFragment extends Fragment {
 
     private static final String TAG = HomeFragment.class.getName();
 
-    private List<Tweet> tweets = new ArrayList<Tweet>();
+    private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

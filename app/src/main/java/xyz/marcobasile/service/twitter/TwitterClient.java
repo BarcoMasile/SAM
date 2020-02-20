@@ -12,6 +12,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.service.twitter.callback.MediaCallback;
 import xyz.marcobasile.service.twitter.callback.TimelineCallback;
 import xyz.marcobasile.service.twitter.util.TwitterClientUtils;
@@ -22,13 +23,15 @@ public class TwitterClient {
     private static String TAG = TwitterClient.class.getName();
     private static final Integer TWEET_COUNT = 100;
 
+    private Long sinceId = null;
+    private Long maxId = null;
+    private final Boolean contributeDetails = true;
+    private final Boolean includeEntities = true;
+
     private static TwitterClient instance;
 
     private TwitterApiClient apiClient;
-    private Long sinceId = null;
-    private Long maxId = null;
-    private Boolean contributeDetails = true;
-    private Boolean includeEntities = true;
+
 
     public static void createTwitterClient() {
 
@@ -43,7 +46,7 @@ public class TwitterClient {
     }
 
 
-    public void getHomeTimelineTweets(List<Tweet> tweets) {
+    public void getHomeTimelineTweets(List<SAMTweet> tweets) {
 
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
                 .homeTimeline(TWEET_COUNT, sinceId, maxId,

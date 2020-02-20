@@ -13,7 +13,7 @@
     <string name="missing_grants">Localization grants missing</string>
     <string name="really_missing_grants">Can\'t use this section without location grants</string>
 
-    <!-- Tweet Composer -->
+    <!-- SAMTweet Composer -->
     <string name="post_a_tweet">Post a tweet</string>
     <string name="tweet_body_hint">What\'s going through your mind?</string>
     <string name="post_tweet">Tweet</string>

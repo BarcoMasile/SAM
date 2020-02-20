@@ -6,14 +6,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import xyz.marcobasile.model.SAMTweet;
+
 public class TweetRepository extends SQLiteOpenHelper {
 
-    private static final String name = "tweet_table";
-    private static final int version = 1;
+    private static final int VERSION = 1;
+    private static final int PER_PAGE = 100;
 
-
-    public TweetRepository(@Nullable Context context) {
-        super(context, name, null, version);
+    public TweetRepository(String tableName, @Nullable Context context) {
+        super(context, tableName, null, VERSION);
     }
 
     @Override
@@ -23,6 +27,33 @@ public class TweetRepository extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    public void save(List<SAMTweet> tweets) {
+
+    }
+
+    public List<SAMTweet> getPage(Long page) {
+
+        return new ArrayList<>();
+    }
+
+    public void save(SAMTweet tweet) {
+
+    }
+
+    public SAMTweet getSAMTweetById(Long id) {
+
+        return null;
+    }
+
+    public List<SAMTweet> searchByString(String search) {
+
+        return null;
+    }
+
+    public void removeFromFavourites(Long id) {
 
     }
 }

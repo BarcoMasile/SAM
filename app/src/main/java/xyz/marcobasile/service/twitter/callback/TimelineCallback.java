@@ -8,20 +8,23 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import xyz.marcobasile.model.SAMTweet;
+import xyz.marcobasile.service.mapper.SAMTweetMapper;
 import xyz.marcobasile.service.twitter.TwitterClient;
 
 public class TimelineCallback implements Callback<List<Tweet>> {
 
     private static final String TAG = TimelineCallback.class.getName();
     private final TwitterClient client;
+    private final SAMTweetMapper mapper = new SAMTweetMapper();
 
-    private List<Tweet> tweets;
+    private List<SAMTweet> tweets;
 
-    public static TimelineCallback makeCallback(List<Tweet> tweets, TwitterClient client) {
+    public static TimelineCallback makeCallback(List<SAMTweet> tweets, TwitterClient client) {
         return new TimelineCallback(tweets, client);
     }
 
-    private TimelineCallback(List<Tweet> tweets, TwitterClient client) {
+    private TimelineCallback(List<SAMTweet> tweets, TwitterClient client) {
 
         this.tweets = tweets;
         this.client = client;
@@ -30,12 +33,12 @@ public class TimelineCallback implements Callback<List<Tweet>> {
     @Override
     public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
 
-        List<Tweet> timeline = response.body();
+        List<SAMTweet> timeline = mapper.toSAMTweet(response.body());
         Log.i(TAG, "get timeline success, " + timeline.size() + " tweets");
         Log.i(TAG, "Old sinceId: " + client.getSinceId());
 
         timeline.stream()
-                .map(Tweet::getId)
+                .map(SAMTweet::getId)
                 .max(Long::compareTo)
                 .ifPresent(client::setSinceId);
 
