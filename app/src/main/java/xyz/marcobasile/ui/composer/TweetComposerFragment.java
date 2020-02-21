@@ -29,7 +29,7 @@ import xyz.marcobasile.ui.composer.util.TweetComposerFragmentUtils;
 public class TweetComposerFragment extends Fragment {
     private static final int IMAGE_PICKER_CODE = 1;
     private final String TAG = this.getClass().getName();
-    private final int characterLimit = 280;
+    private final int CHARACTER_LIMIT = 280;
 
     private TextInputEditText tweetBodyView;
     private MaterialButton tweetBtn, cancelBtn;
@@ -146,7 +146,7 @@ public class TweetComposerFragment extends Fragment {
 
         touchLayer.setOnTouchListener(TweetComposerFragmentListeners.layer(tweetBodyView));
 
-        tweetBodyView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(characterLimit)});
+        tweetBodyView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(CHARACTER_LIMIT)});
         tweetBodyView.addTextChangedListener(TweetComposerFragmentListeners.tweetBody(tweetBtn, getContext()));
 
 
