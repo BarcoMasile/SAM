@@ -17,9 +17,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.model.SAMTwitterUser;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -83,8 +87,11 @@ public class MapSetupUtils {
 
     private void mapViewSetup(GoogleMap map) {
         map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.getUiSettings().setCompassEnabled(false);
         map.setMyLocationEnabled(true);
         map.setBuildingsEnabled(true);
+
+        map.setOnMarkerClickListener(markerClickListener());
 
         MapsInitializer.initialize(fragment.getActivity());
         setLastLocationAndMoveCamera();
@@ -93,6 +100,32 @@ public class MapSetupUtils {
 
     private void setupCameraPosition(LatLng latLng) {
         cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, INITIAL_ZOOM);
-        mapView.getMapAsync(map -> map.moveCamera(cameraUpdate));
+        mapView.getMapAsync(map -> {
+
+            map.animateCamera(cameraUpdate);
+            map.addMarker(makeMarkerOptions(latLng, null));
+
+        });
     }
+
+    private MarkerOptions makeMarkerOptions(LatLng latLng, SAMTwitterUser user) {
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        // markerOptions.snippet(user.getScreenName());
+        markerOptions.draggable(false);
+        markerOptions.flat(true);
+
+        return markerOptions;
+    }
+
+
+    private GoogleMap.OnMarkerClickListener markerClickListener() {
+        return marker -> {
+
+            return true;
+        };
+    }
+
+
 }

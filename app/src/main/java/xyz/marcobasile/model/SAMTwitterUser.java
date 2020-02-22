@@ -13,6 +13,16 @@ public class SAMTwitterUser {
 
     private String screenName;
 
+    private String description;
+
+    private int followersCount;
+
+    private int friendsCount;
+
+    private int statusesCount;
+
     private String profileImageUrl;
+
+    private String location;
 
 }

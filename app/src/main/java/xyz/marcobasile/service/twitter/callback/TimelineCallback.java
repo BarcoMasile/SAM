@@ -34,7 +34,7 @@ public class TimelineCallback implements Callback<List<Tweet>> {
     public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
 
         List<SAMTweet> timeline = mapper.toSAMTweet(response.body());
-        Log.i(TAG, "get timeline success, " + timeline.size() + " tweets");
+        Log.i(TAG, "Get timeline success, " + timeline.size() + " tweets");
         Log.i(TAG, "Old sinceId: " + client.getSinceId());
 
         timeline.stream()

@@ -31,6 +31,7 @@
     <string name="title_saved_posts">Saved Posts</string>
     <string name="saved_posts_search_string">Search posts</string>
     <string name="saved_posts_search_btn">Search</string>
+    <string name="profile_image_description">profile image</string>
 
 
 </resources>

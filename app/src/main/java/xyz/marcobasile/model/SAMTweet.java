@@ -20,11 +20,7 @@ public class SAMTweet {
 
     private SAMTwitterUser user;
 
-    private String createdAt;
-
     private Integer favoriteCount;
-
-    private SAMPlace place;
 
     private int retweetCount;
 }

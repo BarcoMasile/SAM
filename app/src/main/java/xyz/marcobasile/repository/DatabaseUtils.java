@@ -38,7 +38,11 @@ public class DatabaseUtils {
         // Columns
         public static final String ID = "ID";
         public static final String SCREEN_NAME = "SCREEN_NAME";
-        public static final String FAVOURITE_COUNT = "PROFILE_IMAGE_URL";
+        public static final String DESCRIPTION = "DESCRIPTION";
+        public static final String FOLLOWERS_COUNT = "FOLLOWERS_COUNT";
+        public static final String FRIENDS_COUNT = "FRIENDS_COUNT";
+        public static final String STATUSES_COUNT = "STATUSES_COUNT";
+        public static final String PROFILE_IMAGE_URL = "PROFILE_IMAGE_URL";
 
         // Query
         public static final String INSERT_ONE = "";
@@ -49,7 +53,11 @@ public class DatabaseUtils {
                 "CREATE TABLE "+ TABLE +" (" +
                     ID + " INTEGER PRIMARY KEY," +
                     SCREEN_NAME + " TEXT NOT NULL," +
-                    FAVOURITE_COUNT + " INTEGER )";
+                    DESCRIPTION + " TEXT," +
+                    FOLLOWERS_COUNT + " INTEGER," +
+                    FRIENDS_COUNT + " INTEGER," +
+                    STATUSES_COUNT + " INTEGER," +
+                    PROFILE_IMAGE_URL + " TEXT)" ;
     }
 
 }
