@@ -68,10 +68,11 @@ public class MapFragment extends Fragment {
     }
 
     private void setupViews(Bundle savedInstanceState) {
-        mapView = root.<MapView>findViewById(R.id.map_view);
-        mapView.onCreate(savedInstanceState);
 
+        mapView = root.<MapView>findViewById(R.id.map_view);
         listView = root.findViewById(R.id.list_view);
+
+        mapView.onCreate(savedInstanceState);
     }
 
     @Override

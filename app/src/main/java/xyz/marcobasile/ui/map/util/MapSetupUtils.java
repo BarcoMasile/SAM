@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Build;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -22,8 +23,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.Locale;
+
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTwitterUser;
+import xyz.marcobasile.ui.map.SAMTwitterUserInfoWindow;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -40,7 +44,7 @@ public class MapSetupUtils {
     private LatLng latLng = null;
 
     private CameraUpdate cameraUpdate;
-    private LocationListener listener = new MapLocationListener(this::setupCameraPosition);
+    // private LocationListener listener = new MapLocationListener(this::setupCameraPosition);
     private FusedLocationProviderClient fusedLocationClient;
 
 
@@ -92,6 +96,8 @@ public class MapSetupUtils {
         map.setBuildingsEnabled(true);
 
         map.setOnMarkerClickListener(markerClickListener());
+        map.setOnInfoWindowClickListener(Marker::hideInfoWindow);
+        map.setInfoWindowAdapter(new SAMTwitterUserInfoWindow(fragment.getContext()));
 
         MapsInitializer.initialize(fragment.getActivity());
         setLastLocationAndMoveCamera();
@@ -103,25 +109,41 @@ public class MapSetupUtils {
         mapView.getMapAsync(map -> {
 
             map.animateCamera(cameraUpdate);
-            map.addMarker(makeMarkerOptions(latLng, null));
+            map.addMarker(makeMarkerOptions(latLng, new SAMTwitterUser(123l, "BarcoMasile","voglio dormire", 1234, 1, 44, "", "")));
 
         });
     }
 
     private MarkerOptions makeMarkerOptions(LatLng latLng, SAMTwitterUser user) {
 
+        LatLng userLatLng = new LatLng(0, 0);
+
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        // markerOptions.snippet(user.getScreenName());
         markerOptions.draggable(false);
         markerOptions.flat(true);
 
+        markerOptions.position(latLng);
+
+        if (null == user) {
+            return markerOptions;
+        }
+
+        markerOptions.title(user.getScreenName());
+        markerOptions.snippet(userInfoWindowSnippet(user));
+
         return markerOptions;
+    }
+
+    private String userInfoWindowSnippet(SAMTwitterUser user) {
+
+        return String.format(Locale.getDefault(),"Tweets: %d", user.getStatusesCount());
     }
 
 
     private GoogleMap.OnMarkerClickListener markerClickListener() {
         return marker -> {
+
+            marker.showInfoWindow();
 
             return true;
         };
