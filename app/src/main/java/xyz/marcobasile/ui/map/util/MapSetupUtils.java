@@ -1,6 +1,8 @@
 package xyz.marcobasile.ui.map.util;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,11 +20,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
 
 import xyz.marcobasile.R;
@@ -128,15 +136,29 @@ public class MapSetupUtils {
             return markerOptions;
         }
 
+        /*Bitmap myBitmap;
+        try {
+            URL url = new URL("https://ci.phncdn.com/www-static/images/pornhub_logo_straight.png?cache=2020022102");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            myBitmap = BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }*/
+
         markerOptions.title(user.getScreenName());
         markerOptions.snippet(userInfoWindowSnippet(user));
+        // markerOptions.icon(BitmapDescriptorFactory.fromBitmap());
 
         return markerOptions;
     }
 
     private String userInfoWindowSnippet(SAMTwitterUser user) {
 
-        return String.format(Locale.getDefault(),"Tweets: %d", user.getStatusesCount());
+        return String.format(Locale.getDefault(),"%d#%d", user.getFollowersCount(), user.getFriendsCount());
     }
 
 

@@ -2,14 +2,14 @@
     <string name="app_name">SAM</string>
 
     <!-- Home -->
-    <string name="title_home">Home</string>
+    <string name="title_home">Twitter Timeline</string>
     <string name="toast_login_successful">Authentication success</string>
     <string name="toast_login_failure">Authentication failed</string>
 
     <string name="welcome_message">Please login via Twitter to use the app</string>
 
     <!-- Map -->
-    <string name="title_map">Posts Locations</string>
+    <string name="title_map">Users Locations</string>
     <string name="missing_grants">Localization grants missing</string>
     <string name="really_missing_grants">Can\'t use this section without location grants</string>
 
@@ -27,9 +27,9 @@
     <string name="image_description">pic to tweet</string>
     <string name="home_header_text">Twitter Timeline</string>
 
-    <!-- Saved Posts -->
-    <string name="title_saved_posts">Saved Posts</string>
-    <string name="saved_posts_search_string">Search posts</string>
+    <!-- Saved Tweets -->
+    <string name="title_saved_posts">Saved Tweets</string>
+    <string name="saved_posts_search_string">Search tweets</string>
     <string name="saved_posts_search_btn">Search</string>
     <string name="profile_image_description">profile image</string>
 

@@ -1,10 +1,8 @@
 package xyz.marcobasile.ui.map;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,7 +17,7 @@ public class SAMTwitterUserInfoWindow implements GoogleMap.InfoWindowAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private TextView retweets, likes;
+    private TextView followers, friends;
 
     public SAMTwitterUserInfoWindow(Context context) {
         this.context = context;
@@ -39,11 +37,11 @@ public class SAMTwitterUserInfoWindow implements GoogleMap.InfoWindowAdapter {
         View infoWindowView = layoutInflater.inflate(R.layout.user_window_info, null);
         infoWindowView.setLayoutParams(new RelativeLayout.LayoutParams(350,360));
 
-        retweets = infoWindowView.findViewById(R.id.user_window_info_retweets_count);
-        likes = infoWindowView.findViewById(R.id.user_window_info_likes_count);
+        followers = infoWindowView.findViewById(R.id.user_window_info_followers_count);
+        friends = infoWindowView.findViewById(R.id.user_window_info_friends_count);
 
-        retweets.setText(countValues[0]);
-        likes.setText(countValues[1]);
+        followers.setText(countValues[0]);
+        friends.setText(countValues[1]);
 
 
         return infoWindowView;
