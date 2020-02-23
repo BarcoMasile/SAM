@@ -23,6 +23,21 @@
         android:textSize="28sp"
         android:visibility="gone" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="38dp"
+        android:backgroundTint="#E91E63"
+        android:clickable="true"
+        android:focusable="true"
+        app:fabCustomSize="64dp"
+        app:fabSize="auto"
+        app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
+
     <ScrollView
         android:id="@+id/home_scroll_view"
         android:layout_width="match_parent"
@@ -40,6 +55,9 @@
             android:id="@+id/home_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+        </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>

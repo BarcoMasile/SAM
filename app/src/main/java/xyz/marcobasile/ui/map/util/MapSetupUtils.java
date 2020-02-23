@@ -52,7 +52,6 @@ public class MapSetupUtils {
     private LatLng latLng = null;
 
     private CameraUpdate cameraUpdate;
-    // private LocationListener listener = new MapLocationListener(this::setupCameraPosition);
     private FusedLocationProviderClient fusedLocationClient;
 
 
@@ -117,7 +116,7 @@ public class MapSetupUtils {
         mapView.getMapAsync(map -> {
 
             map.animateCamera(cameraUpdate);
-            map.addMarker(makeMarkerOptions(latLng, new SAMTwitterUser(123l, "BarcoMasile","voglio dormire", 1234, 1, 44, "", "")));
+            // map.addMarker(makeMarkerOptions(latLng, new SAMTwitterUser(123l, "BarcoMasile","voglio dormire", 1234, 1, 44, "", "")));
 
         });
     }
@@ -129,6 +128,7 @@ public class MapSetupUtils {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.draggable(false);
         markerOptions.flat(true);
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tw__composer_logo_blue));
 
         markerOptions.position(latLng);
 

@@ -1,5 +1,9 @@
 package xyz.marcobasile.model;
 
+import android.graphics.Bitmap;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +27,10 @@ public class SAMTwitterUser {
 
     private String profileImageUrl;
 
+    private Bitmap profileImage;
+
     private String location;
+
+    private LatLng latLng;
 
 }

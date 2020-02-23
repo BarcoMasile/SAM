@@ -1,9 +1,13 @@
 package xyz.marcobasile.service.twitter.callback;
 
 import android.util.Log;
+
+import com.twitter.sdk.android.core.models.Coordinates;
+import com.twitter.sdk.android.core.models.Place;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;

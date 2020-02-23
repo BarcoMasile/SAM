@@ -3,7 +3,7 @@ package xyz.marcobasile.repository;
 public class DatabaseUtils {
 
     public static class Tweet {
-
+        // Tabella per i tweet salvati dalla Home Timeline
         public static final String TABLE = "TWEET";
 
         // Columns
@@ -13,7 +13,7 @@ public class DatabaseUtils {
         public static final String FAVOURITE_COUNT = "FAVOURITE_COUNT";
         public static final String PLACE = "PLACE";
         public static final String RETWEET_COUNT = "RETWEET_COUNT";
-        public static final String SAVED = "SAVED";
+//        public static final String SAVED = "SAVED";
 
         // Query
         public static final String INSERT_ONE = "";
@@ -27,12 +27,12 @@ public class DatabaseUtils {
                     USER_ID + " INTEGER REFERENCES TW_USER(ID)," +
                     FAVOURITE_COUNT + " INTEGER NOT NULL," +
                     PLACE + " TEXT," +
-                    RETWEET_COUNT + " INTEGER NOT NULL," +
-                    SAVED + " INTEGER NOT NULL)";
+                    RETWEET_COUNT + " INTEGER NOT NULL)";
+//                    SAVED + " INTEGER NOT NULL)";
     }
 
     public static class TweetUser {
-
+        // Tabella per gli utenti dei tweet salvati
         public static final String TABLE = "TW_USER";
 
         // Columns
@@ -43,6 +43,9 @@ public class DatabaseUtils {
         public static final String FRIENDS_COUNT = "FRIENDS_COUNT";
         public static final String STATUSES_COUNT = "STATUSES_COUNT";
         public static final String PROFILE_IMAGE_URL = "PROFILE_IMAGE_URL";
+        public static final String PROFILE_IMAGE_BLOB = "PROFILE_IMAGE_BLOB";
+        public static final String LATITUDE = "LATITUDE";
+        public static final String LONGITUDE = "LONGITUDE";
 
         // Query
         public static final String INSERT_ONE = "";
@@ -57,7 +60,10 @@ public class DatabaseUtils {
                     FOLLOWERS_COUNT + " INTEGER," +
                     FRIENDS_COUNT + " INTEGER," +
                     STATUSES_COUNT + " INTEGER," +
-                    PROFILE_IMAGE_URL + " TEXT)" ;
+                    PROFILE_IMAGE_URL + " TEXT," +
+                    PROFILE_IMAGE_BLOB + " BLOB," +
+                    LATITUDE + " TEXT," +
+                    LONGITUDE + " TEXT)";
     }
 
 }

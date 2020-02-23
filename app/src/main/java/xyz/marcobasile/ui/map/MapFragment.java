@@ -1,6 +1,8 @@
 package xyz.marcobasile.ui.map;
 
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,10 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.MapView;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.ui.map.util.MapSetupUtils;
@@ -50,6 +56,16 @@ public class MapFragment extends Fragment {
         if (!mapUtils.permissionsGranted()) {
             Toast.makeText(getContext(), "You really need to give permission grants", Toast.LENGTH_LONG).show();
         }
+
+        /*Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+        Address address;
+        try {
+            List<Address> fromLocationName = geocoder.getFromLocationName("Toronto, ON", 1);
+            address = fromLocationName.get(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
         return root;
     }

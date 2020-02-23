@@ -7,26 +7,37 @@
     android:layout_height="130dp"
     android:layout_marginStart="104dp"
     android:layout_marginEnd="68dp"
-    android:background="#00EB0F0F">
+    android:background="#6D5BAAF4"
+    android:paddingStart="6dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="6dp">
 
     <TextView
         android:id="@+id/user_window_info_friends_count"
-        android:layout_width="124dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="14dp"
+        android:background="#FFFFFF"
+        android:fontFamily="sans-serif-medium"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
         android:text="1234567"
         android:textAlignment="textStart"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/user_window_info_followers_count"
-        android:layout_width="127dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/user_window_info_followers"
         android:layout_marginStart="8dp"
         android:layout_marginTop="29dp"
+        android:background="#FFFFFF"
+        android:fontFamily="sans-serif-medium"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
         android:text="1234567"
         android:textSize="18sp" />
 
@@ -40,6 +51,7 @@
         android:layout_marginTop="160dp"
         android:layout_marginBottom="103dp"
         android:text="Followers"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -51,6 +63,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="4dp"
         android:text="Friends"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         android:textStyle="bold" />
 
