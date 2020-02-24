@@ -8,17 +8,17 @@ import android.widget.TextView;
 import xyz.marcobasile.model.PictureHolder;
 import xyz.marcobasile.service.twitter.TwitterClient;
 import xyz.marcobasile.service.twitter.callback.PostTweetCallback;
-import xyz.marcobasile.ui.shared.interfaces.ProceduralInterface;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
 public class TweetButtonAlertDialogListener implements DialogInterface.OnClickListener {
 
     private TextView textView;
-    private ProceduralInterface toggleProgressBar;
+    private GenericProcedure toggleProgressBar;
     private TwitterClient client;
     private PostTweetCallback postTweetCallback;
     private PictureHolder pictureHolder;
 
-    public TweetButtonAlertDialogListener(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ProceduralInterface toggleProgressBar) {
+    public TweetButtonAlertDialogListener(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
         this.textView = textView;
         this.toggleProgressBar = toggleProgressBar;
         client = TwitterClient.getInstance();

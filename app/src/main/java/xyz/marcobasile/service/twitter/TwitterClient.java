@@ -16,6 +16,7 @@ import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.service.twitter.callback.MediaCallback;
 import xyz.marcobasile.service.twitter.callback.TimelineCallback;
 import xyz.marcobasile.service.twitter.util.TwitterClientUtils;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
 
 public class TwitterClient {
@@ -46,14 +47,14 @@ public class TwitterClient {
     }
 
 
-    public void getHomeTimelineTweets(List<SAMTweet> tweets) {
+    public void getHomeTimelineTweets(List<SAMTweet> tweets, GenericProcedure callback) {
 
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
                 .homeTimeline(TWEET_COUNT, sinceId, maxId,
                         false, true,
                         contributeDetails, includeEntities);
 
-        listCall.enqueue(TimelineCallback.makeCallback(tweets, this));
+        listCall.enqueue(TimelineCallback.makeCallback(tweets, this, callback));
     }
 
     public void postTweet(String tweet, Callback<Tweet> callback) {

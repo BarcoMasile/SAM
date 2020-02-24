@@ -10,7 +10,7 @@ import xyz.marcobasile.R;
 import xyz.marcobasile.model.PictureHolder;
 import xyz.marcobasile.ui.composer.listener.CancelButtonAlertDialogListener;
 import xyz.marcobasile.ui.composer.listener.TweetButtonAlertDialogListener;
-import xyz.marcobasile.ui.shared.interfaces.ProceduralInterface;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
 import static xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListeners.cancelDialog;
 import static xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListeners.tweetDialog;
@@ -27,7 +27,7 @@ public class AlertDialogUtils {
                     textView.getResources().getString(R.string.cancel_btn_dialog_message));
     }
 
-    public static void tweetButtonAlertDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ProceduralInterface toggleProgressBar) {
+    public static void tweetButtonAlertDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
 
         TweetButtonAlertDialogListener listener = tweetDialog(textView, pictureHolder, clearAttach, attachIcon, toggleProgressBar);
 

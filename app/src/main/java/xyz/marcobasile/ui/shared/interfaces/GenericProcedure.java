@@ -1,7 +1,7 @@
 package xyz.marcobasile.ui.shared.interfaces;
 
 @FunctionalInterface
-public interface ProceduralInterface {
+public interface GenericProcedure {
 
     void doProcedure();
 }

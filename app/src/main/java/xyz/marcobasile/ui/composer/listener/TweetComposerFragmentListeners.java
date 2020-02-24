@@ -10,13 +10,13 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 
 import xyz.marcobasile.model.PictureHolder;
-import xyz.marcobasile.ui.shared.interfaces.ProceduralInterface;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 import xyz.marcobasile.ui.shared.listener.TouchLayerOnTouchListener;
 
 
 public class TweetComposerFragmentListeners {
 
-    public static View.OnClickListener tweet(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ProceduralInterface toggleProgressBar) {
+    public static View.OnClickListener tweet(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
         return new TweetButtonListener(textView, pictureHolder, clearAttach, attachIcon, toggleProgressBar);
     }
 
@@ -32,7 +32,7 @@ public class TweetComposerFragmentListeners {
         return new TouchLayerOnTouchListener(tweetBody);
     }
 
-    public static TweetButtonAlertDialogListener tweetDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ProceduralInterface toggleProgressBar) {
+    public static TweetButtonAlertDialogListener tweetDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
         return new TweetButtonAlertDialogListener(textView, pictureHolder, clearAttach, attachIcon, toggleProgressBar);
     }
 

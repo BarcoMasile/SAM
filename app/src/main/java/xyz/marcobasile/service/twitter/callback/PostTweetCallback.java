@@ -13,7 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.PictureHolder;
-import xyz.marcobasile.ui.shared.interfaces.ProceduralInterface;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
 public class PostTweetCallback implements Callback<Tweet> {
 
@@ -23,9 +23,9 @@ public class PostTweetCallback implements Callback<Tweet> {
     private Button clearAttach;
     private PictureHolder pictureHolder;
     private Button attachIcon;
-    private ProceduralInterface toggleProgressBar;
+    private GenericProcedure toggleProgressBar;
 
-    public PostTweetCallback(TextView textView, Button clearAttach, PictureHolder pictureHolder, Button attachIcon, ProceduralInterface toggleProgressBar) {
+    public PostTweetCallback(TextView textView, Button clearAttach, PictureHolder pictureHolder, Button attachIcon, GenericProcedure toggleProgressBar) {
         this.textView = textView;
         this.clearAttach = clearAttach;
         this.pictureHolder = pictureHolder;
