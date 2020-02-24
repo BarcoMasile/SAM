@@ -13,11 +13,11 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.function.Consumer;
 
-public class MapLocationListener implements LocationListener {
+public class MapLocationListener /*implements LocationListener*/ {
 
     private static final String TAG = MapLocationListener.class.getName();
 
-    private LatLng latLng;
+    /*private LatLng latLng;
     private Consumer<LatLng> callback;
 
     public MapLocationListener(Consumer<LatLng> locationUpdateCallback) {
@@ -39,5 +39,5 @@ public class MapLocationListener implements LocationListener {
     public void onProviderEnabled(String provider) {}
 
     @Override
-    public void onProviderDisabled(String provider) {}
+    public void onProviderDisabled(String provider) {}*/
 }

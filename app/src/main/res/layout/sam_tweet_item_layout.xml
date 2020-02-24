@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sam_tweet_item_layout_L"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2FFF9800"
+    android:minHeight="180dp"
+    android:orientation="vertical"
+    app:layout_constrainedHeight="true"
+    app:layout_constraintHeight_max="wrap"
+    app:layout_constraintHeight_min="180dp">
+
+    <LinearLayout
+        android:id="@+id/brick_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/tweet_profile_img_L"
+                android:layout_width="78dp"
+                android:layout_height="74dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:background="#FAEE0707"
+                android:contentDescription="@string/profile_image_description"
+                tools:srcCompat="@tools:sample/avatars[15]" />
+
+            <Button
+                android:id="@+id/save_btn_L"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginBottom="-6dp"
+                android:backgroundTint="#E91E63"
+                app:icon="@drawable/ic_star_border_24px"
+                app:iconSize="28sp"
+                app:iconTint="#FFFFFF" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.75">
+
+            <TextView
+                android:id="@+id/tweet_user_name_L"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="5dp"
+                android:background="#BCFFFFFF"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="@string/generic_test_string"
+                android:textAlignment="viewStart"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tweet_body_text_L"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="42dp"
+                android:layout_marginEnd="5dp"
+                android:background="#BCFFFFFF"
+                android:maxHeight="132dp"
+                android:minHeight="78dp"
+                android:padding="4dp"
+                android:paddingStart="4dp"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="4dp"
+                android:text="prova tweet text body"
+                android:textAlignment="textStart"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/brick_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/brick_one"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/media_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            tools:srcCompat="@tools:sample/avatars[1]" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/brick_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/brick_picture"
+        android:layout_marginTop="-8dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/retweet_count_L"
+            android:layout_width="196dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:backgroundTint="#90DC39"
+            android:clickable="false"
+            android:maxHeight="30dp"
+            android:shadowColor="#00FFFFFF"
+            android:text="1030485"
+            android:textColorLink="#A6FFFFFF"
+            app:icon="@drawable/ic_loop_24px" />
+
+        <Button
+            android:id="@+id/likes_count_L"
+            android:layout_width="196dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:backgroundTint="#03A9F4"
+            android:clickable="false"
+            android:maxHeight="30dp"
+            android:shadowColor="#00FFFFFF"
+            android:text="1030485"
+            app:icon="@drawable/ic_favorite_24px" />
+    </LinearLayout>
+
+</RelativeLayout>

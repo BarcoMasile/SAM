@@ -18,49 +18,13 @@ public class SAMTweet {
 
     private String text;
 
-    private SAMTwitterUser user;
-
     private Integer favoriteCount;
 
     private int retweetCount;
 
-    public Long getId() {
-        return id;
-    }
+    private boolean saved;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private SAMTwitterUser user;
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public SAMTwitterUser getUser() {
-        return user;
-    }
-
-    public void setUser(SAMTwitterUser user) {
-        this.user = user;
-    }
-
-    public Integer getFavoriteCount() {
-        return favoriteCount;
-    }
-
-    public void setFavoriteCount(Integer favoriteCount) {
-        this.favoriteCount = favoriteCount;
-    }
-
-    public int getRetweetCount() {
-        return retweetCount;
-    }
-
-    public void setRetweetCount(int retweetCount) {
-        this.retweetCount = retweetCount;
-    }
+    private String mediaURL;
 }

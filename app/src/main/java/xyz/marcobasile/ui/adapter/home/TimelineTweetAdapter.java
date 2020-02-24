@@ -1,11 +1,9 @@
 package xyz.marcobasile.ui.adapter.home;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,11 +29,9 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
     public TimelineTweetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Log.i(TAG, "Timeline Tweet view holder init");
-
         View samTweetItem = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.sam_tweet_item, parent, false);
 
-        // TODO: usare il builder
         return new TimelineTweetViewHolder(samTweetItem);
     }
 
@@ -45,11 +41,12 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
         SAMTweet samTweet = tweets.get(position);
         SAMTwitterUser user = samTweet.getUser();
 
-        holder.setUsernameView(user.getScreenName());
-        holder.setTweetBodyView(samTweet.getText());
-        holder.setRetweets(samTweet.getRetweetCount());
-        holder.setLikes(samTweet.getFavoriteCount());
-        holder.setProfileImageView(user.getProfileImage());
+        holder.username(user.getScreenName());
+        holder.tweetBody(samTweet.getText());
+        holder.retweets(samTweet.getRetweetCount());
+        holder.likes(samTweet.getFavoriteCount());
+        holder.setProfileImage(user.getProfileImage());
+        holder.saved(samTweet.isSaved());
     }
 
     @Override
