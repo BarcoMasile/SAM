@@ -7,6 +7,7 @@ import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.models.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import xyz.marcobasile.model.SAMTweet;
@@ -15,12 +16,19 @@ import xyz.marcobasile.model.SAMTwitterUser;
 
 public class SAMTweetMapper {
 
-    private static final String PICTURE_MEDIA_TYPE = "jped";
+    private static final String PICTURE_MEDIA_TYPE = "photo";
+    private static final String VIDEO_MEDIA_TYPE = "video";
+    private static final String GIF_MEDIA_TYPE = "animated_gif";
+
+    private static final String THUMB_MEDIA_SIZE = "thumb";
+    private static final String SMALL_MEDIA_SIZE = "small";
+    private static final String MEDIUM_MEDIA_SIZE = "medium";
+
 
     public List<SAMTweet> toSAMTweet(@NonNull List<Tweet> tweets) {
 
         return tweets.stream()
-                .filter(tweet -> !tweet.possiblySensitive) // TODO: testare
+                .filter(tweet -> !tweet.possiblySensitive)
                 .map(this::toSAMTweet)
                 .collect(Collectors.toList());
     }
@@ -57,7 +65,20 @@ public class SAMTweetMapper {
         return tweet.extendedEntities.media
                 .stream()
                 .filter(mediaEntity -> PICTURE_MEDIA_TYPE.equals(mediaEntity.type))
-                .map(mediaEntity -> mediaEntity.mediaUrl) // oppure mediaEntity.url
+                .map(this::pickMediaURLForTweetPicture)
                 .findAny().orElse(null);
+    }
+
+    private String pickMediaURLForTweetPicture(MediaEntity mediaEntity) {
+
+        MediaEntity.Sizes sizes = mediaEntity.sizes;
+
+        StringBuilder sb = new StringBuilder(mediaEntity.mediaUrl);
+        if (sizes.small != null) {
+            sb.append(":");
+            sb.append(SMALL_MEDIA_SIZE);
+        }
+
+        return sb.toString();
     }
 }

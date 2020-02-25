@@ -50,7 +50,7 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
         saveBtn = mainView.findViewById(R.id.save_btn);
     }
 
-    public void setProfileImage(Bitmap profileImage) {
+    public void profileImage(Bitmap profileImage) {
 
         profileImageView.setImageBitmap(profileImage);
     }

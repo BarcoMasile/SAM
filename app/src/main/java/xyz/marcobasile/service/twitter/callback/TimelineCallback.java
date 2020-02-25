@@ -24,6 +24,7 @@ public class TimelineCallback implements Callback<List<Tweet>> {
     private GenericProcedure callback;
 
     public static TimelineCallback makeCallback(List<SAMTweet> tweets, TwitterClient client, GenericProcedure callback) {
+
         return new TimelineCallback(tweets, client, callback);
     }
 

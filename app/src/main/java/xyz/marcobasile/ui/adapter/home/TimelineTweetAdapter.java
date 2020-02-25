@@ -39,14 +39,14 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
     public void onBindViewHolder(@NonNull TimelineTweetViewHolder holder, int position) {
 
         SAMTweet samTweet = tweets.get(position);
-        SAMTwitterUser user = samTweet.getUser();
-
-        holder.username(user.getScreenName());
         holder.tweetBody(samTweet.getText());
         holder.retweets(samTweet.getRetweetCount());
         holder.likes(samTweet.getFavoriteCount());
-        holder.setProfileImage(user.getProfileImage());
         holder.saved(samTweet.isSaved());
+
+        SAMTwitterUser user = samTweet.getUser();
+        holder.username(user.getScreenName());
+        holder.profileImage(user.getProfileImage());
     }
 
     @Override
