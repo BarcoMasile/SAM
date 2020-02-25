@@ -13,13 +13,12 @@ public class DatabaseUtils {
         public static final String FAVOURITE_COUNT = "FAVOURITE_COUNT";
         public static final String PLACE = "PLACE";
         public static final String RETWEET_COUNT = "RETWEET_COUNT";
-//        public static final String SAVED = "SAVED";
 
         // Query
-        public static final String INSERT_ONE = "";
+        public static final String SAVE = "";
         public static final String FIND_ONE = "";
-        public static final String SEARCH_ONE = "";
-        public static final String REMOVE_ONE = "";
+        public static final String SEARCH = "";
+        public static final String REMOVE = "";
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE + " (" +
                     ID + " INTEGER PRIMARY KEY," +
@@ -28,7 +27,7 @@ public class DatabaseUtils {
                     FAVOURITE_COUNT + " INTEGER NOT NULL," +
                     PLACE + " TEXT," +
                     RETWEET_COUNT + " INTEGER NOT NULL)";
-//                    SAVED + " INTEGER NOT NULL)";
+
     }
 
     public static class TweetUser {
@@ -48,10 +47,10 @@ public class DatabaseUtils {
         public static final String LONGITUDE = "LONGITUDE";
 
         // Query
-        public static final String INSERT_ONE = "";
+        public static final String SAVE = "";
         public static final String FIND_ONE = "";
-        public static final String SEARCH_ONE = "";
-        public static final String REMOVE_ONE = "";
+        public static final String SEARCH = "";
+        public static final String REMOVE = "";
         public static final String CREATE_TABLE =
                 "CREATE TABLE "+ TABLE +" (" +
                     ID + " INTEGER PRIMARY KEY," +

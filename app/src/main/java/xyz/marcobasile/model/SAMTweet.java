@@ -27,32 +27,4 @@ public class SAMTweet {
     private String mediaURL;
 
     private SAMTwitterUser user;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public Integer getFavoriteCount() {
-        return favoriteCount;
-    }
-
-    public int getRetweetCount() {
-        return retweetCount;
-    }
-
-    public boolean isSaved() {
-        return saved;
-    }
-
-    public String getMediaURL() {
-        return mediaURL;
-    }
-
-    public SAMTwitterUser getUser() {
-        return user;
-    }
 }

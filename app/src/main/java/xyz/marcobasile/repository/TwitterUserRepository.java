@@ -6,6 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.Set;
+
+import xyz.marcobasile.model.SAMTwitterUser;
+
 public class TwitterUserRepository extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
@@ -23,6 +27,20 @@ public class TwitterUserRepository extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public void save(SAMTwitterUser user) {
+
+    }
+
+    public Set<SAMTwitterUser> findAll() {
+
+        return null;
+    }
+
+    public Set<SAMTwitterUser> findAllIn(Set<Long> ids) {
+
+        return null;
     }
 
     // delete: select distinc tweet not in

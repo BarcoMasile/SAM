@@ -55,6 +55,11 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
         profileImageView.setImageBitmap(profileImage);
     }
 
+    public void mediaImage(Bitmap mediaImage) {
+
+        mediaImageView.setImageBitmap(mediaImage);
+    }
+
     public void likes(int likesCount) {
 
         likes.setText(String.format(Locale.getDefault(),"%d", likesCount));

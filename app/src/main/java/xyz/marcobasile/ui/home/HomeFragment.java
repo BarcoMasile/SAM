@@ -1,6 +1,5 @@
 package xyz.marcobasile.ui.home;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,14 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.models.Tweet;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import xyz.marcobasile.R;
-import xyz.marcobasile.model.SAMTweet;
+import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.service.twitter.TwitterClient;
 import xyz.marcobasile.ui.adapter.home.TimelineTweetAdapter;
 
@@ -30,19 +26,22 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private TimelineTweetAdapter timelineTweetAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private FloatingActionButton refreshBtn;
 
-    private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
+    private ContentProvider provider;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        setupView(root);
+        provider = new ContentProvider();
 
+        setupView(root);
         populateScrollView();
 
-        Log.i(TAG, "End onCreateView");
+        Log.i(TAG, "Done onCreateView");
 
         return root;
     }
@@ -54,16 +53,21 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        timelineTweetAdapter = new TimelineTweetAdapter(tweets);
+        timelineTweetAdapter = new TimelineTweetAdapter(provider);
         recyclerView.setAdapter(timelineTweetAdapter);
+
+        refreshBtn = root.findViewById(R.id.refresh_button);
+        refreshBtn.setOnClickListener(view -> {
+
+            view.setEnabled(false);
+            timelineTweetAdapter.notifyDataSetChanged();
+        });
     }
 
     private void populateScrollView() {
 
         Twitter.initialize(getContext());
         TwitterClient twitterClient = TwitterClient.getInstance();
-        twitterClient.getHomeTimelineTweets(tweets, () -> timelineTweetAdapter.notifyDataSetChanged());
-
-        Log.i(TAG, "Ottenuti " + tweets.size() + " tweets.");
+        twitterClient.getHomeTimelineTweets(provider.tweets(), () -> timelineTweetAdapter.notifyDataSetChanged());
     }
 }

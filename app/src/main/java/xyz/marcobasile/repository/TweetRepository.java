@@ -14,7 +14,7 @@ import xyz.marcobasile.model.SAMTweet;
 public class TweetRepository extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
-    private static final int PER_PAGE = 100;
+    private static final int PER_PAGE = 50;
 
     public TweetRepository(String tableName, @Nullable Context context) {
         super(context, tableName, null, VERSION);
@@ -23,6 +23,7 @@ public class TweetRepository extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+
     }
 
     @Override
@@ -30,30 +31,22 @@ public class TweetRepository extends SQLiteOpenHelper {
 
     }
 
-    public void save(List<SAMTweet> tweets) {
-
-    }
-
-    public List<SAMTweet> getPage(Long page) {
-
-        return new ArrayList<>();
-    }
 
     public void save(SAMTweet tweet) {
 
     }
 
-    public SAMTweet getSAMTweetById(Long id) {
+    public SAMTweet findById(Long id) {
 
         return null;
+    }
+
+    public void delete(Long id) {
+
     }
 
     public List<SAMTweet> searchByString(String search) {
 
         return null;
-    }
-
-    public void removeFromFavourites(Long id) {
-
     }
 }

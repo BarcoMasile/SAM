@@ -22,7 +22,7 @@ public class SAMTweetMapper {
 
     private static final String THUMB_MEDIA_SIZE = "thumb";
     private static final String SMALL_MEDIA_SIZE = "small";
-    private static final String MEDIUM_MEDIA_SIZE = "medium";
+//    private static final String MEDIUM_MEDIA_SIZE = "medium";
 
 
     public List<SAMTweet> toSAMTweet(@NonNull List<Tweet> tweets) {
@@ -80,5 +80,10 @@ public class SAMTweetMapper {
         }
 
         return sb.toString();
+    }
+
+    private String pickMediaURLForUserPicture(MediaEntity mediaEntity) {
+
+        return null;
     }
 }

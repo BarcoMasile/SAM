@@ -9,19 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Optional;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.model.SAMTwitterUser;
+import xyz.marcobasile.service.ContentProvider;
 
 public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetViewHolder> {
 
     private final static String TAG = TimelineTweetAdapter.class.getName();
 
-    private List<SAMTweet> tweets;
+    private ContentProvider provider;
 
-    public TimelineTweetAdapter(List<SAMTweet> tweets) {
-        this.tweets = tweets;
+    public TimelineTweetAdapter(ContentProvider provider) {
+
+        this.provider = provider;
     }
 
     @NonNull
@@ -38,20 +41,26 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
     @Override
     public void onBindViewHolder(@NonNull TimelineTweetViewHolder holder, int position) {
 
-        SAMTweet samTweet = tweets.get(position);
+        SAMTweet samTweet = provider.tweets().get(position);
+
         holder.tweetBody(samTweet.getText());
         holder.retweets(samTweet.getRetweetCount());
         holder.likes(samTweet.getFavoriteCount());
         holder.saved(samTweet.isSaved());
+        Optional.ofNullable(provider.getImage(samTweet.getMediaURL()))
+                .ifPresent(holder::mediaImage);
+
 
         SAMTwitterUser user = samTweet.getUser();
+
         holder.username(user.getScreenName());
-        holder.profileImage(user.getProfileImage());
+        Optional.ofNullable(provider.getImage(user.getProfileImageUrl()))
+                .ifPresent(holder::profileImage);
     }
 
     @Override
     public int getItemCount() {
-        return tweets.size();
+        return provider.tweets().size();
     }
 
 }

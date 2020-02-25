@@ -2,6 +2,7 @@ package xyz.marcobasile.service.twitter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -26,8 +27,8 @@ public class TwitterClient {
 
     private Long sinceId = null;
     private Long maxId = null;
-    private final Boolean contributeDetails = true;
-    private final Boolean includeEntities = true;
+    private static final Boolean CONTRIBUTE_DETAILS = true;
+    private static final Boolean INCLUDE_ENTITIES = true;
 
     private static TwitterClient instance;
 
@@ -39,6 +40,7 @@ public class TwitterClient {
         if (instance != null) {
             return;
         }
+        Log.i(TAG, "TwitterClient init");
 
         instance = new TwitterClient();
         instance.setApiClient(client());
@@ -52,7 +54,7 @@ public class TwitterClient {
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
                 .homeTimeline(TWEET_COUNT, sinceId, maxId,
                         false, true,
-                        contributeDetails, includeEntities);
+                        CONTRIBUTE_DETAILS, INCLUDE_ENTITIES);
 
         listCall.enqueue(TimelineCallback.makeCallback(tweets, this, callback));
     }
@@ -68,6 +70,8 @@ public class TwitterClient {
         Call<Media> upload = TwitterClientUtils.picUpload(imageUri, ctx);
         upload.enqueue(new MediaCallback(tweet, callback));
     }
+
+
 
 
     private static TwitterApiClient client() {
