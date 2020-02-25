@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sam_tweet_item_layout"
+    android:id="@+id/sam_tweet_item_layout_"
     android:layout_width="match_parent"
     android:layout_height="188dp"
     android:background="#2FFF9800"
@@ -12,7 +12,7 @@
     app:layout_constraintHeight_max="wrap"
     app:layout_constraintHeight_min="180dp">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/tweet_profile_img"
         android:layout_width="78dp"
         android:layout_height="74dp"
@@ -117,6 +117,6 @@
         android:layout_height="4dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF" />-->
 
 </RelativeLayout>

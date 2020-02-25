@@ -2,11 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sam_tweet_item_layout_L"
+    android:id="@+id/sam_tweet_item_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:background="#2FFF9800"
-    android:minHeight="180dp"
+    android:minHeight="160dp"
     android:orientation="vertical"
     app:layout_constrainedHeight="true"
     app:layout_constraintHeight_max="wrap"
@@ -29,7 +31,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/tweet_profile_img_L"
+                android:id="@+id/tweet_profile_img"
                 android:layout_width="78dp"
                 android:layout_height="74dp"
                 android:layout_marginStart="10dp"
@@ -39,7 +41,7 @@
                 tools:srcCompat="@tools:sample/avatars[15]" />
 
             <Button
-                android:id="@+id/save_btn_L"
+                android:id="@+id/save_btn"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
@@ -56,7 +58,7 @@
             android:layout_weight="3.75">
 
             <TextView
-                android:id="@+id/tweet_user_name_L"
+                android:id="@+id/tweet_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:layout_marginStart="8dp"
@@ -70,7 +72,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tweet_body_text_L"
+                android:id="@+id/tweet_body_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -108,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:srcCompat="@tools:sample/avatars[1]" />
     </LinearLayout>
 
@@ -123,7 +125,7 @@
         android:weightSum="2">
 
         <Button
-            android:id="@+id/retweet_count_L"
+            android:id="@+id/retweet_count"
             android:layout_width="196dp"
             android:layout_height="40dp"
             android:layout_marginStart="2dp"
@@ -141,7 +143,7 @@
             app:icon="@drawable/ic_loop_24px" />
 
         <Button
-            android:id="@+id/likes_count_L"
+            android:id="@+id/likes_count"
             android:layout_width="196dp"
             android:layout_height="40dp"
             android:layout_marginStart="2dp"

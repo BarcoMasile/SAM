@@ -30,7 +30,7 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
 
         Log.i(TAG, "Timeline Tweet view holder init");
         View samTweetItem = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.sam_tweet_item, parent, false);
+                .inflate(R.layout.sam_tweet_item_layout, parent, false);
 
         return new TimelineTweetViewHolder(samTweetItem);
     }
