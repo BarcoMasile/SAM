@@ -47,7 +47,8 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
         holder.retweets(samTweet.getRetweetCount());
         holder.likes(samTweet.getFavoriteCount());
         holder.saved(samTweet.isSaved());
-        Optional.ofNullable(provider.getImage(samTweet.getMediaURL()))
+        Optional.<String>ofNullable(samTweet.getMediaURL())
+                .map(mediaURL -> provider.getImage(mediaURL))
                 .ifPresent(holder::mediaImage);
 
 

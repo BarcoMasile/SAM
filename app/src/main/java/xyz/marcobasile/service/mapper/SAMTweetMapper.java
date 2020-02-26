@@ -81,9 +81,4 @@ public class SAMTweetMapper {
 
         return sb.toString();
     }
-
-    private String pickMediaURLForUserPicture(MediaEntity mediaEntity) {
-
-        return null;
-    }
 }
