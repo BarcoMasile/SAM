@@ -14,14 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.twitter.sdk.android.core.Twitter;
 
+import java.util.Timer;
+
 import xyz.marcobasile.R;
 import xyz.marcobasile.service.ContentProvider;
+import xyz.marcobasile.service.task.TweetDownloaderTimerTask;
 import xyz.marcobasile.service.twitter.TwitterClient;
 import xyz.marcobasile.ui.adapter.home.TimelineTweetAdapter;
 
 public class HomeFragment extends Fragment {
 
     private static final String TAG = HomeFragment.class.getName();
+    private static final String TWEET_DOWNLOADER_TIMER = "TweetDownloaderTimer";
 
     private RecyclerView recyclerView;
     private TimelineTweetAdapter timelineTweetAdapter;
@@ -29,7 +33,9 @@ public class HomeFragment extends Fragment {
     private FloatingActionButton refreshBtn;
 
     private ContentProvider provider;
-
+    private Timer tweetDownloaderTimer = new Timer(TWEET_DOWNLOADER_TIMER);
+    private TweetDownloaderTimerTask tweetDownloaderTask;
+    private TwitterClient twitterClient;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,10 +47,25 @@ public class HomeFragment extends Fragment {
         setupView(root);
         populateScrollView();
 
+        tweetDownloaderTask = new TweetDownloaderTimerTask(provider, twitterClient);
+        // startTimer();
         Log.i(TAG, "Done onCreateView");
 
         return root;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startTimer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopTimer();
+    }
+
 
     private void setupView(View root) {
 
@@ -57,17 +78,31 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(timelineTweetAdapter);
 
         refreshBtn = root.findViewById(R.id.refresh_button);
+        refreshBtn.setEnabled(false);
         refreshBtn.setOnClickListener(view -> {
 
             view.setEnabled(false);
             timelineTweetAdapter.notifyDataSetChanged();
         });
+
+        provider.setOnDataReceived(tweets -> refreshBtn.setEnabled(tweets.size() > 0));
     }
 
     private void populateScrollView() {
 
         Twitter.initialize(getContext());
-        TwitterClient twitterClient = TwitterClient.getInstance();
+        twitterClient = TwitterClient.getInstance();
         twitterClient.getHomeTimelineTweets(provider.tweets(), () -> timelineTweetAdapter.notifyDataSetChanged());
+    }
+
+    private void startTimer() {
+
+        tweetDownloaderTimer.scheduleAtFixedRate(tweetDownloaderTask, TweetDownloaderTimerTask.DELAY, TweetDownloaderTimerTask.DELAY);
+    }
+
+    private void stopTimer() {
+
+        tweetDownloaderTimer.cancel();
+        tweetDownloaderTimer.purge();
     }
 }

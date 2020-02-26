@@ -14,7 +14,7 @@ public class ImageBitmapCache extends LruCache<String, Bitmap> {
         super(MAX_SIZE);
     }
 
-/*    @Override
+    /*@Override
     protected Bitmap create(String key) {
 
         return null;

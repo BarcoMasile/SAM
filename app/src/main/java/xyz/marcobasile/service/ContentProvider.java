@@ -15,13 +15,12 @@ import xyz.marcobasile.service.cache.ImageBitmapCache;
 public class ContentProvider {
 
     private final static String TAG = ContentProvider.class.getName();
-    // public static ContentProvider provider = new ContentProvider();
 
-    private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
     private final ImageBitmapCache cache = new ImageBitmapCache();
+    private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
 
-    @Setter
     private OnDataReceived onDataReceived;
+
 
     public List<SAMTweet> tweets() {
 
@@ -60,6 +59,11 @@ public class ContentProvider {
         synchronized (cache) {
             cache.put(key, bitmap);
         }
+    }
+
+    public void setOnDataReceived(OnDataReceived onDataReceived) {
+
+        this.onDataReceived = onDataReceived;
     }
 
     public static interface OnDataReceived extends Consumer<List<SAMTweet>> {}

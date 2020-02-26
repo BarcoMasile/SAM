@@ -38,6 +38,11 @@ public class TimelineCallback implements Callback<List<Tweet>> {
     @Override
     public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
 
+        if (!response.isSuccessful()) {
+            Log.e(TAG, "Impossibile ottenere tweets, possibile raggiungigmento API rate limit.");
+            return;
+        }
+
         List<SAMTweet> timeline = mapper.toSAMTweet(response.body());
         Log.i(TAG, "Get timeline success, " + timeline.size() + " tweets");
         Log.i(TAG, "Old sinceId: " + client.getSinceId());
@@ -50,7 +55,10 @@ public class TimelineCallback implements Callback<List<Tweet>> {
         Log.i(TAG, "New sinceId: " + client.getSinceId());
 
         tweets.addAll(timeline);
-        callback.doProcedure();
+        if (callback != null) {
+
+            callback.doProcedure();
+        }
     }
 
     @Override
