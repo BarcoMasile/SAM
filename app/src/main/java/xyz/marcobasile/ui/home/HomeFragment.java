@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        provider = new ContentProvider();
+        provider = ContentProvider.getInstance();
 
         setupView(root);
         populateScrollView();
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
             timelineTweetAdapter.notifyDataSetChanged();
         });
 
-        provider.setOnDataReceived(tweets -> refreshBtn.setEnabled(tweets.size() > 0));
+        provider.setOnDataReceived(tweets -> refreshBtn.setEnabled(provider.tweets().size() > 0));
     }
 
     private void populateScrollView() {

@@ -23,7 +23,7 @@ import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 public class TwitterClient {
 
     private static String TAG = TwitterClient.class.getName();
-    private static final Integer TWEET_COUNT = 100;
+    private static final Integer TWEET_COUNT = 40;
 
     private Long sinceId = null;
     private Long maxId = null;
@@ -51,8 +51,9 @@ public class TwitterClient {
 
     public void getHomeTimelineTweets(List<SAMTweet> tweets, GenericProcedure callback) {
 
+        Long maxId = null == sinceId ? null : sinceId + TWEET_COUNT;
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
-                .homeTimeline(TWEET_COUNT, sinceId, maxId,
+                .homeTimeline(TWEET_COUNT, null, maxId,
                         false, true,
                         CONTRIBUTE_DETAILS, INCLUDE_ENTITIES);
 
@@ -70,8 +71,6 @@ public class TwitterClient {
         Call<Media> upload = TwitterClientUtils.picUpload(imageUri, ctx);
         upload.enqueue(new MediaCallback(tweet, callback));
     }
-
-
 
 
     private static TwitterApiClient client() {

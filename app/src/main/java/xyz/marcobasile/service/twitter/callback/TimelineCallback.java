@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.marcobasile.model.SAMTweet;
+import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.service.mapper.SAMTweetMapper;
 import xyz.marcobasile.service.twitter.TwitterClient;
 import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
@@ -20,17 +21,17 @@ public class TimelineCallback implements Callback<List<Tweet>> {
     private final TwitterClient client;
     private final SAMTweetMapper mapper = new SAMTweetMapper();
 
-    private List<SAMTweet> tweets;
+    private ContentProvider provider;
     private GenericProcedure callback;
 
-    public static TimelineCallback makeCallback(List<SAMTweet> tweets, TwitterClient client, GenericProcedure callback) {
+    public static TimelineCallback makeCallback(ContentProvider provider, TwitterClient client, GenericProcedure callback) {
 
-        return new TimelineCallback(tweets, client, callback);
+        return new TimelineCallback(provider, client, callback);
     }
 
-    private TimelineCallback(List<SAMTweet> tweets, TwitterClient client, GenericProcedure callback) {
+    private TimelineCallback(ContentProvider provider, TwitterClient client, GenericProcedure callback) {
 
-        this.tweets = tweets;
+        this.provider = provider;
         this.client = client;
         this.callback = callback;
     }
@@ -53,8 +54,8 @@ public class TimelineCallback implements Callback<List<Tweet>> {
                 .ifPresent(client::setSinceId);
 
         Log.i(TAG, "New sinceId: " + client.getSinceId());
+        provider.tweets(timeline);
 
-        tweets.addAll(timeline);
         if (callback != null) {
 
             callback.doProcedure();
@@ -65,6 +66,6 @@ public class TimelineCallback implements Callback<List<Tweet>> {
     public void onFailure(Call<List<Tweet>> call, Throwable t) {
 
         Log.i(TAG, "get timeline failure");
-        tweets.clear();
+        // tweets.clear();
     }
 }

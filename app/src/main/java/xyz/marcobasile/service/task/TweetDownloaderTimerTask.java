@@ -8,7 +8,7 @@ import xyz.marcobasile.service.twitter.TwitterClient;
 
 public class TweetDownloaderTimerTask extends TimerTask {
 
-    public static final long DELAY = 1000L * 10L; // Millisecondi!!!
+    public static final long DELAY = 1000L * 30L; // Millisecondi!!!
 
     private ContentProvider provider;
     private TwitterClient twitterClient;

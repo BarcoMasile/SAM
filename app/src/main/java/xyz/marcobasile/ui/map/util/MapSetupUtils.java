@@ -136,19 +136,6 @@ public class MapSetupUtils {
             return markerOptions;
         }
 
-        /*Bitmap myBitmap;
-        try {
-            URL url = new URL("https://ci.phncdn.com/www-static/images/pornhub_logo_straight.png?cache=2020022102");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            myBitmap = BitmapFactory.decodeStream(input);
-        } catch (IOException e) {
-            // Log exception
-            return null;
-        }*/
-
         markerOptions.title(user.getScreenName());
         markerOptions.snippet(userInfoWindowSnippet(user));
         // markerOptions.icon(BitmapDescriptorFactory.fromBitmap());

@@ -6,15 +6,19 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import lombok.Setter;
 import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.service.cache.ImageBitmapCache;
+import xyz.marcobasile.service.task.BitmapDownloader;
 
 public class ContentProvider {
 
     private final static String TAG = ContentProvider.class.getName();
+    private final static ContentProvider instance = new ContentProvider();
 
     private final ImageBitmapCache cache = new ImageBitmapCache();
     private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
@@ -41,6 +45,12 @@ public class ContentProvider {
             onDataReceived.accept(tweets);
         }
 
+        tweets.stream()
+                .flatMap(tweet -> Stream.<String>of(tweet.getMediaURL(), tweet.getUser().getProfileImageUrl))
+                .filter(Objects::nonNull)
+                .map(BitmapDownloader::new)
+                .map(BitmapDownloader::execute); // TODO vedere se possibile non istanziare task multiple
+
         this.tweets.addAll(tweets);
     }
 
@@ -66,6 +76,10 @@ public class ContentProvider {
         this.onDataReceived = onDataReceived;
     }
 
+    public static ContentProvider getInstance() {
+
+        return instance;
+    }
     public static interface OnDataReceived extends Consumer<List<SAMTweet>> {}
 
 }
