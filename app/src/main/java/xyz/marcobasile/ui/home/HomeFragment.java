@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
 
         Twitter.initialize(getContext());
         twitterClient = TwitterClient.getInstance();
-        twitterClient.getHomeTimelineTweets(provider.tweets(), () -> timelineTweetAdapter.notifyDataSetChanged());
+        twitterClient.getHomeTimelineTweets(provider, () -> timelineTweetAdapter.notifyDataSetChanged());
     }
 
     private void startTimer() {

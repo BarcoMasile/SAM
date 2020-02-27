@@ -46,7 +46,7 @@ public class ContentProvider {
         }
 
         tweets.stream()
-                .flatMap(tweet -> Stream.<String>of(tweet.getMediaURL(), tweet.getUser().getProfileImageUrl))
+                .flatMap(tweet -> Stream.<String>of(tweet.getMediaURL(), tweet.getUser().getProfileImageUrl()))
                 .filter(Objects::nonNull)
                 .map(BitmapDownloader::new)
                 .map(BitmapDownloader::execute); // TODO vedere se possibile non istanziare task multiple

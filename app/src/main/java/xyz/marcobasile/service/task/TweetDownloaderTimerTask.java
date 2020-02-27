@@ -21,6 +21,6 @@ public class TweetDownloaderTimerTask extends TimerTask {
     @Override
     public void run() {
 
-        twitterClient.getHomeTimelineTweets(provider.tweets(), null);
+        twitterClient.getHomeTimelineTweets(provider, null);
     }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import xyz.marcobasile.model.SAMTweet;
+import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.service.twitter.callback.MediaCallback;
 import xyz.marcobasile.service.twitter.callback.TimelineCallback;
 import xyz.marcobasile.service.twitter.util.TwitterClientUtils;
@@ -49,7 +50,7 @@ public class TwitterClient {
     }
 
 
-    public void getHomeTimelineTweets(List<SAMTweet> tweets, GenericProcedure callback) {
+    public void getHomeTimelineTweets(ContentProvider provider, GenericProcedure callback) {
 
         Long maxId = null == sinceId ? null : sinceId + TWEET_COUNT;
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
@@ -57,7 +58,7 @@ public class TwitterClient {
                         false, true,
                         CONTRIBUTE_DETAILS, INCLUDE_ENTITIES);
 
-        listCall.enqueue(TimelineCallback.makeCallback(tweets, this, callback));
+        listCall.enqueue(TimelineCallback.makeCallback(provider, this, callback));
     }
 
     public void postTweet(String tweet, Callback<Tweet> callback) {
