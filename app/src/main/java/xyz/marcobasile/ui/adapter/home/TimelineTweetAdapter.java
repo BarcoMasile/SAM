@@ -1,5 +1,6 @@
 package xyz.marcobasile.ui.adapter.home;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,10 +48,10 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
         holder.retweets(samTweet.getRetweetCount());
         holder.likes(samTweet.getFavoriteCount());
         holder.saved(samTweet.isSaved());
-        Optional.<String>ofNullable(samTweet.getMediaURL())
+        Bitmap mediaBitmap = Optional.<String>ofNullable(samTweet.getMediaURL())
                 .map(mediaURL -> provider.getImage(mediaURL))
-                .ifPresent(holder::mediaImage);
-
+                .orElse(null);
+        holder.mediaImage(mediaBitmap); // se e' null, rimuoviamo l'immagine
 
         SAMTwitterUser user = samTweet.getUser();
 

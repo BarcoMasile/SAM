@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         populateScrollView();
 
         tweetDownloaderTask = new TweetDownloaderTimerTask(provider, twitterClient);
-        // startTimer();
+
         Log.i(TAG, "Done onCreateView");
 
         return root;
@@ -57,13 +57,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        startTimer();
+        //startTimer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        stopTimer();
+        //stopTimer();
     }
 
 
@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
             timelineTweetAdapter.notifyDataSetChanged();
         });
 
-        provider.setOnDataReceived(tweets -> refreshBtn.setEnabled(provider.tweets().size() > 0));
+         provider.setOnDataReceived(tweets -> refreshBtn.setEnabled(provider.tweets().size() > 0));
     }
 
     private void populateScrollView() {

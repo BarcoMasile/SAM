@@ -54,18 +54,18 @@ public class TimelineCallback implements Callback<List<Tweet>> {
                 .ifPresent(client::setSinceId);
 
         Log.i(TAG, "New sinceId: " + client.getSinceId());
-        provider.tweets(timeline);
 
-        if (callback != null) {
+        provider.tweets(timeline, callback);
+
+        /*if (callback != null) {
 
             callback.doProcedure();
-        }
+        }*/
     }
 
     @Override
     public void onFailure(Call<List<Tweet>> call, Throwable t) {
 
         Log.i(TAG, "get timeline failure");
-        // tweets.clear();
     }
 }

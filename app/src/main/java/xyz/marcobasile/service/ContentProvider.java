@@ -1,19 +1,20 @@
 package xyz.marcobasile.service;
 
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import lombok.Setter;
 import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.service.cache.ImageBitmapCache;
 import xyz.marcobasile.service.task.BitmapDownloader;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
 public class ContentProvider {
 
@@ -22,34 +23,33 @@ public class ContentProvider {
 
     private final ImageBitmapCache cache = new ImageBitmapCache();
     private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
+    private BitmapDownloader bitmapDownloader;
 
-    private OnDataReceived onDataReceived;
+    public ContentProvider() {
+
+        this.bitmapDownloader = new BitmapDownloader(this);
+    }
 
 
     public List<SAMTweet> tweets() {
-
         return tweets;
     }
 
 
-    /**
-     * All'aggiunta di un insieme di tweet (circa 5-12) parte la sfilza di
-     * {@link AsyncTask} per scaricare le foto (profilo e media) in cache
-     * @param tweets
-     */
-    public void tweets(List<SAMTweet> tweets) {
+    public void tweets(List<SAMTweet> tweets, GenericProcedure callback) {
 
         Log.i(TAG, "About to add " + tweets.size());
-        if (onDataReceived != null) {
-            // TODO: questo lo devo fare quando finiscono tutti i task
-            onDataReceived.accept(tweets);
-        }
 
-        tweets.stream()
+        Set<String> urlStrings = tweets.stream()
                 .flatMap(tweet -> Stream.<String>of(tweet.getMediaURL(), tweet.getUser().getProfileImageUrl()))
                 .filter(Objects::nonNull)
-                .map(BitmapDownloader::new)
-                .map(BitmapDownloader::execute); // TODO vedere se possibile non istanziare task multiple
+                .collect(Collectors.toSet());
+
+        if (callback != null) {
+            bitmapDownloader.setOnetimeCallback(callback);
+        }
+
+        bitmapDownloader.execute(urlStrings);
 
         this.tweets.addAll(tweets);
     }
@@ -71,15 +71,13 @@ public class ContentProvider {
         }
     }
 
-    public void setOnDataReceived(OnDataReceived onDataReceived) {
-
-        this.onDataReceived = onDataReceived;
-    }
-
     public static ContentProvider getInstance() {
 
         return instance;
     }
-    public static interface OnDataReceived extends Consumer<List<SAMTweet>> {}
+
+    public void setOnDataReceived(BitmapDownloader.OnDataReceived callback) {
+        bitmapDownloader.setCallback(callback);
+    }
 
 }

@@ -9,48 +9,73 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
+import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.service.ContentProvider;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
-public class BitmapDownloader extends AsyncTask<String, Integer, Bitmap> {
+public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitmap>> {
 
     private final static String TAG = BitmapDownloader.class.getName();
 
-    private final ContentProvider provider = ContentProvider.getInstance();
-    private final String imageURL;
-    private ConcurrentLinkedDeque<String> stack;
+    private final ContentProvider provider;
+    private GenericProcedure ontimeCallback;
+    private OnDataReceived callback;
 
-    public BitmapDownloader(String imageURL) {
+    public BitmapDownloader(ContentProvider provider) {
         super();
-        this.imageURL = imageURL;
+        this.provider = provider;
     }
 
     @Override
-    protected void onPostExecute(Bitmap bitmap) {
+    protected void onPostExecute(List<Bitmap> bitmaps) {
 
-        String currentURL = stack.pop();
-        provider.putImage(imageURL, bitmap); // provider.putImage(currentURL, bitmap);
+        if (ontimeCallback != null) {
+            ontimeCallback.doProcedure();
+            ontimeCallback = null;
+        }
+
+        if (callback != null) {
+            callback.accept(provider.tweets());
+        }
     }
 
     @Override
-    protected void onProgressUpdate(Integer... values) {
-        super.onProgressUpdate(values);
-    }
+    protected List<Bitmap> doInBackground(Set<String>... _strings) {
 
-    @Override
-    protected Bitmap doInBackground(String... strings) {
-
-        Bitmap bitmap = null;
-
-        if (strings.length == 0) {
+        if (_strings.length == 0) {
             return null;
         }
 
-        stack.push(strings[0]);
+        Set<String> strings = _strings[0];
 
+        return strings.stream()
+                .map(this::getBitmapFromURLString)
+                .collect(Collectors.toList());
+    }
+
+    private Bitmap getBitmapFromURLString(String urlString) {
+
+        if (isCancelled()) {
+            return null;
+        }
+
+        // Bitmap bitmap = null;
+        Bitmap bitmap = provider.getImage(urlString);
+
+        if (bitmap != null) {
+            return bitmap;
+        }
+
+        // se non presente gia' la scarichiamo
         try {
-            URL url = new URL(strings[0]);
+            URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
@@ -58,11 +83,23 @@ public class BitmapDownloader extends AsyncTask<String, Integer, Bitmap> {
             InputStream input = connection.getInputStream();
             bitmap = BitmapFactory.decodeStream(input);
 
+            provider.putImage(urlString, bitmap);
+
         } catch (IOException e) {
 
-            Log.i(TAG, "Impossibile scaricare immagine all'url: " + imageURL);
+            Log.i(TAG, "Impossibile scaricare immagine all'url: " + urlString);
         }
 
         return bitmap;
     }
+
+    public void setOnetimeCallback(GenericProcedure callback) {
+        this.ontimeCallback = callback;
+    }
+
+    public void setCallback(OnDataReceived callback) {
+        this.callback = callback;
+    }
+
+    public static interface OnDataReceived extends Consumer<List<SAMTweet>> {}
 }
