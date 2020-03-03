@@ -21,7 +21,6 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
     private final int SAVED_ICON_RES = R.drawable.ic_star_24px;
     private final int UNSAVED_ICON_RES = R.drawable.ic_star_border_24px;
 
-    private final View samTweetItemView;
     private Drawable savedIcon, unsavedIcon;
 
     private ImageView profileImageView, mediaImageView;
@@ -31,7 +30,6 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
 
     public TimelineTweetViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.samTweetItemView = itemView;
         setupViews(itemView);
 
         savedIcon = itemView.getResources().getDrawable(SAVED_ICON_RES, null);

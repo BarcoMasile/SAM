@@ -52,7 +52,8 @@ public class TwitterClient {
 
     public void getHomeTimelineTweets(ContentProvider provider, GenericProcedure callback) {
 
-        Long maxId = null == sinceId ? null : sinceId - 1 - TWEET_COUNT;
+//        Long maxId = null == sinceId ? null : sinceId - 1 - TWEET_COUNT;
+        Long maxId = null;
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
                 .homeTimeline(TWEET_COUNT, sinceId, maxId,
                         false, true,

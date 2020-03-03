@@ -57,13 +57,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //startTimer();
+        startTimer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //stopTimer();
+        stopTimer();
     }
 
 

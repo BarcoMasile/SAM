@@ -23,12 +23,7 @@ public class ContentProvider {
 
     private final ImageBitmapCache cache = new ImageBitmapCache();
     private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
-    private BitmapDownloader bitmapDownloader;
-
-    public ContentProvider() {
-
-        this.bitmapDownloader = new BitmapDownloader(this);
-    }
+    private BitmapDownloader.OnDataReceived dataCallback;
 
 
     public List<SAMTweet> tweets() {
@@ -44,6 +39,9 @@ public class ContentProvider {
                 .flatMap(tweet -> Stream.<String>of(tweet.getMediaURL(), tweet.getUser().getProfileImageUrl()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
+
+        BitmapDownloader bitmapDownloader = new BitmapDownloader(this);
+        bitmapDownloader.setCallback(dataCallback);
 
         if (callback != null) {
             bitmapDownloader.setOnetimeCallback(callback);
@@ -76,8 +74,8 @@ public class ContentProvider {
         return instance;
     }
 
-    public void setOnDataReceived(BitmapDownloader.OnDataReceived callback) {
-        bitmapDownloader.setCallback(callback);
+    public void setOnDataReceived(BitmapDownloader.OnDataReceived dataCallback) {
+        this.dataCallback = dataCallback;
     }
 
 }

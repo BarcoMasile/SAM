@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -25,7 +23,7 @@ public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitma
     private final static String TAG = BitmapDownloader.class.getName();
 
     private final ContentProvider provider;
-    private GenericProcedure ontimeCallback;
+    private GenericProcedure onetimeCallback;
     private OnDataReceived callback;
 
     public BitmapDownloader(ContentProvider provider) {
@@ -36,9 +34,9 @@ public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitma
     @Override
     protected void onPostExecute(List<Bitmap> bitmaps) {
 
-        if (ontimeCallback != null) {
-            ontimeCallback.doProcedure();
-            ontimeCallback = null;
+        if (onetimeCallback != null) {
+            onetimeCallback.doProcedure();
+            onetimeCallback = null;
         }
 
         if (callback != null) {
@@ -94,7 +92,7 @@ public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitma
     }
 
     public void setOnetimeCallback(GenericProcedure callback) {
-        this.ontimeCallback = callback;
+        this.onetimeCallback = callback;
     }
 
     public void setCallback(OnDataReceived callback) {
