@@ -25,6 +25,7 @@ public class ContentProvider {
     private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
     private BitmapDownloader.OnDataReceived dataCallback;
 
+    private int previousTweetCardinality = 0;
 
     public List<SAMTweet> tweets() {
         return tweets;
@@ -76,6 +77,13 @@ public class ContentProvider {
 
     public void setOnDataReceived(BitmapDownloader.OnDataReceived dataCallback) {
         this.dataCallback = dataCallback;
+    }
+
+    public int getAndResetPreviousTweetCardinality() {
+
+        int previousTweetCardinality = this.previousTweetCardinality;
+        this.previousTweetCardinality = tweets.size();
+        return previousTweetCardinality;
     }
 
 }

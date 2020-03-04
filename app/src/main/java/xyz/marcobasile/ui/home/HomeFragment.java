@@ -59,20 +59,20 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-         startTimer();
+        startTimer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-         stopTimer();
+        //stopTimer();
     }
 
 
     private void setupView(View root) {
 
         recyclerView = (RecyclerView) root.findViewById(R.id.home_scroll_view);
-        recyclerView.setHasFixedSize(true); // per ora a true, poi a false probabilmente
+        recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -80,11 +80,12 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(timelineTweetAdapter);
 
         refreshBtn = root.findViewById(R.id.refresh_button);
-        refreshBtn.setEnabled(false);
+
+        refreshBtn.setVisibility(View.GONE);
         refreshBtn.setOnClickListener(view -> {
 
-            view.setEnabled(false);
             timelineTweetAdapter.notifyDataSetChanged();
+            view.setVisibility(View.GONE);
         });
 
         provider.setOnDataReceived(tweets -> refreshBtn.setVisibility( tweets.size() > 0 ? View.VISIBLE : View.GONE));

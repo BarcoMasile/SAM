@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FABE6B" >
@@ -50,9 +51,11 @@
         android:foregroundTint="#FFFFFF"
         android:rotation="90"
         android:translationZ="24dp"
+        android:visibility="invisible"
         app:fabCustomSize="64dp"
         app:fabSize="auto"
-        app:srcCompat="@drawable/ic_loop_24px" />
+        app:srcCompat="@drawable/ic_loop_24px"
+        tools:visibility="invisible" />
 
     <!--<ScrollView
         android:id="@+id/home_scroll_view"

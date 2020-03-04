@@ -2,34 +2,44 @@ package xyz.marcobasile.ui.adapter.home;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+
+import java.util.List;
 import java.util.Locale;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.model.SAMTweet;
 
 
 public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
 
     private final static String TAG = TimelineTweetViewHolder.class.getName();
+    public static final int LAST_ITEM_OFFSET = 148;
     private final int SAVED_ICON_RES = R.drawable.ic_star_24px;
     private final int UNSAVED_ICON_RES = R.drawable.ic_star_border_24px;
 
     private Drawable savedIcon, unsavedIcon;
 
     private ImageView profileImageView, mediaImageView;
-    private Button likes, retweets, saveBtn;
+    private MaterialButton likes, retweets, saveBtn;
     private TextView usernameView, tweetBodyView;
+    private View itemView;
+
+    private int originalMinHeight;
 
 
     public TimelineTweetViewHolder(@NonNull View itemView) {
         super(itemView);
+        this.itemView = itemView;
+
         setupViews(itemView);
 
         savedIcon = itemView.getResources().getDrawable(SAVED_ICON_RES, null);
@@ -46,6 +56,8 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
         retweets = mainView.findViewById(R.id.retweet_count);
         likes = mainView.findViewById(R.id.likes_count);
         saveBtn = mainView.findViewById(R.id.save_btn);
+
+        originalMinHeight = mainView.getMinimumHeight();
     }
 
     public void profileImage(Bitmap profileImage) {
@@ -69,8 +81,7 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void saved(boolean isSaved) {
-
-        saveBtn.setCompoundDrawables(isSaved ? savedIcon : unsavedIcon, null, null, null);
+        saveBtn.setIcon(isSaved ? savedIcon : unsavedIcon);
     }
 
     public void username(String username) {
@@ -81,5 +92,29 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
     public void tweetBody(String tweetBody) {
 
         tweetBodyView.setText(tweetBody);
+    }
+
+    public void setupSavedButton(List<SAMTweet> tweets, int position) {
+
+        saveBtn.setTag(position);
+        saveBtn.setOnClickListener(btnView -> {
+
+            SAMTweet samTweet = tweets.get(position);
+
+            samTweet.setSaved(!samTweet.isSaved());
+            saved(samTweet.isSaved());
+
+            Log.i(TAG, "SaveButton on click in position: " + position);
+        });
+    }
+
+    public void setupMarginForLastItem() {
+
+        itemView.setMinimumHeight(originalMinHeight + LAST_ITEM_OFFSET);
+    }
+
+    public void resetMarginForItem() {
+
+        itemView.setMinimumHeight(originalMinHeight);
     }
 }

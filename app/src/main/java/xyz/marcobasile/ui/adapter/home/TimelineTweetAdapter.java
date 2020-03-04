@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +58,14 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
         holder.username(user.getScreenName());
         Optional.ofNullable(provider.getImage(user.getProfileImageUrl()))
                 .ifPresent(holder::profileImage);
+
+        holder.setupSavedButton(provider.tweets(), position);
+        holder.resetMarginForItem();
+
+        if (position == provider.tweets().size() - 1) {
+            // e' l'ultimo item
+            holder.setupMarginForLastItem();
+        }
     }
 
     @Override
