@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        //stopTimer();
+        stopTimer();
     }
 
 
