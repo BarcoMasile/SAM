@@ -52,14 +52,13 @@ public class TwitterClient {
 
     public void getHomeTimelineTweets(ContentProvider provider, GenericProcedure callback) {
 
-//        Long maxId = null == sinceId ? null : sinceId - 1 - TWEET_COUNT;
-        Long maxId = null;
+        // Long maxId = null == sinceId ? null : sinceId - 1 - TWEET_COUNT;
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
-                .homeTimeline(TWEET_COUNT, sinceId, maxId,
+                .homeTimeline(TWEET_COUNT, sinceId, null/*maxId*/,
                         false, true,
                         CONTRIBUTE_DETAILS, INCLUDE_ENTITIES);
 
-        listCall.enqueue(TimelineCallback.makeCallback(provider, this, callback));
+        listCall.enqueue(new TimelineCallback(provider, this, callback));
     }
 
     public void postTweet(String tweet, Callback<Tweet> callback) {
@@ -103,5 +102,13 @@ public class TwitterClient {
 
     public Long getSinceId() {
         return sinceId;
+    }
+
+    public void setMaxId(Long maxId) {
+        this.maxId = maxId.equals(this.maxId) ? this.maxId : maxId - 1;
+    }
+
+    public Long getMaxId() {
+        return maxId;
     }
 }

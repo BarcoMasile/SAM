@@ -1,6 +1,8 @@
 package xyz.marcobasile.ui.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,13 +59,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        startTimer();
+         startTimer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        stopTimer();
+         stopTimer();
     }
 
 
@@ -85,7 +87,7 @@ public class HomeFragment extends Fragment {
             timelineTweetAdapter.notifyDataSetChanged();
         });
 
-         provider.setOnDataReceived(tweets -> refreshBtn.setEnabled(provider.tweets().size() > 0));
+        provider.setOnDataReceived(tweets -> refreshBtn.setVisibility( tweets.size() > 0 ? View.VISIBLE : View.GONE));
     }
 
     private void populateScrollView() {

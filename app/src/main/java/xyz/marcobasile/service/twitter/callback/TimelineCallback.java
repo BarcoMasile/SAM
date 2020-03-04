@@ -5,6 +5,7 @@ import android.util.Log;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,12 +25,7 @@ public class TimelineCallback implements Callback<List<Tweet>> {
     private ContentProvider provider;
     private GenericProcedure callback;
 
-    public static TimelineCallback makeCallback(ContentProvider provider, TwitterClient client, GenericProcedure callback) {
-
-        return new TimelineCallback(provider, client, callback);
-    }
-
-    private TimelineCallback(ContentProvider provider, TwitterClient client, GenericProcedure callback) {
+    public TimelineCallback(ContentProvider provider, TwitterClient client, GenericProcedure callback) {
 
         this.provider = provider;
         this.client = client;
@@ -47,13 +43,20 @@ public class TimelineCallback implements Callback<List<Tweet>> {
         List<SAMTweet> timeline = mapper.toSAMTweet(response.body());
         Log.i(TAG, "Get timeline success, " + timeline.size() + " tweets");
         Log.i(TAG, "Old sinceId: " + client.getSinceId());
+        // Log.i(TAG, "Old maxId: " + client.getMaxId());
 
         timeline.stream()
                 .map(SAMTweet::getId)
                 .max(Long::compareTo)
                 .ifPresent(client::setSinceId);
+        /*timeline.stream()
+                .map(SAMTweet::getId)
+                .min(Long::compareTo)
+                .ifPresent(client::setMaxId);*/
+
 
         Log.i(TAG, "New sinceId: " + client.getSinceId());
+        // Log.i(TAG, "New maxId: " + client.getMaxId());
 
         provider.tweets(timeline, callback);
     }
