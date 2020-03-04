@@ -19,11 +19,25 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="20dp" />
 
-    <ListView
+    <!--<ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="300dp"
-        tools:listitem="@layout/map_user_list_item" />
+        tools:listitem="@layout/map_user_list_item" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        tools:listitem="@layout/map_user_list_item"
+        android:id="@+id/map_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="300dp"
+        android:background="#6FFFFFFF">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
