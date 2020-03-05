@@ -28,7 +28,6 @@ public class MapTweetUserAdapter extends RecyclerView.Adapter<MapTweetUserViewHo
         this.provider = provider;
     }
 
-
     @NonNull
     @Override
     public MapTweetUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,8 +42,21 @@ public class MapTweetUserAdapter extends RecyclerView.Adapter<MapTweetUserViewHo
     @Override
     public void onBindViewHolder(@NonNull MapTweetUserViewHolder holder, int position) {
 
-        //
+        SAMTwitterUser user = provider.users().get(position);
 
+        holder.username(user.getScreenName());
+        holder.followers(user.getFollowersCount());
+        holder.profileImage(provider.getImage(user.getProfileImageUrl()));
+
+        holder.getItemView().setOnClickListener(view -> {
+
+        });
+
+        holder.resetMarginForItem();
+        if (position == provider.users().size() - 1) {
+            // e' l'ultimo item
+            holder.setupMarginForLastItem();
+        }
     }
 
     @Override

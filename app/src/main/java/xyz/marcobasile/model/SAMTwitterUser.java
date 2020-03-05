@@ -7,10 +7,12 @@ import com.google.android.gms.maps.model.LatLng;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class SAMTwitterUser {
 
     private long id;

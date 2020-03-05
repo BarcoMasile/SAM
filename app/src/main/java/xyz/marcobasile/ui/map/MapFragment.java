@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.MapView;
 
@@ -23,6 +25,8 @@ import java.util.List;
 import java.util.Locale;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.service.ContentProvider;
+import xyz.marcobasile.ui.adapter.map.MapTweetUserAdapter;
 import xyz.marcobasile.ui.map.util.MapSetupUtils;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -34,7 +38,10 @@ public class MapFragment extends Fragment {
     private MapSetupUtils mapUtils;
 
     private View root;
-    private ListView listView;
+    private RecyclerView recyclerView;
+
+    private MapTweetUserAdapter mapTweetUserAdapter;
+    private ContentProvider provider;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +74,8 @@ public class MapFragment extends Fragment {
             e.printStackTrace();
         }*/
 
+        provider = ContentProvider.getInstance();
+
         return root;
     }
 
@@ -86,7 +95,13 @@ public class MapFragment extends Fragment {
     private void setupViews(Bundle savedInstanceState) {
 
         mapView = root.<MapView>findViewById(R.id.map_view);
-        listView = root.findViewById(R.id.map_scroll_view);
+
+        recyclerView = (RecyclerView) root.findViewById(R.id.map_scroll_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
+
+        mapTweetUserAdapter = new MapTweetUserAdapter(provider);
+        recyclerView.setAdapter(mapTweetUserAdapter);
 
         mapView.onCreate(savedInstanceState);
     }

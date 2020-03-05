@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import xyz.marcobasile.model.SAMTweet;
+import xyz.marcobasile.model.SAMTwitterUser;
 import xyz.marcobasile.service.cache.ImageBitmapCache;
 import xyz.marcobasile.service.task.BitmapDownloader;
 import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
@@ -22,13 +23,20 @@ public class ContentProvider {
     private final static ContentProvider instance = new ContentProvider();
 
     private final ImageBitmapCache cache = new ImageBitmapCache();
+
     private List<SAMTweet> tweets = new ArrayList<SAMTweet>();
+    private List<SAMTwitterUser> users = new ArrayList<SAMTwitterUser>();
+
     private BitmapDownloader.OnDataReceived dataCallback;
 
     private int previousTweetCardinality = 0;
 
     public List<SAMTweet> tweets() {
         return tweets;
+    }
+
+    public List<SAMTwitterUser> users() {
+        return users;
     }
 
 
@@ -50,6 +58,14 @@ public class ContentProvider {
 
         bitmapDownloader.execute(urlStrings);
 
+        Set<SAMTwitterUser> recentTweetUsersSet = tweets.stream()
+                .map(SAMTweet::getUser)
+                .collect(Collectors.toSet());
+
+        recentTweetUsersSet.addAll(users); // mi assicuro che non ci siano duplicati
+
+        this.users.clear();
+        this.users.addAll(recentTweetUsersSet); // e poi li conservo nella lista per facile utilizzo
         this.tweets.addAll(tweets);
     }
 

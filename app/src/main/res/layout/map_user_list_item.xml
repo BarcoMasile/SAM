@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map_user_list_item"
     android:layout_width="match_parent"
-    android:layout_height="124dp"
+    android:layout_height="114dp"
     android:background="#2FFF9800">
 
     <ImageView
@@ -21,7 +21,7 @@
     <TextView
         android:id="@+id/user_name"
         android:layout_width="286dp"
-        android:layout_height="56dp"
+        android:layout_height="42dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
         android:padding="6dp"
         android:text="@string/generic_test_string"
         android:textAlignment="viewStart"
-        android:textSize="28sp" />
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/followers_count"
