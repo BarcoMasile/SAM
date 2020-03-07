@@ -7,7 +7,7 @@ public class DatabaseUtils {
         public static final String TABLE = "TWEET";
 
         // Columns
-        public static final String ID = "ID";
+        public static final String ID = "_id";
         public static final String TEXT = "TWEET_TEXT";
         public static final String FAVOURITE_COUNT = "FAVOURITE_COUNT";
         public static final String RETWEET_COUNT = "RETWEET_COUNT";

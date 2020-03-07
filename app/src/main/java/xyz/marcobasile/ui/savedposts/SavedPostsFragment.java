@@ -24,7 +24,7 @@ import xyz.marcobasile.ui.shared.listener.TouchLayerOnTouchListener;
 public class SavedPostsFragment extends Fragment {
 
     private TextView searchTextEdit;
-    private Button searchBtn;
+    private Button searchBtn, clearStringBtn;
 
     private FrameLayout touchLayer;
     private ListView listView;
@@ -47,6 +47,10 @@ public class SavedPostsFragment extends Fragment {
     public void setupViews(View root) {
 
         searchTextEdit = root.findViewById(R.id.search_string);
+
+        clearStringBtn = root.findViewById(R.id.clear_str_btn);
+        clearStringBtn.setOnClickListener(view -> searchTextEdit.setText(""));
+
         searchBtn = root.findViewById(R.id.search_btn);
         searchBtn.setEnabled(false);
 

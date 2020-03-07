@@ -50,9 +50,7 @@ public class SavedPostsAdapter extends CursorAdapter {
     public SavedPostsAdapter(Context context, TweetRepository repo) {
         super(context, repo.findAllCursor(), AUTO_REQUERY);
         this.repo = repo;
-
-        savedIcon = itemView.getResources().getDrawable(SAVED_ICON_RES, null);
-        // unsavedIcon = itemView.getResources().getDrawable(UNSAVED_ICON_RES, null);
+        savedIcon = context.getResources().getDrawable(SAVED_ICON_RES, null);
     }
 
     @Override
@@ -89,6 +87,9 @@ public class SavedPostsAdapter extends CursorAdapter {
         likes.setText(Integer.valueOf(tweet.getFavoriteCount()));
 
         // saveBtn.setIcon(tweet.getSaved() ? savedIcon : unsavedIcon);
+        /*if (null == savedIcon) {
+            savedIcon = itemView.getResources().getDrawable(SAVED_ICON_RES, null);
+        }*/
         saveBtn.setIcon(savedIcon);
 
         resetMarginForItem();

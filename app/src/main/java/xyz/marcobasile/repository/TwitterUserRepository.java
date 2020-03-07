@@ -10,12 +10,12 @@ import java.util.Set;
 
 import xyz.marcobasile.model.SAMTwitterUser;
 
-public class TwitterUserRepository extends SQLiteOpenHelper {
+public class TwitterUserRepository /*extends SQLiteOpenHelper*/ {
 
     private static final int VERSION = 1;
     private static final int PER_PAGE = 100;
 
-    public TwitterUserRepository(@Nullable Context context) {
+    /*public TwitterUserRepository(@Nullable Context context) {
         super(context, DatabaseUtils.TweetUser.TABLE, null, VERSION);
     }
 
@@ -41,7 +41,7 @@ public class TwitterUserRepository extends SQLiteOpenHelper {
     public Set<SAMTwitterUser> findAllIn(Set<Long> ids) {
 
         return null;
-    }
+    }*/
 
     // delete: select distinc tweet not in
 }
