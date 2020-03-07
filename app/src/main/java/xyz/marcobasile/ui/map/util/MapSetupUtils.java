@@ -32,9 +32,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Optional;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTwitterUser;
+import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.ui.map.SAMTwitterUserInfoWindow;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -46,18 +48,21 @@ public class MapSetupUtils {
     private static final String TAG = MapSetupUtils.class.getName();
     private static final String[] permessi = new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
     private static final float INITIAL_ZOOM = 14.5f;
+    private BitmapDescriptor DEFAULT_BITMAP_DESCRIPTOR;
 
     private Fragment fragment;
     private MapView mapView;
-    private LatLng latLng = null;
 
     private CameraUpdate cameraUpdate;
     private FusedLocationProviderClient fusedLocationClient;
+    private ContentProvider provider;
 
 
-    public MapSetupUtils(Fragment fragment) {
+    public MapSetupUtils(Fragment fragment, ContentProvider provider) {
+
         this.fragment = fragment;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragment.getContext());
+        this.provider = provider;
     }
 
     public void setupMapView(MapView mapView) {
@@ -83,18 +88,6 @@ public class MapSetupUtils {
         fragment.requestPermissions(permessi, 0);
     }
 
-    public void setLastLocationAndMoveCamera() {
-        if (null == latLng) {
-            fusedLocationClient.getLastLocation().addOnCompleteListener(result -> {
-                Location location = result.getResult();
-                latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                setupCameraPosition(latLng);
-            });
-        } else {
-            setupCameraPosition(latLng);
-        }
-    }
-
 
     private void mapViewSetup(GoogleMap map) {
         map.getUiSettings().setMyLocationButtonEnabled(false);
@@ -107,53 +100,62 @@ public class MapSetupUtils {
         map.setInfoWindowAdapter(new SAMTwitterUserInfoWindow(fragment.getContext()));
 
         MapsInitializer.initialize(fragment.getActivity());
-        setLastLocationAndMoveCamera();
+        DEFAULT_BITMAP_DESCRIPTOR = BitmapDescriptorFactory.fromResource(R.drawable.tw__composer_logo_blue);
+        provider.users()
+                .stream()
+                .filter(user -> user.getLatLng() != null)
+                .forEach(user -> {
+                    map.addMarker(makeMarkerOptions(user));
+                });
+
+        provider.users().stream().findFirst()
+                .map(SAMTwitterUser::getLatLng)
+                .ifPresent(this::setupCameraPosition);
     }
 
+    public void setCameraOnUser(SAMTwitterUser user) {
+
+        Optional.ofNullable(user.getLatLng())
+                .ifPresent(this::setupCameraPosition);
+    }
 
     private void setupCameraPosition(LatLng latLng) {
         cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, INITIAL_ZOOM);
         mapView.getMapAsync(map -> {
 
             map.animateCamera(cameraUpdate);
-            // map.addMarker(makeMarkerOptions(latLng, new SAMTwitterUser(123l, "BarcoMasile","voglio dormire", 1234, 1, 44, "", "")));
-
         });
     }
 
-    private MarkerOptions makeMarkerOptions(LatLng latLng, SAMTwitterUser user) {
-
-        LatLng userLatLng = new LatLng(0, 0);
+    private MarkerOptions makeMarkerOptions(SAMTwitterUser user) {
 
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.draggable(false);
         markerOptions.flat(true);
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tw__composer_logo_blue));
-
-        markerOptions.position(latLng);
-
-        if (null == user) {
-            return markerOptions;
-        }
-
         markerOptions.title(user.getScreenName());
         markerOptions.snippet(userInfoWindowSnippet(user));
-        // markerOptions.icon(BitmapDescriptorFactory.fromBitmap());
+
+        BitmapDescriptor bitmapDescriptor;
+        Bitmap iconBitmap = provider.getImage(user.getProfileImageUrl());
+
+        if (null == iconBitmap) {
+            bitmapDescriptor = DEFAULT_BITMAP_DESCRIPTOR;
+        } else {
+            bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(iconBitmap);
+        }
+
+        markerOptions.icon(bitmapDescriptor);
 
         return markerOptions;
     }
 
     private String userInfoWindowSnippet(SAMTwitterUser user) {
-
         return String.format(Locale.getDefault(),"%d#%d", user.getFollowersCount(), user.getFriendsCount());
     }
 
 
     private GoogleMap.OnMarkerClickListener markerClickListener() {
         return marker -> {
-
             marker.showInfoWindow();
-
             return true;
         };
     }

@@ -44,7 +44,6 @@ public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitma
                 toIndex = provider.tweets().size();
 
             List<SAMTweet> subList = provider.tweets().subList(fromIndex, toIndex); // solo i nuovi tweet se ci sono
-            // TODO testare questo
             callback.accept(subList);
         }
     }

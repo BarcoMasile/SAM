@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,17 +14,22 @@ import java.util.Optional;
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.model.SAMTwitterUser;
+import xyz.marcobasile.repository.TweetRepository;
 import xyz.marcobasile.service.ContentProvider;
+import xyz.marcobasile.service.task.DBSavedStateControlTask;
 
 public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetViewHolder> {
 
     private final static String TAG = TimelineTweetAdapter.class.getName();
 
+    private TweetRepository tweetRepo;
+
     private ContentProvider provider;
 
-    public TimelineTweetAdapter(ContentProvider provider) {
+    public TimelineTweetAdapter(ContentProvider provider, TweetRepository tweetRepo) {
 
         this.provider = provider;
+        this.tweetRepo = tweetRepo;
     }
 
     @NonNull
@@ -47,7 +51,10 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
         holder.tweetBody(samTweet.getText());
         holder.retweets(samTweet.getRetweetCount());
         holder.likes(samTweet.getFavoriteCount());
-        holder.saved(samTweet.isSaved());
+
+        new DBSavedStateControlTask(holder, tweetRepo).execute(samTweet);
+        /*holder.saved(samTweet.isSaved());*/
+
         Bitmap mediaBitmap = Optional.<String>ofNullable(samTweet.getMediaURL())
                 .map(mediaURL -> provider.getImage(mediaURL))
                 .orElse(null);

@@ -46,7 +46,9 @@ public class MapFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        mapUtils = new MapSetupUtils(this);
+        provider = ContentProvider.getInstance();
+
+        mapUtils = new MapSetupUtils(this, provider);
         root = inflater.inflate(R.layout.fragment_map, container, false);
 
         setupViews(savedInstanceState);
@@ -64,17 +66,6 @@ public class MapFragment extends Fragment {
             Toast.makeText(getContext(), "You really need to give permission grants", Toast.LENGTH_LONG).show();
         }
 
-        /*Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-
-        Address address;
-        try {
-            List<Address> fromLocationName = geocoder.getFromLocationName("Toronto, ON", 1);
-            address = fromLocationName.get(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        provider = ContentProvider.getInstance();
 
         return root;
     }
@@ -100,7 +91,7 @@ public class MapFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
 
-        mapTweetUserAdapter = new MapTweetUserAdapter(provider);
+        mapTweetUserAdapter = new MapTweetUserAdapter(provider, mapUtils);
         recyclerView.setAdapter(mapTweetUserAdapter);
 
         mapView.onCreate(savedInstanceState);

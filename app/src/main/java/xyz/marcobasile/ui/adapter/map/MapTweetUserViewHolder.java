@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.ui.map.util.MapSetupUtils;
 
 class MapTweetUserViewHolder extends RecyclerView.ViewHolder {
 

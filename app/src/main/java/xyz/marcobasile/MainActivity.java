@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import xyz.marcobasile.repository.TwitterUserRepository;
 import xyz.marcobasile.service.twitter.TwitterClient;
 import xyz.marcobasile.service.twitter.util.LoginUtils;
 
@@ -74,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
         welcomeTextView.setVisibility(View.VISIBLE);
         loginBtn.setVisibility(View.VISIBLE);
         navView.setVisibility(View.INVISIBLE);
+    }
+
+    private void setupServices() {
+        //
     }
 
 }

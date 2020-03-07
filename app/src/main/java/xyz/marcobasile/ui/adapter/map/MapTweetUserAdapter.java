@@ -14,18 +14,21 @@ import java.util.List;
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTwitterUser;
 import xyz.marcobasile.service.ContentProvider;
+import xyz.marcobasile.ui.map.util.MapSetupUtils;
 
 public class MapTweetUserAdapter extends RecyclerView.Adapter<MapTweetUserViewHolder> {
 
     private final static String TAG = MapTweetUserAdapter.class.getName();
 
     private ContentProvider provider;
+    private MapSetupUtils mapUtils;
 
     private List<SAMTwitterUser> users = Arrays.asList(SAMTwitterUser.builder().screenName("Marco Basile").statusesCount(123).followersCount(12).friendsCount(21).location("Foggia, Italy").profileImageUrl("https://pbs.twimg.com/profile_images/903288596802797568/raJx8uZk_400x400.jpg").build());
 
-    public MapTweetUserAdapter(ContentProvider provider) {
+    public MapTweetUserAdapter(ContentProvider provider, MapSetupUtils mapUtils) {
 
         this.provider = provider;
+        this.mapUtils = mapUtils;
     }
 
     @NonNull
@@ -49,7 +52,7 @@ public class MapTweetUserAdapter extends RecyclerView.Adapter<MapTweetUserViewHo
         holder.profileImage(provider.getImage(user.getProfileImageUrl()));
 
         holder.getItemView().setOnClickListener(view -> {
-
+            mapUtils.setCameraOnUser(user);
         });
 
         holder.resetMarginForItem();

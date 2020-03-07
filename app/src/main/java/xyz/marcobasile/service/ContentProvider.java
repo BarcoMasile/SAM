@@ -1,5 +1,6 @@
 package xyz.marcobasile.service;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -15,6 +16,7 @@ import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.model.SAMTwitterUser;
 import xyz.marcobasile.service.cache.ImageBitmapCache;
 import xyz.marcobasile.service.task.BitmapDownloader;
+import xyz.marcobasile.service.task.UserLocationGeocoder;
 import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
 public class ContentProvider {
@@ -30,6 +32,11 @@ public class ContentProvider {
     private BitmapDownloader.OnDataReceived dataCallback;
 
     private int previousTweetCardinality = 0;
+    private Context ctx;
+
+    public void setContext(Context ctx) {
+        this.ctx = ctx;
+    }
 
     public List<SAMTweet> tweets() {
         return tweets;
@@ -58,15 +65,21 @@ public class ContentProvider {
 
         bitmapDownloader.execute(urlStrings);
 
-        Set<SAMTwitterUser> recentTweetUsersSet = tweets.stream()
-                .map(SAMTweet::getUser)
+        saveRecentTweetUsers(tweets);
+
+        this.tweets.addAll(tweets);
+    }
+
+    public void enqueueImageDownloadsForTweets(List<SAMTweet> tweets) {
+
+        Set<String> urlStrings = tweets.stream()
+                .flatMap(tweet -> Stream.<String>of(tweet.getMediaURL(), tweet.getUser().getProfileImageUrl()))
+                .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
-        recentTweetUsersSet.addAll(users); // mi assicuro che non ci siano duplicati
+        BitmapDownloader bitmapDownloader = new BitmapDownloader(this);
 
-        this.users.clear();
-        this.users.addAll(recentTweetUsersSet); // e poi li conservo nella lista per facile utilizzo
-        this.tweets.addAll(tweets);
+        bitmapDownloader.execute(urlStrings);
     }
 
     public Bitmap getImage(String key) {
@@ -87,7 +100,6 @@ public class ContentProvider {
     }
 
     public static ContentProvider getInstance() {
-
         return instance;
     }
 
@@ -100,6 +112,23 @@ public class ContentProvider {
         int previousTweetCardinality = this.previousTweetCardinality;
         this.previousTweetCardinality = tweets.size();
         return previousTweetCardinality;
+    }
+
+    private void saveRecentTweetUsers(List<SAMTweet> tweets) {
+
+        Set<SAMTwitterUser> recentTweetUsersSet = tweets.stream()
+                .map(SAMTweet::getUser)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        UserLocationGeocoder geocoderTask = new UserLocationGeocoder(ctx);
+        geocoderTask.execute(users);
+
+        recentTweetUsersSet.addAll(users);
+
+        users.clear();
+        users.addAll(recentTweetUsersSet); // e poi li conservo nella lista per facile utilizzo
+
     }
 
 }

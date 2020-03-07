@@ -19,6 +19,9 @@ import com.twitter.sdk.android.core.Twitter;
 import java.util.Timer;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.repository.DatabaseUtils;
+import xyz.marcobasile.repository.TweetRepository;
+import xyz.marcobasile.repository.TwitterUserRepository;
 import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.service.task.TweetDownloaderTimerTask;
 import xyz.marcobasile.service.twitter.TwitterClient;
@@ -38,6 +41,8 @@ public class HomeFragment extends Fragment {
     private Timer tweetDownloaderTimer = new Timer(TWEET_DOWNLOADER_TIMER);
     private TweetDownloaderTimerTask tweetDownloaderTask;
     private TwitterClient twitterClient;
+//    private TwitterUserRepository userRepo;
+    private TweetRepository tweetRepo;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +50,10 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         provider = ContentProvider.getInstance();
+        provider.setContext(getContext());
+
+        tweetRepo = new TweetRepository(getContext());
+//        userRepo = new TwitterUserRepository(getContext());
 
         setupView(root);
         populateScrollView();
@@ -59,13 +68,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        startTimer();
+        //startTimer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        stopTimer();
+        //stopTimer();
     }
 
 
@@ -76,7 +85,7 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        timelineTweetAdapter = new TimelineTweetAdapter(provider);
+        timelineTweetAdapter = new TimelineTweetAdapter(provider, tweetRepo);
         recyclerView.setAdapter(timelineTweetAdapter);
 
         refreshBtn = root.findViewById(R.id.refresh_button);

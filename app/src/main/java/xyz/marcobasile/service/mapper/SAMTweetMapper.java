@@ -7,6 +7,7 @@ import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.models.User;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -17,18 +18,19 @@ import xyz.marcobasile.model.SAMTwitterUser;
 public class SAMTweetMapper {
 
     private static final String PICTURE_MEDIA_TYPE = "photo";
-    private static final String VIDEO_MEDIA_TYPE = "video";
-    private static final String GIF_MEDIA_TYPE = "animated_gif";
+    /*private static final String VIDEO_MEDIA_TYPE = "video";
+    private static final String GIF_MEDIA_TYPE = "animated_gif";*/
 
-    private static final String THUMB_MEDIA_SIZE = "thumb";
+    /*private static final String THUMB_MEDIA_SIZE = "thumb";*/
     private static final String SMALL_MEDIA_SIZE = "small";
-//    private static final String MEDIUM_MEDIA_SIZE = "medium";
 
 
     public List<SAMTweet> toSAMTweet(@NonNull List<Tweet> tweets) {
 
         return tweets.stream()
                 .filter(tweet -> !tweet.possiblySensitive)
+                .filter(tweet -> tweet.user != null)
+                .filter(tweet -> tweet.user.location != null && (!tweet.user.location.equals("")))
                 .map(this::toSAMTweet)
                 .collect(Collectors.toList());
     }
@@ -43,6 +45,7 @@ public class SAMTweetMapper {
                 .favoriteCount(tweet.favoriteCount)
                 .retweetCount(tweet.retweetCount)
                 .mediaURL(getOneMediaURL(tweet))
+                .saved(null)
                 .build();
     }
 

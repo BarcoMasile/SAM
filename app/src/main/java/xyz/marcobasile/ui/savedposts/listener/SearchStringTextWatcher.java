@@ -2,21 +2,32 @@ package xyz.marcobasile.ui.savedposts.listener;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 
+import xyz.marcobasile.repository.TweetRepository;
 import xyz.marcobasile.service.twitter.TwitterClient;
+import xyz.marcobasile.ui.adapter.savedposts.SavedPostsAdapter;
 
 public class SearchStringTextWatcher implements TextWatcher {
 
-    private TwitterClient client;
+    private TweetRepository repo;
+    private SavedPostsAdapter adapter;
+    private Button searchBtn;
 
-    public SearchStringTextWatcher(TwitterClient twitterClient) {
+    public SearchStringTextWatcher(TweetRepository repo, SavedPostsAdapter adapter, Button searchBtn) {
 
-        client = twitterClient;
+        this.repo = repo;
+        this.adapter = adapter;
+        this.searchBtn = searchBtn;
     }
 
     @Override
     public void afterTextChanged(Editable s) {
 
+        searchBtn.setEnabled(s.length() > 3);
+        if (s.length() == 0) {
+            adapter.changeCursor(repo.findAllCursor());
+        }
     }
 
     @Override

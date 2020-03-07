@@ -15,8 +15,8 @@ public class TwitterUserRepository extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final int PER_PAGE = 100;
 
-    public TwitterUserRepository(String tableName, @Nullable Context context) {
-        super(context, tableName, null, VERSION);
+    public TwitterUserRepository(@Nullable Context context) {
+        super(context, DatabaseUtils.TweetUser.TABLE, null, VERSION);
     }
 
     @Override

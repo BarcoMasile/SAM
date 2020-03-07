@@ -17,6 +17,7 @@ import java.util.Locale;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTweet;
+import xyz.marcobasile.repository.TweetRepository;
 
 
 public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
@@ -35,7 +36,6 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
 
     private int originalMinHeight;
 
-
     public TimelineTweetViewHolder(@NonNull View itemView) {
         super(itemView);
         this.itemView = itemView;
@@ -46,7 +46,7 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
         unsavedIcon = itemView.getResources().getDrawable(UNSAVED_ICON_RES, null);
     }
 
-    private void setupViews(View mainView) {
+    public void setupViews(View mainView) {
 
         profileImageView = mainView.findViewById(R.id.tweet_profile_img);
         mediaImageView = mainView.findViewById(R.id.media_image);
@@ -101,8 +101,8 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
 
             SAMTweet samTweet = tweets.get(position);
 
-            samTweet.setSaved(!samTweet.isSaved());
-            saved(samTweet.isSaved());
+            samTweet.setSaved(!samTweet.getSaved()); // TODO: controllare che il null non crei problemi
+            saved(samTweet.getSaved());
 
             Log.i(TAG, "SaveButton on click in position: " + position);
         });

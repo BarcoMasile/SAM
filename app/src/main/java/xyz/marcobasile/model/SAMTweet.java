@@ -22,7 +22,7 @@ public class SAMTweet {
 
     private int retweetCount;
 
-    private boolean saved;
+    private Boolean saved;
 
     private String mediaURL;
 
