@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -93,6 +94,7 @@ public class MapFragment extends Fragment {
 
         mapTweetUserAdapter = new MapTweetUserAdapter(provider, mapUtils);
         recyclerView.setAdapter(mapTweetUserAdapter);
+        //recyclerView.addOnItemTouchListener(null);
 
         mapView.onCreate(savedInstanceState);
     }

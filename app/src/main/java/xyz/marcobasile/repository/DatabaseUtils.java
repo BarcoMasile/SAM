@@ -46,7 +46,7 @@ public class DatabaseUtils {
 
     }
 
-    public static class TweetUser {
+    /*public static class TweetUser {
         // Tabella per gli utenti dei tweet salvati
         public static final String TABLE = "TW_USER";
 
@@ -79,6 +79,6 @@ public class DatabaseUtils {
                     PROFILE_IMAGE_BLOB + " BLOB," +
                     LATITUDE + " TEXT," +
                     LONGITUDE + " TEXT)";
-    }
+    }*/
 
 }

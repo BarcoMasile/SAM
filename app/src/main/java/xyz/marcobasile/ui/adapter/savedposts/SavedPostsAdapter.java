@@ -33,7 +33,7 @@ public class SavedPostsAdapter extends CursorAdapter {
     public static final int LAST_ITEM_OFFSET = 148;
     private static final boolean AUTO_REQUERY = true;
     private final int SAVED_ICON_RES = R.drawable.ic_star_24px;
-    private final int UNSAVED_ICON_RES = R.drawable.ic_star_border_24px;
+    // private final int UNSAVED_ICON_RES = R.drawable.ic_star_border_24px;
 
     private Drawable savedIcon, unsavedIcon;
 
@@ -50,6 +50,9 @@ public class SavedPostsAdapter extends CursorAdapter {
     public SavedPostsAdapter(Context context, TweetRepository repo) {
         super(context, repo.findAllCursor(), AUTO_REQUERY);
         this.repo = repo;
+
+        savedIcon = itemView.getResources().getDrawable(SAVED_ICON_RES, null);
+        // unsavedIcon = itemView.getResources().getDrawable(UNSAVED_ICON_RES, null);
     }
 
     @Override
