@@ -53,7 +53,6 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
         holder.likes(samTweet.getFavoriteCount());
 
         new DBSavedStateControlTask(holder, tweetRepo).execute(samTweet);
-        /*holder.saved(samTweet.isSaved());*/
 
         Bitmap mediaBitmap = Optional.<String>ofNullable(samTweet.getMediaURL())
                 .map(mediaURL -> provider.getImage(mediaURL))
@@ -66,13 +65,7 @@ public class TimelineTweetAdapter extends RecyclerView.Adapter<TimelineTweetView
         Optional.ofNullable(provider.getImage(user.getProfileImageUrl()))
                 .ifPresent(holder::profileImage);
 
-        holder.setupSavedButton(provider.tweets(), position);
-        holder.resetMarginForItem();
-
-        if (position == provider.tweets().size() - 1) {
-            // e' l'ultimo item
-            holder.setupMarginForLastItem();
-        }
+        holder.setupSavedButton(provider.tweets(), position, tweetRepo);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -43,13 +44,16 @@ public class ContentProvider {
     }
 
     public List<SAMTwitterUser> users() {
-        return users;
+
+        return users.stream()
+                .filter(user -> user.getLatLng() != null)
+                .collect(Collectors.toList());
     }
 
 
     public void tweets(List<SAMTweet> tweets, GenericProcedure callback) {
 
-        Log.i(TAG, "About to add " + tweets.size());
+        Log.i(TAG, "About to add tweets: " + tweets.size());
 
         Set<String> urlStrings = tweets.stream()
                 .flatMap(tweet -> Stream.<String>of(tweet.getMediaURL(), tweet.getUser().getProfileImageUrl()))
@@ -78,8 +82,14 @@ public class ContentProvider {
                 .collect(Collectors.toSet());
 
         BitmapDownloader bitmapDownloader = new BitmapDownloader(this);
-
         bitmapDownloader.execute(urlStrings);
+    }
+
+    public void enqueueImageDownload(String url, GenericProcedure callback) {
+
+        BitmapDownloader bitmapDownloader = new BitmapDownloader(this);
+        bitmapDownloader.setOnetimeCallback(callback);
+        bitmapDownloader.execute(Collections.singleton(url));
     }
 
     public Bitmap getImage(String key) {
@@ -122,7 +132,7 @@ public class ContentProvider {
                 .collect(Collectors.toSet());
 
         UserLocationGeocoder geocoderTask = new UserLocationGeocoder(ctx);
-        geocoderTask.execute(users);
+        geocoderTask.execute(recentTweetUsersSet);
 
         recentTweetUsersSet.addAll(users);
 

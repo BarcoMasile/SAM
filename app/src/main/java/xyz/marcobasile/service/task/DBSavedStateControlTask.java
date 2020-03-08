@@ -29,7 +29,8 @@ public class DBSavedStateControlTask extends AsyncTask<SAMTweet, Void, Boolean> 
             return false;
         }
 
-        tweet.setSaved(_tweet.getSaved() == null ? false : _tweet.getSaved());
+        boolean saved = _tweet.getSaved() != null && _tweet.getSaved();
+        tweet.setSaved(saved);
         return tweet.getSaved();
 
     }

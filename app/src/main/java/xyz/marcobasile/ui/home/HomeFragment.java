@@ -19,9 +19,7 @@ import com.twitter.sdk.android.core.Twitter;
 import java.util.Timer;
 
 import xyz.marcobasile.R;
-import xyz.marcobasile.repository.DatabaseUtils;
 import xyz.marcobasile.repository.TweetRepository;
-import xyz.marcobasile.repository.TwitterUserRepository;
 import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.service.task.TweetDownloaderTimerTask;
 import xyz.marcobasile.service.twitter.TwitterClient;
@@ -41,7 +39,6 @@ public class HomeFragment extends Fragment {
     private Timer tweetDownloaderTimer = new Timer(TWEET_DOWNLOADER_TIMER);
     private TweetDownloaderTimerTask tweetDownloaderTask;
     private TwitterClient twitterClient;
-//    private TwitterUserRepository userRepo;
     private TweetRepository tweetRepo;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,7 +50,6 @@ public class HomeFragment extends Fragment {
         provider.setContext(getContext());
 
         tweetRepo = new TweetRepository(getContext());
-//        userRepo = new TwitterUserRepository(getContext());
 
         setupView(root);
         populateScrollView();

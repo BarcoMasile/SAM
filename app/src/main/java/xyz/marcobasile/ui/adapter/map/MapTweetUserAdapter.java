@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
-import java.util.List;
-
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTwitterUser;
 import xyz.marcobasile.service.ContentProvider;
@@ -22,8 +19,6 @@ public class MapTweetUserAdapter extends RecyclerView.Adapter<MapTweetUserViewHo
 
     private ContentProvider provider;
     private MapSetupUtils mapUtils;
-
-    private List<SAMTwitterUser> users = Arrays.asList(SAMTwitterUser.builder().screenName("Marco Basile").statusesCount(123).followersCount(12).friendsCount(21).location("Foggia, Italy").profileImageUrl("https://pbs.twimg.com/profile_images/903288596802797568/raJx8uZk_400x400.jpg").build());
 
     public MapTweetUserAdapter(ContentProvider provider, MapSetupUtils mapUtils) {
 
@@ -65,6 +60,6 @@ public class MapTweetUserAdapter extends RecyclerView.Adapter<MapTweetUserViewHo
     @Override
     public int getItemCount() {
 
-        return users.size();
+        return provider.users().size();
     }
 }

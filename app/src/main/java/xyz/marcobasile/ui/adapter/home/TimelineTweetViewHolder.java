@@ -94,27 +94,29 @@ public class TimelineTweetViewHolder extends RecyclerView.ViewHolder {
         tweetBodyView.setText(tweetBody);
     }
 
-    public void setupSavedButton(List<SAMTweet> tweets, int position) {
+    public void setupSavedButton(List<SAMTweet> tweets, int position, TweetRepository repo) {
 
         saveBtn.setTag(position);
         saveBtn.setOnClickListener(btnView -> {
 
             SAMTweet samTweet = tweets.get(position);
 
-            samTweet.setSaved(!samTweet.getSaved()); // TODO: controllare che il null non crei problemi
-            saved(samTweet.getSaved());
+            toggleSavedState(samTweet);
+
+            boolean toBeSaved = samTweet.getSaved();
+            saved(toBeSaved);
+
+            if (toBeSaved) {
+                repo.save(samTweet);
+            } else {
+                repo.delete(samTweet.getId());
+            }
 
             Log.i(TAG, "SaveButton on click in position: " + position);
         });
     }
 
-    public void setupMarginForLastItem() {
-
-        itemView.setMinimumHeight(originalMinHeight + LAST_ITEM_OFFSET);
-    }
-
-    public void resetMarginForItem() {
-
-        itemView.setMinimumHeight(originalMinHeight);
+    private void toggleSavedState(SAMTweet tweet) {
+        tweet.setSaved(!(tweet.getSaved() != null && tweet.getSaved()));
     }
 }

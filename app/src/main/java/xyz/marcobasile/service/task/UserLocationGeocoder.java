@@ -9,14 +9,18 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import xyz.marcobasile.model.SAMTwitterUser;
 
-public class UserLocationGeocoder extends AsyncTask<List<SAMTwitterUser>,Void, List<SAMTwitterUser>> {
+public class UserLocationGeocoder extends AsyncTask<Set<SAMTwitterUser>,Void, Set<SAMTwitterUser>> {
 
     private static final String TAG = UserLocationGeocoder.class.getName();
     private Geocoder geocoder;
@@ -27,23 +31,25 @@ public class UserLocationGeocoder extends AsyncTask<List<SAMTwitterUser>,Void, L
     }
 
     @Override
-    protected List<SAMTwitterUser> doInBackground(List<SAMTwitterUser>... lists) {
+    protected Set<SAMTwitterUser> doInBackground(Set<SAMTwitterUser>... lists) {
+        int i = 0;
 
         if (lists.length == 0) {
             return null;
         }
 
-        List<SAMTwitterUser> users = lists[0];
+        ArrayList<SAMTwitterUser> users = new ArrayList<>(lists[0]);
 
-        for (SAMTwitterUser user : users) {
-            setLocationIfPresent(user); // TODO controllare concurrent modification exception se presente
+        for (i = 0 ; i < users.size(); i++) {
+
+            setLocationIfPresent(users.get(i)); // questo necessario per evitare concurrent modification exception
         }
 
-        return users;
+        return new HashSet<>(users);
     }
 
     @Override
-    protected void onPostExecute(List<SAMTwitterUser> samTwitterUsers) {
+    protected void onPostExecute(Set<SAMTwitterUser> samTwitterUsers) {
 
         Log.i(TAG, "geocoded " + samTwitterUsers.size() + " users locations");
     }

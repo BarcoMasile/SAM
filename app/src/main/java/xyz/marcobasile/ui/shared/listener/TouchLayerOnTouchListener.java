@@ -12,9 +12,9 @@ import java.util.Optional;
 
 public class TouchLayerOnTouchListener implements FrameLayout.OnTouchListener {
 
-    private TextView textView;
+    private View textView;
 
-    public TouchLayerOnTouchListener(TextView textView) {
+    public TouchLayerOnTouchListener(View textView) {
         this.textView = textView;
     }
 

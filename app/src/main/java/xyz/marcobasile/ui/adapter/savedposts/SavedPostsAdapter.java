@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,31 +12,24 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.button.MaterialButton;
 
 import java.util.Optional;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTweet;
-import xyz.marcobasile.model.SAMTwitterUser;
-import xyz.marcobasile.repository.DatabaseUtils;
 import xyz.marcobasile.repository.TweetRepository;
 import xyz.marcobasile.service.ContentProvider;
 
-//public class SavedPostsAdapter extends RecyclerView.Adapter<SavedPostsViewHolder> {
+
 public class SavedPostsAdapter extends CursorAdapter {
 
     private final static String TAG = SavedPostsAdapter.class.getName();
 
-    public static final int LAST_ITEM_OFFSET = 148;
     private static final boolean AUTO_REQUERY = true;
     private final int SAVED_ICON_RES = R.drawable.ic_star_24px;
-    // private final int UNSAVED_ICON_RES = R.drawable.ic_star_border_24px;
 
-    private Drawable savedIcon, unsavedIcon;
+    private Drawable savedIcon;
 
     private ImageView profileImageView, mediaImageView;
     private MaterialButton likes, retweets, saveBtn;
@@ -66,36 +60,44 @@ public class SavedPostsAdapter extends CursorAdapter {
     public void bindView(View mainView, Context context, Cursor cursor) {
 
         setupViews(mainView);
-
         populateViews(cursor);
     }
 
     private void populateViews(Cursor c) {
 
         SAMTweet tweet = repo.tweetFromCursor(c);
-        profileImageView.setImageBitmap(provider.getImage(tweet.getUser().getProfileImageUrl()));
+
+        String profileImageUrl = tweet.getUser().getProfileImageUrl();
+        Bitmap profileImage = provider.getImage(profileImageUrl);
+
+        if (null == profileImage) {
+
+            profileImageView.setImageBitmap(null); // TODO: vediamo se risolve
+            provider.enqueueImageDownload(profileImageUrl, () -> {
+
+                Bitmap b = provider.getImage(profileImageUrl); // se il download e' andato bene ora ci sara' la bitmap
+                profileImageView.setImageBitmap(b);
+                notifyDataSetChanged();
+            });
+        } else {
+
+            profileImageView.setImageBitmap(profileImage);
+        }
+
 
         Bitmap mediaBitmap = Optional.<String>ofNullable(tweet.getMediaURL())
                 .map(mediaURL -> provider.getImage(mediaURL))
                 .orElse(null);
+
         mediaImageView.setImageBitmap(mediaBitmap);
 
         usernameView.setText(tweet.getUser().getScreenName());
         tweetBodyView.setText(tweet.getText());
 
-        retweets.setText(Integer.valueOf(tweet.getRetweetCount()));
-        likes.setText(Integer.valueOf(tweet.getFavoriteCount()));
+        retweets.setText(Integer.toString(tweet.getRetweetCount()));
+        likes.setText(Integer.toString(tweet.getFavoriteCount()));
 
-        // saveBtn.setIcon(tweet.getSaved() ? savedIcon : unsavedIcon);
-        /*if (null == savedIcon) {
-            savedIcon = itemView.getResources().getDrawable(SAVED_ICON_RES, null);
-        }*/
         saveBtn.setIcon(savedIcon);
-
-        resetMarginForItem();
-        if (c.isLast()) {
-            setupMarginForLastItem();
-        }
 
         setupSavedButton(tweet);
     }
@@ -104,9 +106,8 @@ public class SavedPostsAdapter extends CursorAdapter {
 
         saveBtn.setOnClickListener(view -> {
             repo.delete(tweet.getId());
-            notifyDataSetChanged();
+            changeCursor(repo.findAllCursor());
         });
-
     }
 
     private void setupViews(View mainView) {
@@ -122,30 +123,4 @@ public class SavedPostsAdapter extends CursorAdapter {
 
         originalMinHeight = mainView.getMinimumHeight();
     }
-
-    public void setupMarginForLastItem() {
-
-        itemView.setMinimumHeight(originalMinHeight + LAST_ITEM_OFFSET);
-    }
-
-    public void resetMarginForItem() {
-
-        itemView.setMinimumHeight(originalMinHeight);
-    }
-
-    /*@NonNull
-    @Override
-    public SavedPostsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull SavedPostsViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }*/
 }

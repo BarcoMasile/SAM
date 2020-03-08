@@ -3,6 +3,7 @@ package xyz.marcobasile.ui.adapter.map;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import xyz.marcobasile.ui.map.util.MapSetupUtils;
 class MapTweetUserViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = MapTweetUserViewHolder.class.getName();
-    private static final int LAST_ITEM_OFFSET = 148;
+    private static final int LAST_ITEM_OFFSET = 200;
 
     private ImageView profileImage;
     private TextView username;

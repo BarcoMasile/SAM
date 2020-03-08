@@ -94,7 +94,6 @@ public class MapFragment extends Fragment {
 
         mapTweetUserAdapter = new MapTweetUserAdapter(provider, mapUtils);
         recyclerView.setAdapter(mapTweetUserAdapter);
-        //recyclerView.addOnItemTouchListener(null);
 
         mapView.onCreate(savedInstanceState);
     }

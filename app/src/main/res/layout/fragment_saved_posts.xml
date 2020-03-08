@@ -9,7 +9,8 @@
     android:focusableInTouchMode="true"
     tools:visibility="visible">
 
-    <EditText
+<!--    <EditText-->
+    <SearchView
         android:id="@+id/search_string"
         android:layout_width="278dp"
         android:layout_height="47dp"
@@ -34,8 +35,8 @@
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
         app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,24 +66,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="50dp"
         android:background="#6FFFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/touch_layer_sp"
         app:layout_constraintTop_toBottomOf="@+id/search_string"
         tools:listitem="@layout/sam_tweet_item_layout">
 
     </ListView>
-
-    <FrameLayout
-        android:id="@+id/touch_layer_sp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="auto"
-        android:focusableInTouchMode="true"
-        tools:visibility="gone">
-
-    </FrameLayout>
 
     <Button
         android:id="@+id/clear_str_btn"
@@ -93,90 +84,9 @@
         android:layout_marginStart="240dp"
         android:layout_marginTop="18dp"
         android:backgroundTint="#00FFFFFF"
+        android:visibility="gone"
         app:icon="@drawable/tw__composer_close"
         app:iconSize="10dp"
         tools:visibility="gone" />
 
 </RelativeLayout>
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FABE6B"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:visibility="visible">
-
-    <Button
-        android:id="@+id/search_btn"
-        android:layout_width="94dp"
-        android:layout_height="49dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="303dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="666dp"
-        android:text="@string/saved_posts_search_btn"
-        android:visibility="visible"
-        app:backgroundTint="@color/textColor"
-        app:layout_constraintBaseline_toBaselineOf="@+id/search_string"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/opaque_layer"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#6FFFFFFF"
-        android:visibility="invisible" />
-
-    <EditText
-        android:id="@+id/search_string"
-        android:layout_width="263dp"
-        android:layout_height="47dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="132dp"
-        android:layout_marginBottom="668dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#81FFFFFF"
-        android:contextClickable="true"
-        android:elegantTextHeight="true"
-        android:ems="10"
-        android:enabled="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:hint="@string/saved_posts_search_string"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:labelFor="@id/search_btn"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/touch_layer_sp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="auto"
-        android:focusableInTouchMode="true"
-        android:visibility="invisible">
-
-    </FrameLayout>
-
-</RelativeLayout>-->

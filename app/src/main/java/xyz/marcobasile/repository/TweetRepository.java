@@ -11,14 +11,11 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import xyz.marcobasile.model.SAMTweet;
 import xyz.marcobasile.model.SAMTwitterUser;
 import xyz.marcobasile.service.ContentProvider;
 
-import static xyz.marcobasile.repository.DatabaseUtils.*;
 import static xyz.marcobasile.repository.DatabaseUtils.Tweet.*;
 import static xyz.marcobasile.repository.DatabaseUtils.Tweet.ALL_COLUMNS;
 import static xyz.marcobasile.repository.DatabaseUtils.Tweet.DELETE;
@@ -133,7 +130,7 @@ public class TweetRepository extends SQLiteOpenHelper {
     public Cursor searchByStringCursor(String search) {
 
         SQLiteDatabase db = getReadableDatabase();
-        return db.query(TABLE, ALL_COLUMNS, SEARCH, new String[]{search}, null, null, null);
+        return db.query(TABLE, ALL_COLUMNS, SEARCH, new String[]{"%" + search.toUpperCase() + "%" }, null, null, null);
     }
 
     private List<SAMTweet> tweetCollectionFromCursor(Cursor c) {
