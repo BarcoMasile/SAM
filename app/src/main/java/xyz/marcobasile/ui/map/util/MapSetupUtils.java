@@ -3,13 +3,10 @@ package xyz.marcobasile.ui.map.util;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,13 +19,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.model.SAMTwitterUser;
@@ -52,7 +44,6 @@ public class MapSetupUtils {
     private MapView mapView;
 
     private CameraUpdate cameraUpdate;
-    private FusedLocationProviderClient fusedLocationClient;
     private ContentProvider provider;
 
     private List<Marker> markers = new ArrayList<>();
@@ -60,7 +51,6 @@ public class MapSetupUtils {
     public MapSetupUtils(Fragment fragment, ContentProvider provider) {
 
         this.fragment = fragment;
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(fragment.getContext());
         this.provider = provider;
     }
 
@@ -114,15 +104,11 @@ public class MapSetupUtils {
 
         // setto la posizione al primo elemento
         provider.users().stream().findFirst()
-                .ifPresent(this::setupCameraPosition);
+                .ifPresent(this::setCameraOnUser);
     }
+
 
     public void setCameraOnUser(SAMTwitterUser user) {
-
-        setupCameraPosition(user);
-    }
-
-    private void setupCameraPosition(SAMTwitterUser user) {
 
         LatLng latLng = user.getLatLng();
         cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, INITIAL_ZOOM);
