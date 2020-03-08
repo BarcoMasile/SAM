@@ -41,8 +41,10 @@ import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MapSetupUtils {
+
     private static final String TAG = MapSetupUtils.class.getName();
     private static final String[] permessi = new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
+
     private static final float INITIAL_ZOOM = 14.5f;
     private BitmapDescriptor DEFAULT_BITMAP_DESCRIPTOR;
 
