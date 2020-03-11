@@ -83,6 +83,7 @@ public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitma
 
             InputStream input = connection.getInputStream();
             bitmap = BitmapFactory.decodeStream(input);
+            input.close();
 
             provider.putImage(urlString, bitmap);
 

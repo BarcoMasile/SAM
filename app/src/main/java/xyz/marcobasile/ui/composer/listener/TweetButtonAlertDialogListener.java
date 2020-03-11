@@ -35,13 +35,19 @@ public class TweetButtonAlertDialogListener implements DialogInterface.OnClickLi
             // deve avviare
             toggleProgressBar.doProcedure();
 
-            if (null == pictureHolder.getPictureUri()) {
+            if (!pictureHolder.canProvide()) {
 
                 client.postTweet(tweetText, postTweetCallback);
             } else {
 
+                if (pictureHolder.hasBitmap()) {
+                    client.postTweetWithPicture(tweetText, pictureHolder.getPictureBytes(), postTweetCallback, textView.getContext());
+                } else {
+                    client.postTweetWithPicture(tweetText, pictureHolder.getPictureUri(), postTweetCallback, textView.getContext());
+                }
+
                 Uri imageUri = pictureHolder.getPictureUri();
-                client.postTweetWithPicture(tweetText, imageUri, postTweetCallback, textView.getContext());
+
             }
 
         }

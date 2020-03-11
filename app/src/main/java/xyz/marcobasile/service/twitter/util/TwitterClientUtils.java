@@ -39,9 +39,14 @@ public class TwitterClientUtils {
     }
 
     public static Call<Media> picUpload(Uri pictureUri, Context ctx) {
-        byte[] imageFileBytes = getFileFromUri(pictureUri, ctx);
 
-        RequestBody mediaBody = RequestBody.create(MediaType.parse("image/jpeg"), imageFileBytes);
+        byte[] imageFileBytes = getFileFromUri(pictureUri, ctx);
+        return picUpload(imageFileBytes, ctx);
+    }
+
+    public static Call<Media> picUpload(byte[] pictureBytes, Context ctx) {
+
+        RequestBody mediaBody = RequestBody.create(MediaType.parse("image/jpeg"), pictureBytes);
         return media.upload(mediaBody, null, null);
     }
 

@@ -7,6 +7,8 @@
     <color name="textColor">#B7D8135B</color>
     <color name="itemTextColor">#E9D313</color>
 
+    <color name="post_success_color">#FFEB3B</color>
+
     <color name="login_success_color">#81C639</color>
     <color name="login_failure_color">#EB034E</color>
 

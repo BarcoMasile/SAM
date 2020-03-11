@@ -50,11 +50,12 @@ public class MapTweetUserAdapter extends RecyclerView.Adapter<MapTweetUserViewHo
             mapUtils.setCameraOnUser(user);
         });
 
-        holder.resetMarginForItem();
+        // TODO: vedere se non cambia niente
+        /*holder.resetMarginForItem();
         if (position == provider.users().size() - 1) {
             // e' l'ultimo item
             holder.setupMarginForLastItem();
-        }
+        }*/
     }
 
     @Override

@@ -24,10 +24,10 @@ import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 public class TwitterClient {
 
     private static String TAG = TwitterClient.class.getName();
-    private static final Integer TWEET_COUNT = 40;
+    private static final Integer TWEET_COUNT = 100;
 
     private Long sinceId = null;
-    private Long maxId = null;
+//    private Long maxId = null;
     private static final Boolean CONTRIBUTE_DETAILS = true;
     private static final Boolean INCLUDE_ENTITIES = true;
 
@@ -52,7 +52,6 @@ public class TwitterClient {
 
     public void getHomeTimelineTweets(ContentProvider provider, GenericProcedure callback) {
 
-        // Long maxId = null == sinceId ? null : sinceId - 1 - TWEET_COUNT;
         Call<List<Tweet>> listCall = apiClient.getStatusesService()
                 .homeTimeline(TWEET_COUNT, sinceId, null/*maxId*/,
                         false, true,
@@ -70,6 +69,12 @@ public class TwitterClient {
     public void postTweetWithPicture(String tweet, Uri imageUri, Callback<Tweet> callback, Context ctx) {
 
         Call<Media> upload = TwitterClientUtils.picUpload(imageUri, ctx);
+        upload.enqueue(new MediaCallback(tweet, callback));
+    }
+
+    public void postTweetWithPicture(String tweet, byte[] imageBytes, Callback<Tweet> callback, Context ctx) {
+
+        Call<Media> upload = TwitterClientUtils.picUpload(imageBytes, ctx);
         upload.enqueue(new MediaCallback(tweet, callback));
     }
 
@@ -104,11 +109,11 @@ public class TwitterClient {
         return sinceId;
     }
 
-    public void setMaxId(Long maxId) {
+    /*public void setMaxId(Long maxId) {
         this.maxId = maxId.equals(this.maxId) ? this.maxId : maxId - 1;
     }
 
     public Long getMaxId() {
         return maxId;
-    }
+    }*/
 }

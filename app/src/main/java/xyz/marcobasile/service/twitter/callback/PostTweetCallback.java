@@ -60,7 +60,7 @@ public class PostTweetCallback implements Callback<Tweet> {
 
     private void snackbar(String msg) {
         Snackbar snackbar = Snackbar.make(textView, msg, Snackbar.LENGTH_LONG);
-        snackbar.getView().setBackgroundResource(R.color.textColor);
+        snackbar.getView().setBackgroundResource(R.color.post_success_color);
         snackbar.show();
     }
 }

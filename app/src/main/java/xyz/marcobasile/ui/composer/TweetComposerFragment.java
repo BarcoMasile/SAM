@@ -1,7 +1,10 @@
 package xyz.marcobasile.ui.composer;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -22,18 +25,22 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.Arrays;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.doodling.DoodlingActivity;
 import xyz.marcobasile.model.PictureHolder;
 import xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListeners;
 import xyz.marcobasile.ui.composer.util.TweetComposerFragmentUtils;
 
+import static xyz.marcobasile.doodling.DoodlingActivity.DOODLE_EXTRA;
+
 public class TweetComposerFragment extends Fragment {
     private static final int IMAGE_PICKER_CODE = 1;
+    private static final int DOODLING_CODE = 2;
     private final String TAG = this.getClass().getName();
     private final int CHARACTER_LIMIT = 280;
 
     private TextInputEditText tweetBodyView;
     private MaterialButton tweetBtn, cancelBtn;
-    private Button pickImage, clearAttach, attachIcon;
+    private Button pickImage, clearAttach, attachIcon, doodle;
     private ChipGroup chipGroup;
     private ProgressBar bar;
     private View backdrop;
@@ -63,15 +70,24 @@ public class TweetComposerFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        
-        if (requestCode != IMAGE_PICKER_CODE || null == imageReturnedIntent ) {
-            clearAttach.setEnabled(pictureHolder.getPictureUri() != null);
+
+        if (null == imageReturnedIntent || resultCode != Activity.RESULT_OK) {
+            clearAttach.setEnabled(pictureHolder.canProvide());
             return;
         }
 
+        if (requestCode == IMAGE_PICKER_CODE) {
+
+            pictureHolder.setPictureUri(imageReturnedIntent.getData());
+        } else if (requestCode == DOODLING_CODE) {
+
+            byte[] bitmapBytes = imageReturnedIntent.getByteArrayExtra(DOODLE_EXTRA);
+            pictureHolder.setPictureBytes(bitmapBytes);
+        }
+
         attachIcon.setVisibility(View.VISIBLE);
-        pictureHolder.setPictureUri(imageReturnedIntent.getData());
         clearAttach.setEnabled(true);
+
     }
 
 
@@ -86,6 +102,7 @@ public class TweetComposerFragment extends Fragment {
         pickImage = root.<Button>findViewById(R.id.image_picker_btn);
         clearAttach = root.<Button>findViewById(R.id.delete_attach_btn);
         clearAttach.setEnabled(false);
+        doodle = root.findViewById(R.id.doodle_btn);
 
         // backdrop & progress bar
         backdrop = root.<View>findViewById(R.id.backdrop);
@@ -100,6 +117,7 @@ public class TweetComposerFragment extends Fragment {
     }
 
     public void toggleProgressBarAndBackDrop() {
+
         if (bar.getVisibility() == View.VISIBLE) {
 
             bar.setVisibility(View.INVISIBLE);
@@ -142,6 +160,12 @@ public class TweetComposerFragment extends Fragment {
             pictureHolder.clear();
             attachIcon.setVisibility(View.INVISIBLE);
             view.setEnabled(false);
+        });
+
+        doodle.setOnClickListener(view -> {
+
+            Intent intent = new Intent(DoodlingActivity.DOODLING_INTENT);
+            startActivityForResult(intent, DOODLING_CODE);
         });
 
         touchLayer.setOnTouchListener(TweetComposerFragmentListeners.layer(tweetBodyView));

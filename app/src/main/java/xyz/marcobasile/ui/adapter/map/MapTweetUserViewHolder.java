@@ -58,7 +58,7 @@ class MapTweetUserViewHolder extends RecyclerView.ViewHolder {
         originalMinHeight = mainView.getMinimumHeight();
     }
 
-    public void setupMarginForLastItem() {
+    /*public void setupMarginForLastItem() {
 
         itemView.setMinimumHeight(originalMinHeight + LAST_ITEM_OFFSET);
     }
@@ -66,5 +66,5 @@ class MapTweetUserViewHolder extends RecyclerView.ViewHolder {
     public void resetMarginForItem() {
 
         itemView.setMinimumHeight(originalMinHeight);
-    }
+    }*/
 }
