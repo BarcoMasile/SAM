@@ -47,6 +47,7 @@ public class DoodlingActivity extends AppCompatActivity {
         this.cancel = findViewById(R.id.doodle_cancel_btn);
         this.save = findViewById(R.id.doodle_save_btn);
         this.ctrlZ = findViewById(R.id.control_z);
+        this.ctrlZ.setEnabled(false);
 
         this.color_1 = findViewById(R.id.color_1);
         this.color_2 = findViewById(R.id.color_2);

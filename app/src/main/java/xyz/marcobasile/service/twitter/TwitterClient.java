@@ -24,7 +24,7 @@ import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 public class TwitterClient {
 
     private static String TAG = TwitterClient.class.getName();
-    private static final Integer TWEET_COUNT = 100;
+    private static final Integer TWEET_COUNT = 80;
 
     private Long sinceId = null;
 //    private Long maxId = null;
