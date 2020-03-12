@@ -73,8 +73,9 @@ public class DoodlingView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);;
         mCanvas = new Canvas(mBitmap);
+        mCanvas.drawColor(Color.WHITE);
     }
 
     @Override
@@ -82,6 +83,7 @@ public class DoodlingView extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap( mBitmap, 0, 0, mBitmapPaint);
+//        canvas.drawColor(Color.WHITE);
         canvas.drawPath( mPath,  mPaint);
         canvas.drawPath( circlePath,  circlePaint);
     }

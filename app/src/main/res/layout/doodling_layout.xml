@@ -41,31 +41,34 @@
         android:layout_marginStart="34dp"
         android:layout_marginTop="500dp"
         android:layout_marginEnd="34dp"
+        android:hapticFeedbackEnabled="true"
         android:indeterminate="false"
         android:max="6"
         android:progress="1"
         android:progressTint="#FFC107"
         android:scaleX="1.15"
         android:scaleY="1.15"
+        android:thumb="@drawable/ic_create_24px"
+        android:thumbOffset="4dp"
         android:thumbTint="#E91E63" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/control_z"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="122dp"
         android:clickable="true"
         android:focusable="true"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
         android:foregroundTint="#FFFFFF"
-        android:src="@android:drawable/ic_menu_revert"
+        android:src="@drawable/ic_refresh_24px"
         android:textAlignment="center"
         android:tint="#FFFFFF"
         app:backgroundTint="#0000BCD4"
-        app:fabSize="mini"
-        app:maxImageSize="10dp" />
+        app:fabSize="mini" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/color_3"
@@ -78,6 +81,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foregroundTint="#FFFFFF"
+        android:src="@drawable/ic_colorize_24px"
         android:tint="#FFFFFF"
         app:backgroundTint="#FF9800"
         app:fabSize="mini" />
@@ -93,6 +97,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foregroundTint="#FFFFFF"
+        android:src="@drawable/ic_colorize_24px"
         android:tint="#FFFFFF"
         app:backgroundTint="#EC407A"
         app:fabSize="mini" />
@@ -108,6 +113,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foregroundTint="#FFFFFF"
+        android:src="@drawable/ic_colorize_24px"
         android:tint="#FFFFFF"
         app:backgroundTint="#42A5F5"
         app:fabSize="mini" />
