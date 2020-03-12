@@ -69,12 +69,6 @@ public class DoodlingView extends View {
         initView(context);
     }
 
-    /*public DoodlingView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context);
-
-    }*/
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -149,5 +143,13 @@ public class DoodlingView extends View {
     public Bitmap getBitmap() {
 
         return mBitmap;
+    }
+
+    public void setStrokeColor(int color) {
+        mPaint.setColor(color);
+    }
+
+    public void setStrokeWidth(int factor) {
+        mPaint.setStrokeWidth(12.f * (float) factor);
     }
 }

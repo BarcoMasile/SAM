@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <xyz.marcobasile.doodling.DoodlingView
@@ -14,9 +16,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="34dp"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="15dp"
         android:backgroundTint="#E91E63"
-        android:text="Save" />
+        android:text="@string/save_doodle" />
 
     <Button
         android:id="@+id/doodle_cancel_btn"
@@ -25,8 +27,89 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="34dp"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="15dp"
         android:backgroundTint="#3F51B5"
-        android:text="Cancel" />
+        android:text="@string/cancel_tweet" />
+
+    <SeekBar
+        android:id="@+id/stroke_width_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="34dp"
+        android:indeterminate="false"
+        android:max="6"
+        android:progress="1"
+        android:progressTint="#FFC107"
+        android:scaleX="1.15"
+        android:scaleY="1.15"
+        android:thumbTint="#E91E63" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/control_z"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="122dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foregroundTint="#FFFFFF"
+        android:src="@android:drawable/ic_menu_revert"
+        android:textAlignment="center"
+        android:tint="#FFFFFF"
+        app:backgroundTint="#0000BCD4"
+        app:fabSize="mini"
+        app:maxImageSize="10dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/color_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="315dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foregroundTint="#FFFFFF"
+        android:tint="#FFFFFF"
+        app:backgroundTint="#FF9800"
+        app:fabSize="mini" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/color_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="199dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foregroundTint="#FFFFFF"
+        android:tint="#FFFFFF"
+        app:backgroundTint="#EC407A"
+        app:fabSize="mini" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/color_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="257dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foregroundTint="#FFFFFF"
+        android:tint="#FFFFFF"
+        app:backgroundTint="#42A5F5"
+        app:fabSize="mini" />
 
 </RelativeLayout>

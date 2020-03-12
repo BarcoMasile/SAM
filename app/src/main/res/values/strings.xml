@@ -33,6 +33,7 @@
     <string name="saved_posts_search_btn">Search</string>
     <string name="profile_image_description">profile image</string>
     <string name="doodle_btn_text">Draw</string>
+    <string name="save_doodle">Save</string>
 
 
 </resources>
