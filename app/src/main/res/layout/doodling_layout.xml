@@ -53,21 +53,19 @@
         android:thumbTint="#E91E63" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/control_z"
+        android:id="@+id/color_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="122dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="346dp"
         android:clickable="true"
         android:focusable="true"
-        android:foregroundGravity="center_vertical|center|center_horizontal"
         android:foregroundTint="#FFFFFF"
-        android:src="@drawable/ic_refresh_24px"
-        android:textAlignment="center"
+        android:src="@drawable/ic_colorize_24px"
         android:tint="#FFFFFF"
-        app:backgroundTint="#0000BCD4"
+        app:backgroundTint="#31F00E"
         app:fabSize="mini" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -76,8 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="315dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="288dp"
         android:clickable="true"
         android:focusable="true"
         android:foregroundTint="#FFFFFF"
@@ -92,8 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="199dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="172dp"
         android:clickable="true"
         android:focusable="true"
         android:foregroundTint="#FFFFFF"
@@ -108,14 +106,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="257dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="230dp"
         android:clickable="true"
         android:focusable="true"
         android:foregroundTint="#FFFFFF"
         android:src="@drawable/ic_colorize_24px"
         android:tint="#FFFFFF"
         app:backgroundTint="#42A5F5"
+        app:fabSize="mini" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/control_z"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="114dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:foregroundTint="#FFFFFF"
+        android:src="@drawable/ic_refresh_24px"
+        android:textAlignment="center"
+        android:tint="#FFFFFF"
+        app:backgroundTint="#0000BCD4"
         app:fabSize="mini" />
 
 </RelativeLayout>

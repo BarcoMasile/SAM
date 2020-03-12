@@ -12,146 +12,197 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DoodlingView extends View {
 
+    private static final float STROKE_WIDTH = 12.f;
+    private static final float CIRLE_STROKE_WIDTH = 4f;
+    private static final float CIRCLE_RADIUS = 30.f;
+
     private ArrayDeque<Path> pathStack = new ArrayDeque<>();
-    private Context ctx;
+    private OnPathStackChangeCallback onPathStackChangeCallback;
+    private Map<Path,Paint> paintMap = new HashMap<>();
 
     public int width, height;
-    private Bitmap mBitmap;
-    private Canvas mCanvas;
-    private Path mPath;
-    private Paint mBitmapPaint;
-    private Paint circlePaint;
-    private Path circlePath;
-    private Paint mPaint;
 
-    {
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setColor(Color.GREEN);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(12);
-    }
+    private Bitmap bitmap;
+    private Canvas canvas;
+    private Paint canvasPaint, bitmapPaint, circlePaint;
+    private Path path, circlePath;
 
-    private void initView(Context context) {
+    private float x, y;
+    private Float stroke = Float.valueOf(STROKE_WIDTH);
 
-        ctx = context;
-        mPath = new Path();
-        mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-        circlePaint = new Paint();
-        circlePath = new Path();
-        circlePaint.setAntiAlias(true);
-        circlePaint.setColor(Color.BLUE);
-        circlePaint.setStyle(Paint.Style.STROKE);
-        circlePaint.setStrokeJoin(Paint.Join.MITER);
-        circlePaint.setStrokeWidth(4f);
-    }
 
     public DoodlingView(Context context) {
         super(context);
-        initView(context);
+        setupView();
+        setupCanvas();
     }
 
     public DoodlingView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView(context);
+        setupView();
+        setupCanvas();
     }
 
     public DoodlingView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context);
+        setupView();
+        setupCanvas();
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int width, int height, int prevWidth, int prevHeight) {
+        super.onSizeChanged(width, height, prevWidth, prevHeight);
 
-        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);;
-        mCanvas = new Canvas(mBitmap);
-        mCanvas.drawColor(Color.WHITE);
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.WHITE);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap( mBitmap, 0, 0, mBitmapPaint);
-//        canvas.drawColor(Color.WHITE);
-        canvas.drawPath( mPath,  mPaint);
-        canvas.drawPath( circlePath,  circlePaint);
+        canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
+        canvas.drawPath(path, canvasPaint);
+        canvas.drawPath(circlePath, circlePaint);
     }
 
-    private float mX, mY;
-    private static final float TOUCH_TOLERANCE = 4;
 
-    private void touch_start(float x, float y) {
-        mPath.reset();
-        mPath.moveTo(x, y);
-        mX = x;
-        mY = y;
+    private void touchDown(float _x, float _y) {
+        
+        path.reset();
+        path.moveTo(_x, _y);
+        x = _x;
+        y = _y;
     }
 
-    private void touch_move(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
-        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
-            mX = x;
-            mY = y;
+    private void touchDrag(float _x, float _y) {
+        x = _x;
+        y = _y;
 
-            circlePath.reset();
-            circlePath.addCircle(mX, mY, 30, Path.Direction.CW);
-        }
-    }
+        path.quadTo(x, y, (_x + x)/2, (_y + y)/2);
 
-    private void touch_up() {
-        mPath.lineTo(mX, mY);
         circlePath.reset();
-        // commit the path to our offscreen
-        mCanvas.drawPath(mPath,  mPaint);
+        circlePath.addCircle(x, y, CIRCLE_RADIUS, Path.Direction.CW);
+    }
+
+    private void touchUp() {
+
+        path.lineTo(x, y);
+        circlePath.reset();
+
+        canvas.drawPath(path, canvasPaint);
+        addPath(path);
         // kill this so we don't double draw
-        mPath.reset();
+        path.reset();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
+
+        float _x = event.getX();
+        float _y = event.getY();
 
         switch (event.getAction()) {
+
             case MotionEvent.ACTION_DOWN:
-                touch_start(x, y);
+                touchDown(_x, _y);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
-                touch_move(x, y);
+                touchDrag(_x, _y);
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-                touch_up();
+                touchUp();
                 invalidate();
                 break;
         }
+
         return true;
     }
 
-    public Bitmap getBitmap() {
+    private void addPath(Path p) {
 
-        return mBitmap;
+        pathStack.push(p);
+        paintMap.put(p, canvasPaint);
+
+        canvasPaint = new Paint(canvasPaint);
+
+        path = new Path();
+
+        if (onPathStackChangeCallback != null) {
+            onPathStackChangeCallback.onDataChange(pathStack.isEmpty());
+        }
+    }
+
+    public void undo() {
+
+        pathStack.poll();
+
+        canvas.drawColor(Color.WHITE);
+        pathStack.forEach(path -> {
+            canvas.drawPath(path, paintMap.getOrDefault(path, canvasPaint));
+        });
+        invalidate();
+
+        if (onPathStackChangeCallback != null) {
+            onPathStackChangeCallback.onDataChange(pathStack.isEmpty());
+        }
+    }
+
+
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 
     public void setStrokeColor(int color) {
-        mPaint.setColor(color);
+        canvasPaint.setColor(color);
     }
 
     public void setStrokeWidth(int factor) {
-        mPaint.setStrokeWidth(12.f * (float) factor);
+        stroke = STROKE_WIDTH * (float) factor;
+        canvasPaint.setStrokeWidth(stroke);
+    }
+
+    public void setOnPathStackChangeCallback(OnPathStackChangeCallback cb) {
+        this.onPathStackChangeCallback = cb;
+    }
+
+    private void setupCanvas() {
+
+        canvasPaint = new Paint();
+        canvasPaint.setAntiAlias(true);
+        canvasPaint.setDither(true);
+        canvasPaint.setStyle(Paint.Style.STROKE);
+        canvasPaint.setStrokeJoin(Paint.Join.ROUND);
+        canvasPaint.setStrokeCap(Paint.Cap.ROUND);
+        canvasPaint.setStrokeWidth(STROKE_WIDTH);
+    }
+
+    private void setupView() {
+
+        bitmapPaint = new Paint(Paint.DITHER_FLAG);
+        path = new Path();
+
+        circlePath = new Path();
+
+        circlePaint = new Paint();
+        circlePaint.setAntiAlias(true);
+        circlePaint.setColor(Color.BLUE);
+        circlePaint.setStyle(Paint.Style.STROKE);
+        circlePaint.setStrokeJoin(Paint.Join.MITER);
+        circlePaint.setStrokeWidth(CIRLE_STROKE_WIDTH);
+    }
+
+    public static interface OnPathStackChangeCallback {
+
+        void onDataChange(boolean isEmpty);
     }
 }

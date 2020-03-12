@@ -3,11 +3,7 @@ package xyz.marcobasile.doodling;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -17,9 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 
 import xyz.marcobasile.R;
 
@@ -30,7 +24,7 @@ public class DoodlingActivity extends AppCompatActivity {
 
     private DoodlingView doodlingView;
     private Button cancel, save;
-    private FloatingActionButton color_1, color_2, color_3;
+    private FloatingActionButton color_1, color_2, color_3, color_4, ctrlZ;
     private SeekBar strokeBar;
 
     @Override
@@ -47,11 +41,17 @@ public class DoodlingActivity extends AppCompatActivity {
         this.doodlingView = findViewById(R.id.doodle_view);
         this.cancel = findViewById(R.id.doodle_cancel_btn);
         this.save = findViewById(R.id.doodle_save_btn);
+        this.ctrlZ = findViewById(R.id.control_z);
+
         this.color_1 = findViewById(R.id.color_1);
         this.color_2 = findViewById(R.id.color_2);
         this.color_3 = findViewById(R.id.color_3);
-        
+        this.color_4 = findViewById(R.id.color_4);
+
         this.strokeBar = findViewById(R.id.stroke_width_bar);
+
+        doodlingView.setStrokeColor(color_1.getBackgroundTintList().getDefaultColor());
+        doodlingView.setOnPathStackChangeCallback(isEmpty -> ctrlZ.setEnabled(!isEmpty));
     }
 
     public void setupListeners() {
@@ -69,15 +69,21 @@ public class DoodlingActivity extends AppCompatActivity {
             finish();
         });
 
+        ctrlZ.setOnClickListener(view -> {
+
+            doodlingView.undo();
+        });
+
         color_1.setOnClickListener(colorClickListener(color_1));
         color_2.setOnClickListener(colorClickListener(color_2));
         color_3.setOnClickListener(colorClickListener(color_3));
+        color_4.setOnClickListener(colorClickListener(color_4));
 
         strokeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                // seekBar.getThumb().set
+                //
             }
 
             @Override
