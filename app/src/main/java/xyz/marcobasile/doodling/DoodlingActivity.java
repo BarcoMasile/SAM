@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import xyz.marcobasile.R;
 
@@ -26,6 +29,8 @@ public class DoodlingActivity extends AppCompatActivity {
     private Button cancel, save;
     private FloatingActionButton color_1, color_2, color_3, color_4, ctrlZ;
     private SeekBar strokeBar;
+
+    private List<View> hideOnDrag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,14 +57,29 @@ public class DoodlingActivity extends AppCompatActivity {
 
         doodlingView.setStrokeColor(color_1.getBackgroundTintList().getDefaultColor());
         doodlingView.setOnPathStackChangeCallback(isEmpty -> ctrlZ.setEnabled(!isEmpty));
+
+        hideOnDrag = Arrays.asList(cancel, save, ctrlZ, color_1, color_2, color_3, color_4, strokeBar);
     }
 
     public void setupListeners() {
 
+        doodlingView.setOnTouchDragCallback(new DoodlingView.OnTouchDragCallback() {
+
+            @Override
+            public void onDragStart() {
+                hideOnDrag.forEach(view -> view.setVisibility(View.INVISIBLE));
+            }
+
+            @Override
+            public void onDragEnd() {
+                hideOnDrag.forEach(view -> view.setVisibility(View.VISIBLE));
+            }
+        });
+
         save.setOnClickListener(view -> {
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            doodlingView.getBitmap().compress(Bitmap.CompressFormat.JPEG, 25, bos);
+            doodlingView.getBitmap().compress(Bitmap.CompressFormat.JPEG, 40, bos);
             setIntentResultAndFinish(bos.toByteArray());
         });
 

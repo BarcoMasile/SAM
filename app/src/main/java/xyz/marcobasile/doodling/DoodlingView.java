@@ -22,8 +22,10 @@ public class DoodlingView extends View {
     private static final float CIRLE_STROKE_WIDTH = 4f;
     private static final float CIRCLE_RADIUS = 30.f;
 
-    private ArrayDeque<Path> pathStack = new ArrayDeque<>();
     private OnPathStackChangeCallback onPathStackChangeCallback;
+    private OnTouchDragCallback onTouchDragCallback;
+
+    private ArrayDeque<Path> pathStack = new ArrayDeque<>();
     private Map<Path,Paint> paintMap = new HashMap<>();
 
     public int width, height;
@@ -80,6 +82,10 @@ public class DoodlingView extends View {
         path.moveTo(_x, _y);
         x = _x;
         y = _y;
+
+        if (onTouchDragCallback != null) {
+            onTouchDragCallback.onDragStart();
+        }
     }
 
     private void touchDrag(float _x, float _y) {
@@ -101,6 +107,10 @@ public class DoodlingView extends View {
         addPath(path);
         // kill this so we don't double draw
         path.reset();
+
+        if (onTouchDragCallback != null) {
+            onTouchDragCallback.onDragEnd();
+        }
     }
 
     @Override
@@ -175,6 +185,10 @@ public class DoodlingView extends View {
         this.onPathStackChangeCallback = cb;
     }
 
+    public void setOnTouchDragCallback(OnTouchDragCallback cb) {
+        this.onTouchDragCallback = cb;
+    }
+
     private void setupCanvas() {
 
         canvasPaint = new Paint();
@@ -204,5 +218,12 @@ public class DoodlingView extends View {
     public static interface OnPathStackChangeCallback {
 
         void onDataChange(boolean isEmpty);
+    }
+
+    public static interface OnTouchDragCallback {
+
+        void onDragStart();
+
+        void onDragEnd();
     }
 }
