@@ -40,20 +40,23 @@ public class MainActivity extends AppCompatActivity {
 
         if (!LoginUtils.isUserAuthenticated()) {
             setupLoginView();
+        } else {
+            TwitterClient.createTwitterClient();
         }
-        TwitterClient.createTwitterClient();
         Log.i(TAG, "Done creating " + TAG);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         loginBtn.onActivityResult(requestCode, resultCode, data);
         welcomeTextView.setVisibility(View.INVISIBLE);
         loginBtn.setVisibility(View.INVISIBLE);
     }
 
     private void setupMainView() {
+
         setContentView(R.layout.activity_main_relative_layout);
         loginBtn = findViewById(R.id.login_button);
         welcomeTextView = findViewById(R.id.welcome_text);
@@ -75,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
         welcomeTextView.setVisibility(View.VISIBLE);
         loginBtn.setVisibility(View.VISIBLE);
         navView.setVisibility(View.INVISIBLE);
-    }
-
-    private void setupServices() {
-        //
     }
 
 }

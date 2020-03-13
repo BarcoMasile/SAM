@@ -18,6 +18,7 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import xyz.marcobasile.R;
+import xyz.marcobasile.service.twitter.TwitterClient;
 
 
 public class LoginUtils {
@@ -32,14 +33,14 @@ public class LoginUtils {
         return null != session;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+//    @RequiresApi(api = Build.VERSION_CODES.M)
     private static void loginSuccessfulToast(Context ctx) {
         Toast toast = Toast.makeText(ctx, R.string.toast_login_successful, Toast.LENGTH_LONG);
         toast.getView().setBackgroundColor(ctx.getColor(R.color.login_success_color));
         toast.show();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+//    @RequiresApi(api = Build.VERSION_CODES.M)
     private static void loginFailureToast(Context ctx) {
         Toast toast = Toast.makeText(ctx, R.string.toast_login_failure, Toast.LENGTH_LONG);
         toast.getView().setBackgroundColor(ctx.getColor(R.color.login_failure_color));
@@ -60,7 +61,6 @@ public class LoginUtils {
             this.navView = navView;
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void success(Result<TwitterSession> result) {
             Log.i(TAG, "Twitter Login successful");
@@ -73,14 +73,15 @@ public class LoginUtils {
             navView.setVisibility(View.VISIBLE);
 
             loginSuccessfulToast(ctx);
+
+            //Generic procedure da usare qui per popolare il fragment e avviare il timer
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void failure(TwitterException exception) {
             Log.w(TAG, "Twitter Login failure");
             Log.d(TAG, "Message: " + exception.getLocalizedMessage());
-            TwitterCore.getInstance().getSessionManager().clearActiveSession(); // TODO: verificare non faccia danni
+            TwitterCore.getInstance().getSessionManager().clearActiveSession(); // non dovrebbe far danni
             loginFailureToast(ctx);
         }
     };

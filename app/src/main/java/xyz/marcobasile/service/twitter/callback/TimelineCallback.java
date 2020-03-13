@@ -43,20 +43,14 @@ public class TimelineCallback implements Callback<List<Tweet>> {
         List<SAMTweet> timeline = mapper.toSAMTweet(response.body());
         Log.i(TAG, "Get timeline success, " + timeline.size() + " tweets");
         Log.i(TAG, "Old sinceId: " + client.getSinceId());
-        // Log.i(TAG, "Old maxId: " + client.getMaxId());
 
         timeline.stream()
                 .map(SAMTweet::getId)
                 .max(Long::compareTo)
                 .ifPresent(client::setSinceId);
-        /*timeline.stream()
-                .map(SAMTweet::getId)
-                .min(Long::compareTo)
-                .ifPresent(client::setMaxId);*/
 
 
         Log.i(TAG, "New sinceId: " + client.getSinceId());
-        // Log.i(TAG, "New maxId: " + client.getMaxId());
 
         provider.tweets(timeline, callback);
     }

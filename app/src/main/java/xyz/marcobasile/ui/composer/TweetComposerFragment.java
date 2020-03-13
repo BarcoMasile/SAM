@@ -71,6 +71,9 @@ public class TweetComposerFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
+        cancelBtn.setVisibility(View.VISIBLE);
+        tweetBtn.setVisibility(View.VISIBLE);
+
         if (null == imageReturnedIntent || resultCode != Activity.RESULT_OK) {
             clearAttach.setEnabled(pictureHolder.canProvide());
             return;
@@ -138,10 +141,10 @@ public class TweetComposerFragment extends Fragment {
     }
 
     private void setEnableAllButtonsInView(boolean enabled) {
-        Arrays.asList(pickImage, attachIcon, tweetBtn, cancelBtn)
+        Arrays.asList(pickImage, attachIcon, tweetBtn, cancelBtn, clearAttach, doodle)
             .forEach(btn -> btn.setEnabled(enabled));
 
-        clearAttach.setEnabled(pictureHolder.getPictureUri() != null);
+        clearAttach.setEnabled(enabled && pictureHolder.getPictureUri() != null);
     }
 
     @SuppressLint("ClickableViewAccessibility")

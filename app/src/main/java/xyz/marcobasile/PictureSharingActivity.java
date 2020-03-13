@@ -67,9 +67,9 @@ public class PictureSharingActivity extends Activity {
             intent.setData(null);
             setResult(Activity.RESULT_OK, intent);
             finishAndRemoveTask();
+        } else {
+            TwitterClient.createTwitterClient();
         }
-
-        TwitterClient.createTwitterClient();
 
         getIntentContent(intent);
 

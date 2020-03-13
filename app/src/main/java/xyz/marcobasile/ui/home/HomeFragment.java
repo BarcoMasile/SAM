@@ -1,8 +1,7 @@
 package xyz.marcobasile.ui.home;
 
-import android.graphics.Color;
+
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import xyz.marcobasile.repository.TweetRepository;
 import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.service.task.TweetDownloaderTimerTask;
 import xyz.marcobasile.service.twitter.TwitterClient;
+import xyz.marcobasile.service.twitter.util.LoginUtils;
 import xyz.marcobasile.ui.adapter.home.TimelineTweetAdapter;
 
 public class HomeFragment extends Fragment {
@@ -52,6 +52,12 @@ public class HomeFragment extends Fragment {
         tweetRepo = new TweetRepository(getContext());
 
         setupView(root);
+        if (!LoginUtils.isUserAuthenticated()) {
+
+            return root;
+        }
+
+        TwitterClient.createTwitterClient();
         populateScrollView();
 
         tweetDownloaderTask = new TweetDownloaderTimerTask(provider, twitterClient);
@@ -64,13 +70,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //startTimer();
+        startTimer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //stopTimer();
+        stopTimer();
     }
 
 
@@ -90,7 +96,7 @@ public class HomeFragment extends Fragment {
         refreshBtn.setOnClickListener(view -> {
 
             timelineTweetAdapter.notifyDataSetChanged();
-            view.setVisibility(View.GONE);
+            refreshBtn.setVisibility(View.GONE);
         });
 
         provider.setOnDataReceived(tweets -> refreshBtn.setVisibility( tweets.size() > 0 ? View.VISIBLE : View.GONE));
@@ -105,12 +111,17 @@ public class HomeFragment extends Fragment {
 
     private void startTimer() {
 
-        tweetDownloaderTimer.scheduleAtFixedRate(tweetDownloaderTask, TweetDownloaderTimerTask.DELAY, TweetDownloaderTimerTask.DELAY);
+        if (LoginUtils.isUserAuthenticated() && tweetDownloaderTask != null) {
+            tweetDownloaderTimer.scheduleAtFixedRate(tweetDownloaderTask, TweetDownloaderTimerTask.DELAY, TweetDownloaderTimerTask.DELAY);
+        }
     }
 
     private void stopTimer() {
 
-        tweetDownloaderTimer.cancel();
-        tweetDownloaderTimer.purge();
+        if (LoginUtils.isUserAuthenticated()) {
+
+            tweetDownloaderTimer.cancel();
+            tweetDownloaderTimer.purge();
+        }
     }
 }

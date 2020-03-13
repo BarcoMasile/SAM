@@ -215,12 +215,12 @@ public class DoodlingView extends View {
         circlePaint.setStrokeWidth(CIRLE_STROKE_WIDTH);
     }
 
-    public static interface OnPathStackChangeCallback {
+    public interface OnPathStackChangeCallback {
 
         void onDataChange(boolean isEmpty);
     }
 
-    public static interface OnTouchDragCallback {
+    public interface OnTouchDragCallback {
 
         void onDragStart();
 
