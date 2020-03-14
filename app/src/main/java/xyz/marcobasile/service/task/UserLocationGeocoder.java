@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 import xyz.marcobasile.model.SAMTwitterUser;
 
-public class UserLocationGeocoder extends AsyncTask<Set<SAMTwitterUser>,Void, Set<SAMTwitterUser>> {
+public class UserLocationGeocoder extends AsyncTask<SAMTwitterUser,Void, SAMTwitterUser> {
 
     private static final String TAG = UserLocationGeocoder.class.getName();
     private Geocoder geocoder;
@@ -31,8 +31,9 @@ public class UserLocationGeocoder extends AsyncTask<Set<SAMTwitterUser>,Void, Se
     }
 
     @Override
-    protected Set<SAMTwitterUser> doInBackground(Set<SAMTwitterUser>... lists) {
-        int i = 0;
+    protected SAMTwitterUser doInBackground(SAMTwitterUser... users) {
+
+        /*int i = 0;
 
         if (lists.length == 0) {
             return null;
@@ -45,13 +46,16 @@ public class UserLocationGeocoder extends AsyncTask<Set<SAMTwitterUser>,Void, Se
             setLocationIfPresent(users.get(i)); // questo necessario per evitare concurrent modification exception
         }
 
-        return new HashSet<>(users);
+        return new HashSet<>(users);*/
+
+        return setLocationIfPresent(users[0]);
     }
 
     @Override
-    protected void onPostExecute(Set<SAMTwitterUser> samTwitterUsers) {
+    protected void onPostExecute(SAMTwitterUser samTwitterUser) {
 
-        Log.i(TAG, "geocoded " + samTwitterUsers.size() + " users locations");
+//        Log.i(TAG, "geocoded " + samTwitterUsers.size() + " users locations");
+        Log.i(TAG, "geocoded location for user: " + samTwitterUser.getScreenName());
     }
 
     private SAMTwitterUser setLocationIfPresent(SAMTwitterUser user) {

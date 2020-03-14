@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -42,6 +45,7 @@ public class TweetComposerFragment extends Fragment {
     private TextInputEditText tweetBodyView;
     private MaterialButton tweetBtn, cancelBtn;
     private Button pickImage, clearAttach, attachIcon, doodle;
+    private ImageView imagePreview;
     private ChipGroup chipGroup;
     private ProgressBar bar;
     private View backdrop;
@@ -83,17 +87,18 @@ public class TweetComposerFragment extends Fragment {
         if (requestCode == IMAGE_PICKER_CODE) {
 
             pictureHolder.setPictureUri(imageReturnedIntent.getData());
+            imagePreview.setImageURI(imageReturnedIntent.getData());
         } else if (requestCode == DOODLING_CODE) {
 
             byte[] bitmapBytes = imageReturnedIntent.getByteArrayExtra(DOODLE_EXTRA);
             pictureHolder.setPictureBytes(bitmapBytes);
+            imagePreview.setImageBitmap(BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length));
         }
 
         attachIcon.setVisibility(View.VISIBLE);
         clearAttach.setEnabled(true);
 
     }
-
 
     private void setupView(View root) {
 
@@ -114,6 +119,8 @@ public class TweetComposerFragment extends Fragment {
         bar.setVisibility(View.INVISIBLE);
 
         chipGroup = root.<ChipGroup>findViewById(R.id.chip_group);
+
+        imagePreview = root.findViewById(R.id.tweet_picture_preview);
 
         touchLayer = root.<FrameLayout>findViewById(R.id.touch_layer);
 
@@ -150,6 +157,7 @@ public class TweetComposerFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupListeners() {
+
         tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet(tweetBodyView, pictureHolder, clearAttach, attachIcon, this::toggleProgressBarAndBackDrop));
         cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancel(tweetBodyView, clearAttach));
 
@@ -164,6 +172,8 @@ public class TweetComposerFragment extends Fragment {
             pictureHolder.clear();
             attachIcon.setVisibility(View.INVISIBLE);
             view.setEnabled(false);
+            imagePreview.setImageURI(null);
+            imagePreview.setImageBitmap(null);
         });
 
         doodle.setOnClickListener(view -> {

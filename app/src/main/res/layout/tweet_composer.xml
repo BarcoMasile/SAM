@@ -107,6 +107,25 @@
         android:visibility="visible"
         app:icon="@android:drawable/ic_menu_gallery" />
 
+    <ImageView
+        android:id="@+id/tweet_picture_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="230dp"
+        android:layout_below="@+id/tweet_body_layout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="34dp"
+        android:contentDescription="tweet image preview"
+        android:paddingLeft="12dp"
+        android:paddingTop="2dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="2dp"
+        android:visibility="visible"
+        tools:srcCompat="@tools:sample/avatars[4]"
+        tools:visibility="visible" />
+
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
         android:layout_width="match_parent"

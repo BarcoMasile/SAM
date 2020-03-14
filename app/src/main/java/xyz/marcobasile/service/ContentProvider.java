@@ -6,6 +6,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -126,19 +128,24 @@ public class ContentProvider {
 
     private void saveRecentTweetUsers(List<SAMTweet> tweets) {
 
+        // UserLocationGeocoder geocoderTask = new UserLocationGeocoder(ctx);
+
         Set<SAMTwitterUser> recentTweetUsersSet = tweets.stream()
                 .map(SAMTweet::getUser)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
-        UserLocationGeocoder geocoderTask = new UserLocationGeocoder(ctx);
-        geocoderTask.execute(recentTweetUsersSet);
+        //geocoderTask.execute(recentTweetUsersSet);
+        Set<SAMTwitterUser> usersToGeocode = new HashSet<>(recentTweetUsersSet);
 
         recentTweetUsersSet.addAll(users);
 
         users.clear();
         users.addAll(recentTweetUsersSet); // e poi li conservo nella lista per facile utilizzo
 
+        usersToGeocode.forEach(user -> {
+            new UserLocationGeocoder(ctx).execute(user);
+        });
     }
 
 }
