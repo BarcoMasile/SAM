@@ -6,29 +6,10 @@
     android:layout_height="match_parent"
     android:background="#FABE6B" >
 
-    <TextView
-        android:id="@+id/home_header"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:background="#FACC91"
-        android:paddingTop="8dp"
-        android:text="@string/home_header_text"
-        android:textAlignment="center"
-        android:textColor="@color/textColor"
-        android:textSize="28sp"
-        android:visibility="gone" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/home_header"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"

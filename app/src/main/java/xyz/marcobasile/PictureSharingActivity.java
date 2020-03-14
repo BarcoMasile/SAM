@@ -65,6 +65,7 @@ public class PictureSharingActivity extends Activity {
         if (!LoginUtils.isUserAuthenticated()) {
 
             intent.setData(null);
+            Toast.makeText(getApplicationContext(), "Devi prima autenticarti nell'app!", Toast.LENGTH_SHORT).show();
             setResult(Activity.RESULT_OK, intent);
             finishAndRemoveTask();
         } else {

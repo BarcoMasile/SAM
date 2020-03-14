@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -19,6 +21,7 @@ import java.util.Optional;
 import xyz.marcobasile.R;
 import xyz.marcobasile.repository.TweetRepository;
 import xyz.marcobasile.ui.adapter.savedposts.SavedPostsAdapter;
+import xyz.marcobasile.ui.shared.listener.TouchLayerOnTouchListener;
 
 public class SavedPostsFragment extends Fragment {
 
@@ -67,6 +70,7 @@ public class SavedPostsFragment extends Fragment {
             hideKeyboard();
         });
 
+        searchView.setOnClickListener(view -> view.setFocusable(true));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

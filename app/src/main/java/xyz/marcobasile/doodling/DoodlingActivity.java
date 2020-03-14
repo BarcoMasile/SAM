@@ -24,6 +24,7 @@ public class DoodlingActivity extends AppCompatActivity {
 
     public static final String DOODLING_INTENT = "xyz.marcobasile.DOODLING";
     public static final String DOODLE_EXTRA = "xyz.marcobasile.DOODLE";
+    public static final String NEW_DRAWING_EXTRA = "xyz.marcobasile.NEW_DRAWING";
 
     private DoodlingView doodlingView;
     private Button cancel, save;
@@ -39,6 +40,15 @@ public class DoodlingActivity extends AppCompatActivity {
 
         setupViews();
         setupListeners();
+
+        Intent intent = getIntent();
+        boolean newDrawing = intent.getBooleanExtra(NEW_DRAWING_EXTRA, true);
+
+        if (newDrawing) {
+            doodlingView.clearData();
+        } else {
+            doodlingView.setupOldDrawing();
+        }
     }
 
     public void setupViews() {
@@ -86,6 +96,8 @@ public class DoodlingActivity extends AppCompatActivity {
 
         cancel.setOnClickListener(view -> {
 
+            doodlingView.clearData();
+
             setResult(Activity.RESULT_CANCELED);
             finish();
         });
@@ -103,14 +115,10 @@ public class DoodlingActivity extends AppCompatActivity {
         strokeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //
-            }
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {

@@ -19,6 +19,7 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.service.twitter.TwitterClient;
+import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 
 
 public class LoginUtils {
@@ -73,8 +74,6 @@ public class LoginUtils {
             navView.setVisibility(View.VISIBLE);
 
             loginSuccessfulToast(ctx);
-
-            //Generic procedure da usare qui per popolare il fragment e avviare il timer
         }
 
         @Override

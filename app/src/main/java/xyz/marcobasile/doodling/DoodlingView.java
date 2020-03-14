@@ -25,8 +25,8 @@ public class DoodlingView extends View {
     private OnPathStackChangeCallback onPathStackChangeCallback;
     private OnTouchDragCallback onTouchDragCallback;
 
-    private ArrayDeque<Path> pathStack = new ArrayDeque<>();
-    private Map<Path,Paint> paintMap = new HashMap<>();
+    private static ArrayDeque<Path> pathStack = new ArrayDeque<>();
+    private static Map<Path,Paint> paintMap = new HashMap<>();
 
     public int width, height;
 
@@ -37,6 +37,7 @@ public class DoodlingView extends View {
 
     private float x, y;
     private Float stroke = Float.valueOf(STROKE_WIDTH);
+    private boolean drawPrevious = false;
 
 
     public DoodlingView(Context context) {
@@ -64,6 +65,13 @@ public class DoodlingView extends View {
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         canvas.drawColor(Color.WHITE);
+
+        if (drawPrevious) {
+
+            drawPrevious = false;
+            pathStack.push(new Path()); // e' un path dummy
+            undo();
+        }
     }
 
     @Override
@@ -225,5 +233,16 @@ public class DoodlingView extends View {
         void onDragStart();
 
         void onDragEnd();
+    }
+
+    public void clearData() {
+
+        DoodlingView.pathStack.clear();
+        DoodlingView.paintMap.clear();
+    }
+
+    public void setupOldDrawing() {
+
+        drawPrevious = true;
     }
 }

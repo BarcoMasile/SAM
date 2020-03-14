@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -21,6 +23,8 @@ import xyz.marcobasile.ui.shared.interfaces.GenericProcedure;
 public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitmap>> {
 
     private final static String TAG = BitmapDownloader.class.getName();
+
+    private static boolean firstDataLoad = true;
 
     private final ContentProvider provider;
     private GenericProcedure onetimeCallback;
@@ -43,9 +47,11 @@ public class BitmapDownloader extends AsyncTask<Set<String>, Integer, List<Bitma
             int fromIndex = provider.getAndResetPreviousTweetCardinality(),
                 toIndex = provider.tweets().size();
 
-            List<SAMTweet> subList = provider.tweets().subList(fromIndex, toIndex); // solo i nuovi tweet se ci sono
-            callback.accept(subList);
+            List<SAMTweet> subList = provider.tweets().subList(fromIndex, toIndex);
+            callback.accept(firstDataLoad ? new ArrayList<>(0) : subList); // la primissima volta diamo lista vuota perche' gia' "refresho" io
         }
+
+        firstDataLoad = false;
     }
 
     @Override

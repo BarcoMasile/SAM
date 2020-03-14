@@ -9,7 +9,6 @@
     android:focusableInTouchMode="true"
     tools:visibility="visible">
 
-<!--    <EditText-->
     <SearchView
         android:id="@+id/search_string"
         android:layout_width="278dp"
@@ -19,6 +18,7 @@
         android:layout_marginTop="16dp"
         android:background="#FFFFFF"
         android:backgroundTint="#81FFFFFF"
+        android:clickable="true"
         android:contextClickable="true"
         android:drawableEnd="@drawable/tw__composer_close"
         android:elegantTextHeight="true"
@@ -27,6 +27,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:hint="@string/saved_posts_search_string"
+        android:iconifiedByDefault="false"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:labelFor="@id/search_btn"

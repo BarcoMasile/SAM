@@ -31,6 +31,7 @@ import xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListeners;
 import xyz.marcobasile.ui.composer.util.TweetComposerFragmentUtils;
 
 import static xyz.marcobasile.doodling.DoodlingActivity.DOODLE_EXTRA;
+import static xyz.marcobasile.doodling.DoodlingActivity.NEW_DRAWING_EXTRA;
 
 public class TweetComposerFragment extends Fragment {
     private static final int IMAGE_PICKER_CODE = 1;
@@ -167,7 +168,11 @@ public class TweetComposerFragment extends Fragment {
 
         doodle.setOnClickListener(view -> {
 
+            boolean newDrawing = !pictureHolder.hasBitmap();
+
             Intent intent = new Intent(DoodlingActivity.DOODLING_INTENT);
+            intent.putExtra(NEW_DRAWING_EXTRA, newDrawing);
+
             startActivityForResult(intent, DOODLING_CODE);
         });
 

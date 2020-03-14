@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             TwitterClient.createTwitterClient();
         }
+
         Log.i(TAG, "Done creating " + TAG);
     }
 

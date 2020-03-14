@@ -41,6 +41,8 @@ public class HomeFragment extends Fragment {
     private TwitterClient twitterClient;
     private TweetRepository tweetRepo;
 
+    private boolean properlyInitialized = false;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -57,10 +59,7 @@ public class HomeFragment extends Fragment {
             return root;
         }
 
-        TwitterClient.createTwitterClient();
-        populateScrollView();
-
-        tweetDownloaderTask = new TweetDownloaderTimerTask(provider, twitterClient);
+        homeFragmentTweetInit();
 
         Log.i(TAG, "Done onCreateView");
 
@@ -79,6 +78,20 @@ public class HomeFragment extends Fragment {
         stopTimer();
     }
 
+    private void homeFragmentTweetInit() {
+
+        if (properlyInitialized) {
+            return;
+        }
+
+        properlyInitialized = true;
+        TwitterClient.createTwitterClient();
+        populateScrollView();
+
+        if (null == tweetDownloaderTask) {
+            tweetDownloaderTask = new TweetDownloaderTimerTask(provider, twitterClient);
+        }
+    }
 
     private void setupView(View root) {
 
@@ -111,7 +124,9 @@ public class HomeFragment extends Fragment {
 
     private void startTimer() {
 
-        if (LoginUtils.isUserAuthenticated() && tweetDownloaderTask != null) {
+        if (LoginUtils.isUserAuthenticated()) {
+
+            homeFragmentTweetInit();
             tweetDownloaderTimer.scheduleAtFixedRate(tweetDownloaderTask, TweetDownloaderTimerTask.DELAY, TweetDownloaderTimerTask.DELAY);
         }
     }
@@ -122,6 +137,9 @@ public class HomeFragment extends Fragment {
 
             tweetDownloaderTimer.cancel();
             tweetDownloaderTimer.purge();
+
+            tweetDownloaderTimer = new Timer(TWEET_DOWNLOADER_TIMER);
+            tweetDownloaderTask = new TweetDownloaderTimerTask(provider, twitterClient);
         }
     }
 }

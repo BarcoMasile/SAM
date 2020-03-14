@@ -38,7 +38,7 @@ public class UserLocationGeocoder extends AsyncTask<Set<SAMTwitterUser>,Void, Se
             return null;
         }
 
-        ArrayList<SAMTwitterUser> users = new ArrayList<>(lists[0]);
+        ArrayList<SAMTwitterUser> users = new ArrayList<>(lists[0]); // da' ancora concurrent
 
         for (i = 0 ; i < users.size(); i++) {
 
