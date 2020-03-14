@@ -3,6 +3,7 @@ package xyz.marcobasile.ui.composer.listener;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import xyz.marcobasile.model.PictureHolder;
@@ -15,13 +16,15 @@ public class TweetButtonListener implements View.OnClickListener {
     private PictureHolder pictureHolder;
     private Button clearAttach;
     private Button attachIcon;
+    private ImageView imagePreview;
     private GenericProcedure toggleProgressBar;
 
-    public TweetButtonListener(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
+    public TweetButtonListener(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ImageView imagePreview, GenericProcedure toggleProgressBar) {
         this.textView = textView;
         this.pictureHolder = pictureHolder;
         this.clearAttach = clearAttach;
         this.attachIcon = attachIcon;
+        this.imagePreview = imagePreview;
 
         this.toggleProgressBar = toggleProgressBar;
     }
@@ -29,6 +32,6 @@ public class TweetButtonListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Log.i("TweetButton", "Click tweet");
-        AlertDialogUtils.tweetButtonAlertDialog(textView, pictureHolder, clearAttach, attachIcon, toggleProgressBar);
+        AlertDialogUtils.tweetButtonAlertDialog(textView, pictureHolder, clearAttach, attachIcon, imagePreview, toggleProgressBar);
     }
 }

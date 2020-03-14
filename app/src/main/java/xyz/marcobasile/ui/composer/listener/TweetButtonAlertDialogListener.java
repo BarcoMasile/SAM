@@ -3,6 +3,7 @@ package xyz.marcobasile.ui.composer.listener;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import xyz.marcobasile.model.PictureHolder;
@@ -18,11 +19,11 @@ public class TweetButtonAlertDialogListener implements DialogInterface.OnClickLi
     private PostTweetCallback postTweetCallback;
     private PictureHolder pictureHolder;
 
-    public TweetButtonAlertDialogListener(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
+    public TweetButtonAlertDialogListener(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ImageView imagePreview, GenericProcedure toggleProgressBar) {
         this.textView = textView;
         this.toggleProgressBar = toggleProgressBar;
         client = TwitterClient.getInstance();
-        postTweetCallback = new PostTweetCallback(textView, clearAttach, pictureHolder, attachIcon, toggleProgressBar);
+        postTweetCallback = new PostTweetCallback(textView, clearAttach, pictureHolder, attachIcon, imagePreview, toggleProgressBar);
         this.pictureHolder = pictureHolder;
     }
     @Override

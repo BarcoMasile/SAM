@@ -5,6 +5,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
@@ -16,8 +17,8 @@ import xyz.marcobasile.ui.shared.listener.TouchLayerOnTouchListener;
 
 public class TweetComposerFragmentListeners {
 
-    public static View.OnClickListener tweet(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
-        return new TweetButtonListener(textView, pictureHolder, clearAttach, attachIcon, toggleProgressBar);
+    public static View.OnClickListener tweet(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ImageView imagePreview, GenericProcedure toggleProgressBar) {
+        return new TweetButtonListener(textView, pictureHolder, clearAttach, attachIcon, imagePreview, toggleProgressBar);
     }
 
     public static View.OnClickListener cancel(TextView textView, Button clearAttach) {
@@ -32,8 +33,8 @@ public class TweetComposerFragmentListeners {
         return new TouchLayerOnTouchListener(tweetBody);
     }
 
-    public static TweetButtonAlertDialogListener tweetDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
-        return new TweetButtonAlertDialogListener(textView, pictureHolder, clearAttach, attachIcon, toggleProgressBar);
+    public static TweetButtonAlertDialogListener tweetDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ImageView imagePreview, GenericProcedure toggleProgressBar) {
+        return new TweetButtonAlertDialogListener(textView, pictureHolder, clearAttach, attachIcon, imagePreview, toggleProgressBar);
     }
 
     public static CancelButtonAlertDialogListener cancelDialog(TextView textView, Button clearAttach) {

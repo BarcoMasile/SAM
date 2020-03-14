@@ -2,6 +2,7 @@ package xyz.marcobasile.ui.composer.util;
 
 import android.content.DialogInterface;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -27,9 +28,9 @@ public class AlertDialogUtils {
                     textView.getResources().getString(R.string.cancel_btn_dialog_message));
     }
 
-    public static void tweetButtonAlertDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, GenericProcedure toggleProgressBar) {
+    public static void tweetButtonAlertDialog(TextView textView, PictureHolder pictureHolder, Button clearAttach, Button attachIcon, ImageView imagePreview, GenericProcedure toggleProgressBar) {
 
-        TweetButtonAlertDialogListener listener = tweetDialog(textView, pictureHolder, clearAttach, attachIcon, toggleProgressBar);
+        TweetButtonAlertDialogListener listener = tweetDialog(textView, pictureHolder, clearAttach, attachIcon, imagePreview, toggleProgressBar);
 
         alertDialog(textView,
                 listener,

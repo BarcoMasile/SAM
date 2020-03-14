@@ -33,6 +33,7 @@ import xyz.marcobasile.model.PictureHolder;
 import xyz.marcobasile.ui.composer.listener.TweetComposerFragmentListeners;
 import xyz.marcobasile.ui.composer.util.TweetComposerFragmentUtils;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static xyz.marcobasile.doodling.DoodlingActivity.DOODLE_EXTRA;
 import static xyz.marcobasile.doodling.DoodlingActivity.NEW_DRAWING_EXTRA;
 
@@ -158,7 +159,7 @@ public class TweetComposerFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void setupListeners() {
 
-        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet(tweetBodyView, pictureHolder, clearAttach, attachIcon, this::toggleProgressBarAndBackDrop));
+        tweetBtn.setOnClickListener(TweetComposerFragmentListeners.tweet(tweetBodyView, pictureHolder, clearAttach, attachIcon, imagePreview, this::toggleProgressBarAndBackDrop));
         cancelBtn.setOnClickListener(TweetComposerFragmentListeners.cancel(tweetBodyView, clearAttach));
 
         pickImage.setOnClickListener(view -> {

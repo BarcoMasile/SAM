@@ -3,6 +3,7 @@ package xyz.marcobasile.service.twitter.callback;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -23,13 +24,15 @@ public class PostTweetCallback implements Callback<Tweet> {
     private Button clearAttach;
     private PictureHolder pictureHolder;
     private Button attachIcon;
+    private ImageView imagePreview;
     private GenericProcedure toggleProgressBar;
 
-    public PostTweetCallback(TextView textView, Button clearAttach, PictureHolder pictureHolder, Button attachIcon, GenericProcedure toggleProgressBar) {
+    public PostTweetCallback(TextView textView, Button clearAttach, PictureHolder pictureHolder, Button attachIcon, ImageView imagePreview, GenericProcedure toggleProgressBar) {
         this.textView = textView;
         this.clearAttach = clearAttach;
         this.pictureHolder = pictureHolder;
         this.attachIcon = attachIcon;
+        this.imagePreview = imagePreview;
         this.toggleProgressBar = toggleProgressBar;
     }
 
@@ -43,6 +46,8 @@ public class PostTweetCallback implements Callback<Tweet> {
         clearAttach.setEnabled(false);
         pictureHolder.clear();
         attachIcon.setVisibility(View.INVISIBLE);
+        imagePreview.setImageBitmap(null);
+        imagePreview.setImageURI(null);
 
         // deve spegnere
         toggleProgressBar.doProcedure();
