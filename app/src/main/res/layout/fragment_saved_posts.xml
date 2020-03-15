@@ -11,11 +11,12 @@
 
     <SearchView
         android:id="@+id/search_string"
-        android:layout_width="278dp"
+        android:layout_width="match_parent"
         android:layout_height="47dp"
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="#FFFFFF"
         android:backgroundTint="#81FFFFFF"
         android:clickable="true"
@@ -30,7 +31,6 @@
         android:iconifiedByDefault="false"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:labelFor="@id/search_btn"
         android:paddingStart="4dp"
         android:paddingLeft="4dp"
         android:paddingEnd="4dp"
@@ -41,8 +41,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!-- android:labelFor="@id/search_btn" -->
 
-    <Button
+    <!--<Button
         android:id="@+id/search_btn"
         android:layout_width="94dp"
         android:layout_height="49dp"
@@ -57,7 +58,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/search_string"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
     <ListView
         android:id="@+id/saved_posts_scroll_view"
@@ -75,19 +76,5 @@
         tools:listitem="@layout/sam_tweet_item_layout">
 
     </ListView>
-
-    <Button
-        android:id="@+id/clear_str_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="18dp"
-        android:backgroundTint="#00FFFFFF"
-        android:visibility="gone"
-        app:icon="@drawable/tw__composer_close"
-        app:iconSize="10dp"
-        tools:visibility="gone" />
 
 </RelativeLayout>

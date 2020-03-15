@@ -27,7 +27,7 @@ public class SavedPostsFragment extends Fragment {
 
     private View root;
     private SearchView searchView;
-    private Button searchBtn;
+//    private Button searchBtn;
 
     private ListView listView;
     private TweetRepository repo;
@@ -49,12 +49,9 @@ public class SavedPostsFragment extends Fragment {
     public void setupViews(View root) {
 
         searchView = root.findViewById(R.id.search_string);
-        searchBtn = root.findViewById(R.id.search_btn);
-        searchBtn.setEnabled(false);
-
         listView = root.findViewById(R.id.saved_posts_scroll_view);
 
-        adapter = new SavedPostsAdapter(getContext(), repo);
+        adapter = new SavedPostsAdapter(getContext(), searchView, repo);
         listView.setAdapter(adapter);
     }
 
@@ -63,14 +60,6 @@ public class SavedPostsFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     public void setupListeners() {
 
-        searchBtn.setOnClickListener(view -> {
-
-            String str = searchView.getQuery().toString();
-            adapter.changeCursor(repo.searchByStringCursor(str));
-            hideKeyboard();
-        });
-
-        searchView.setOnClickListener(view -> view.setFocusable(true));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -87,7 +76,11 @@ public class SavedPostsFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String s) {
 
-                searchBtn.setEnabled(s.length() > 3);
+                boolean searchEnabled = s.length() > 3;
+
+                if (searchEnabled) {
+                    adapter.changeCursor(repo.searchByStringCursor(s));
+                }
 
                 if (s.length() == 0) {
                     adapter.changeCursor(repo.findAllCursor());

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
@@ -36,14 +37,17 @@ public class SavedPostsAdapter extends CursorAdapter {
     private TextView usernameView, tweetBodyView;
     private View itemView;
 
+    private SearchView searchView;
+
     private int originalMinHeight;
     private TweetRepository repo;
     private ContentProvider provider = ContentProvider.getInstance();
 
 
-    public SavedPostsAdapter(Context context, TweetRepository repo) {
+    public SavedPostsAdapter(Context context, SearchView searchView, TweetRepository repo) {
         super(context, repo.findAllCursor(), AUTO_REQUERY);
         this.repo = repo;
+        this.searchView = searchView;
         savedIcon = context.getResources().getDrawable(SAVED_ICON_RES, null);
     }
 
@@ -72,7 +76,7 @@ public class SavedPostsAdapter extends CursorAdapter {
 
         if (null == profileImage) {
 
-            profileImageView.setImageBitmap(null); // TODO: vediamo se risolve
+            profileImageView.setImageBitmap(null);
             provider.enqueueImageDownload(profileImageUrl, () -> {
 
                 Bitmap b = provider.getImage(profileImageUrl); // se il download e' andato bene ora ci sara' la bitmap
@@ -105,8 +109,18 @@ public class SavedPostsAdapter extends CursorAdapter {
     private void setupSavedButton(SAMTweet tweet) {
 
         saveBtn.setOnClickListener(view -> {
+
             repo.delete(tweet.getId());
-            changeCursor(repo.findAllCursor());
+            CharSequence query = searchView.getQuery();
+
+            Cursor c;
+            if (null == query || query.length() < 4) {
+                c = repo.findAllCursor();
+            } else {
+                c = repo.searchByStringCursor(query.toString());
+            }
+
+            changeCursor(c);
         });
     }
 
