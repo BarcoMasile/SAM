@@ -34,14 +34,14 @@ public class LoginUtils {
         return null != session;
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.M)
+
     private static void loginSuccessfulToast(Context ctx) {
         Toast toast = Toast.makeText(ctx, R.string.toast_login_successful, Toast.LENGTH_LONG);
         toast.getView().setBackgroundColor(ctx.getColor(R.color.login_success_color));
         toast.show();
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.M)
+
     private static void loginFailureToast(Context ctx) {
         Toast toast = Toast.makeText(ctx, R.string.toast_login_failure, Toast.LENGTH_LONG);
         toast.getView().setBackgroundColor(ctx.getColor(R.color.login_failure_color));
