@@ -64,19 +64,20 @@ public class SavedPostsFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                if (query.length() < 3) {
+                if (query.length() < 1) {
                     return false;
                 }
 
                 adapter.changeCursor(repo.searchByStringCursor(query));
                 hideKeyboard();
+
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
 
-                boolean searchEnabled = s.length() > 3;
+                boolean searchEnabled = s.length() > 1;
 
                 if (searchEnabled) {
                     adapter.changeCursor(repo.searchByStringCursor(s));

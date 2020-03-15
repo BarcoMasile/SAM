@@ -49,7 +49,10 @@ public class MapFragment extends Fragment {
 
         provider = ContentProvider.getInstance();
 
-        mapUtils = new MapSetupUtils(this, provider);
+        if (null == mapUtils) {
+            mapUtils = new MapSetupUtils(this, provider);
+        }
+
         root = inflater.inflate(R.layout.fragment_map, container, false);
 
         setupViews(savedInstanceState);
@@ -101,18 +104,27 @@ public class MapFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mapView.onResume();
+
+        if (mapView != null) {
+            mapView.onResume();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
+
+        if (mapView != null) {
+            mapView.onDestroy();
+        }
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+
+        if (mapView != null) {
+            mapView.onLowMemory();
+        }
     }
 }
