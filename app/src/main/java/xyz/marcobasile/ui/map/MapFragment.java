@@ -1,39 +1,38 @@
 package xyz.marcobasile.ui.map;
 
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.MapView;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.service.ContentProvider;
 import xyz.marcobasile.ui.adapter.map.MapTweetUserAdapter;
 import xyz.marcobasile.ui.map.util.MapSetupUtils;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
+
 public class MapFragment extends Fragment {
 
-    private final String TAG = this.getClass().getName();
+    private final static String TAG = MapFragment.class.getName();
+
+    final UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+    final Handler handler = new Handler(Looper.getMainLooper());
 
     private MapView mapView;
     private MapSetupUtils mapUtils;
@@ -43,6 +42,7 @@ public class MapFragment extends Fragment {
 
     private MapTweetUserAdapter mapTweetUserAdapter;
     private ContentProvider provider;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,11 +66,6 @@ public class MapFragment extends Fragment {
             mapUtils.requestPermissions();
         }
 
-        if (!mapUtils.permissionsGranted()) {
-            Toast.makeText(getContext(), "You really need to give permission grants", Toast.LENGTH_LONG).show();
-        }
-
-
         return root;
     }
 
@@ -81,6 +76,7 @@ public class MapFragment extends Fragment {
         if (mapUtils.permissionGrantedResult(grantResults)) {
             mapUtils.setupMapView(mapView);
         } else {
+
             Toast toast = Toast.makeText(getContext(), R.string.really_missing_grants, Toast.LENGTH_LONG);
             toast.getView().setBackgroundColor(Color.RED);
             toast.show();
@@ -90,6 +86,9 @@ public class MapFragment extends Fragment {
     private void setupViews(Bundle savedInstanceState) {
 
         mapView = root.<MapView>findViewById(R.id.map_view);
+        Log.e(TAG, "In procinto di chiamare la onCreate sulla mapView");
+        mapView.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler(defaultHandler, mapView, handler));
 
         recyclerView = (RecyclerView) root.findViewById(R.id.map_scroll_view);
         recyclerView.setHasFixedSize(true);
@@ -97,8 +96,6 @@ public class MapFragment extends Fragment {
 
         mapTweetUserAdapter = new MapTweetUserAdapter(provider, mapUtils);
         recyclerView.setAdapter(mapTweetUserAdapter);
-
-        mapView.onCreate(savedInstanceState);
     }
 
     @Override
@@ -126,5 +123,33 @@ public class MapFragment extends Fragment {
         if (mapView != null) {
             mapView.onLowMemory();
         }
+    }
+
+    private static UncaughtExceptionHandler uncaughtExceptionHandler(UncaughtExceptionHandler defaultHandler, MapView mapView, Handler handler) {
+
+        return (thread, ex) -> {
+
+            Log.e(TAG + "_Uncaught", "Catturata eccezione thread: " + thread.getName() + ", ex.message: " + ex.getMessage());
+
+            if (ex instanceof NullPointerException && thread.getName().startsWith("GLThread")) {
+
+                Log.e(TAG + "_Uncaught", "UncaughtExceptionHandler, Nullpointer e GLThread nel name");
+
+                Stream.of(ex.getStackTrace())
+                        .map(StackTraceElement::getClassName)
+                        .filter(className -> className.contains("maps"))
+                        .findAny()
+                        .ifPresent( _st -> {
+
+                            Log.e(TAG + "_Uncaught", "In procinto di postDelayed onCreate");
+                            handler.postDelayed(() -> mapView.onCreate(null), 200L);
+                        });
+
+            } else {
+
+                Optional.ofNullable(defaultHandler)
+                        .ifPresent(dh -> dh.uncaughtException(thread, ex));
+            }
+        };
     }
 }
