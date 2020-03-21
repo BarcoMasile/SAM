@@ -5,7 +5,7 @@
 
 L'applicazione ricorda vagamente un client Twitter, con funzioni ad hoc.
 
-![Home screen](images/0_home_screen.jpg =168x)
+![Home screen](images/0_home_screen.jpg | 168x)
 
 Permette di visualizzare i Tweet della propria timeline
 
