@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 import xyz.marcobasile.R;
 import xyz.marcobasile.doodling.DoodlingActivity;
@@ -81,7 +84,10 @@ public class TweetComposerFragment extends Fragment {
         tweetBtn.setVisibility(View.VISIBLE);
 
         if (null == imageReturnedIntent || resultCode != Activity.RESULT_OK) {
+
             clearAttach.setEnabled(pictureHolder.canProvide());
+            setTweetBtnEnabled();
+
             return;
         }
 
@@ -98,7 +104,19 @@ public class TweetComposerFragment extends Fragment {
 
         attachIcon.setVisibility(View.VISIBLE);
         clearAttach.setEnabled(true);
+        setTweetBtnEnabled();
+    }
 
+    private void setTweetBtnEnabled() { // TODO testare
+
+        if (null == tweetBodyView) {
+            return;
+        }
+
+        Editable tweetBody = tweetBodyView.getText();
+        Optional.ofNullable(tweetBody)
+                .map(Editable::toString)
+                .ifPresent(str -> tweetBtn.setEnabled(!str.equals("")));
     }
 
     private void setupView(View root) {
