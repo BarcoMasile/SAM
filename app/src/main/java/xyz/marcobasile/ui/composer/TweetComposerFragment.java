@@ -168,10 +168,11 @@ public class TweetComposerFragment extends Fragment {
     }
 
     private void setEnableAllButtonsInView(boolean enabled) {
-        Arrays.asList(pickImage, attachIcon, tweetBtn, cancelBtn, clearAttach, doodle)
+        Arrays.asList(pickImage, attachIcon, cancelBtn, clearAttach, doodle)
             .forEach(btn -> btn.setEnabled(enabled));
 
         clearAttach.setEnabled(enabled && pictureHolder.getPictureUri() != null);
+        tweetBtn.setEnabled(enabled && (!tweetBodyView.getText().toString().equals("")));
     }
 
     @SuppressLint("ClickableViewAccessibility")
