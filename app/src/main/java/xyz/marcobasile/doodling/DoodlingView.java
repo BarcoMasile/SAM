@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class DoodlingView extends View {
 
@@ -165,9 +166,16 @@ public class DoodlingView extends View {
         pathStack.poll();
 
         canvas.drawColor(Color.WHITE);
-        pathStack.forEach(path -> {
-            canvas.drawPath(path, paintMap.getOrDefault(path, canvasPaint));
-        });
+        ArrayDeque<Path> temp = new ArrayDeque<>(pathStack.size());
+
+        Stream.generate(() -> pathStack.pollLast())
+                .limit(pathStack.size()).forEach(path -> {
+                    temp.push(path);
+                    canvas.drawPath(path, paintMap.getOrDefault(path, canvasPaint));
+                });
+
+        pathStack.clear();
+        pathStack.addAll(temp);
         invalidate();
 
         if (onPathStackChangeCallback != null) {

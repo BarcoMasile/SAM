@@ -3,6 +3,8 @@ package xyz.marcobasile.ui.savedposts;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -27,11 +30,11 @@ public class SavedPostsFragment extends Fragment {
 
     private View root;
     private SearchView searchView;
-//    private Button searchBtn;
 
     private ListView listView;
     private TweetRepository repo;
     private SavedPostsAdapter adapter;
+    private ImageView searchViewCloseBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class SavedPostsFragment extends Fragment {
     public void setupViews(View root) {
 
         searchView = root.findViewById(R.id.search_string);
+        searchViewCloseBtn = searchView.findViewById(R.id.search_close_btn);
         listView = root.findViewById(R.id.saved_posts_scroll_view);
 
         adapter = new SavedPostsAdapter(getContext(), searchView, repo);
@@ -60,6 +64,8 @@ public class SavedPostsFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     public void setupListeners() {
 
+        // searchViewCloseBtn.setOnClickListener(view -> searchView.clearFocus());
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -69,7 +75,7 @@ public class SavedPostsFragment extends Fragment {
                 }
 
                 adapter.changeCursor(repo.searchByStringCursor(query));
-                hideKeyboard();
+                searchView.clearFocus();
 
                 return true;
             }
@@ -85,17 +91,12 @@ public class SavedPostsFragment extends Fragment {
 
                 if (s.length() == 0) {
                     adapter.changeCursor(repo.findAllCursor());
-                    hideKeyboard();
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> searchView.clearFocus(), 100L);
                 }
 
                 return true;
             }
         });
-    }
-
-    private void hideKeyboard() {
-        Optional.ofNullable((InputMethodManager) root.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
-                .ifPresent(imm -> imm.hideSoftInputFromWindow(root.getWindowToken(), 0));
     }
 
 }

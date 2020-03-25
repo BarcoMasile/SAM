@@ -96,8 +96,6 @@ public class DoodlingActivity extends AppCompatActivity {
 
         cancel.setOnClickListener(view -> {
 
-            //doodlingView.clearData();
-
             setResult(Activity.RESULT_CANCELED);
             finish();
         });

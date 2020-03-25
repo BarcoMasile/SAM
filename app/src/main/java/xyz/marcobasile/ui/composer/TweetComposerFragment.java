@@ -107,12 +107,12 @@ public class TweetComposerFragment extends Fragment {
         setTweetBtnEnabled();
     }
 
-    private void setTweetBtnEnabled() { // TODO testare
+    private void setTweetBtnEnabled() {
 
-        if (null == tweetBodyView) {
+        if (null == tweetBodyView || null == tweetBtn) {
             return;
         }
-
+        tweetBtn.setEnabled(false);
         Editable tweetBody = tweetBodyView.getText();
         Optional.ofNullable(tweetBody)
                 .map(Editable::toString)
